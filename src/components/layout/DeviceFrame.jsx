@@ -100,11 +100,11 @@ export const DeviceFrame = ({ children }) => {
         <div className="anees-live-recording-pill" id="liveRecordingPill">
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div className="island-waveform" style={{ gap: '2.5px' }}>
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
+              <span className="wave-bar" />
+              <span className="wave-bar" />
+              <span className="wave-bar" />
+              <span className="wave-bar" />
+              <span className="wave-bar" />
             </div>
             <span className="live-rec-timer">{timerDisplay}</span>
           </div>

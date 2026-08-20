@@ -120,7 +120,7 @@ export const MemoryView = () => {
 
             <div className="spaced-card-footer">
               <div className="spaced-card-tags">
-                <span className="spaced-tag" style={{ background: '#E6F3F4', color: 'var(--ada-teal)' }}>
+                <span className="spaced-tag memory-badge">
                   {t(item.tagKey)}
                 </span>
                 <span className="spaced-tag count">+3</span>

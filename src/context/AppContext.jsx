@@ -7,6 +7,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [currentTab, setCurrentTab] = useState('today');
   const [currentLang, setCurrentLang] = useState('en');
+  const [theme, setTheme] = useState('dark'); // 'dark' | 'light'
   const [isRecording, setIsRecording] = useState(false);
   const [recSeconds, setRecSeconds] = useState(34);
   const [isPresented, setIsPresented] = useState(false);
@@ -32,6 +33,16 @@ export const AppProvider = ({ children }) => {
     }
     return () => clearInterval(interval);
   }, [isRecording]);
+
+  // Handle Theme Attribute on Root
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [theme]);
 
   // Handle Presentation Mode Body Class & Escape Key
   useEffect(() => {
@@ -75,93 +86,71 @@ export const AppProvider = ({ children }) => {
     showToast(next === 'ar' ? 'تم التبديل إلى اللغة العربية (RTL)' : 'Switched to English (LTR)');
   };
 
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    showToast(next === 'dark' ? 'تم تفعيل الوضع الليلي الفاخر' : 'Switched to Light Theme');
+  };
+
   const switchTab = (tab) => {
     setCurrentTab(tab);
     setActiveSheet(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const togglePresentMode = () => {
-    const next = !isPresented;
-    setIsPresented(next);
-    showToast(
-      next
-        ? (currentLang === 'ar' ? 'وضع العرض التنفيذي: شاشة الهاتف كاملة' : 'Present Mode: Full phone screen fitted')
-        : (currentLang === 'ar' ? 'تم الخروج من وضع العرض' : 'Exited Present Mode')
-    );
   };
 
   const startRecording = () => {
     setIsRecording(true);
     setRecSeconds(0);
-    showToast(currentLang === 'ar' ? 'تم تفعيل إلهي: جاري تسجيل وتحليل مجريات الاجتماع' : 'Elahi Active: Live meeting transcription & synthesis started');
+    showToast(currentLang === 'ar' ? 'بدأ تسجيل وتفريغ الاجتماع المباشر' : 'Live Meeting Recording & Diarization Started');
   };
 
   const stopRecording = () => {
     setIsRecording(false);
-    showToast(currentLang === 'ar' ? 'تم استخراج القرارات والإجراءات المعلقة بنجاح' : 'Meeting Minutes & AI Agent Decisions Generated');
-    openMeetingOutput('ops', 'draft');
-  };
-
-  const toggleRecording = () => {
-    if (isRecording) stopRecording();
-    else startRecording();
-  };
-
-  const openMeetingOutput = (meetingId = 'ops', state = 'draft') => {
-    setActiveMeetingId(meetingId);
-    setOutputStatus(state);
+    showToast(currentLang === 'ar' ? 'تم حفظ المحضر وتوليد القرارات' : 'Meeting Synthesized · Minutes Generated');
+    setOutputStatus('draft');
     switchTab('meetingoutput');
+  };
+
+  const openMeetingOutput = (meetingId = 'ops', status = 'draft') => {
+    setActiveMeetingId(meetingId);
+    setOutputStatus(status);
+    switchTab('meetingoutput');
+  };
+
+  const setScenario = (scene) => {
+    setScenarioState(scene);
+    if (scene === 'normal') showToast(currentLang === 'ar' ? 'الحالة: تشغيل قياسي' : 'Scenario: Normal Operations');
+    if (scene === 'conflict') showToast(currentLang === 'ar' ? 'الحالة: تعارض في الجداول' : 'Scenario: Schedule Conflict Detected');
+    if (scene === 'denied') showToast(currentLang === 'ar' ? 'الحالة: صلاحيات مرفوضة' : 'Scenario: Access Clearance Denied');
+    if (scene === 'loading') showToast(currentLang === 'ar' ? 'الحالة: جاري المعالجة الذكية' : 'Scenario: AI Synthesizing');
   };
 
   const approveCurrentMeeting = () => {
     setOutputStatus('approved');
-    showToast(currentLang === 'ar' ? 'تم اعتماد وتوثيق السجل الرسمي' : 'Official Record Approved & Sealed');
+    showToast(currentLang === 'ar' ? 'تم اعتماد المحضر وختمه رسمياً' : 'Record Formally Approved & Sealed');
   };
 
-  const openApprovalModal = () => {
-    setActiveSheet('approval');
+  const togglePresentMode = () => {
+    setIsPresented(!isPresented);
   };
 
-  const closeSheet = () => {
-    setActiveSheet(null);
+  const executeAskQuery = (queryText) => {
+    setAskQuery(queryText);
+    switchTab('answer');
   };
 
-  const setScenario = (scenarioKey) => {
-    setScenarioState(scenarioKey);
-    if (scenarioKey === 'normal') {
-      showToast(currentLang === 'ar' ? 'الحالة العادية: جميع المصادر موثقة' : 'Normal State: All sources verified');
-    } else if (scenarioKey === 'conflict') {
-      setActiveSheet('why');
-      showToast(currentLang === 'ar' ? 'تم استبعاد الرقم المتعارض تلقائياً' : 'Conflicting value excluded per Trust Guardrails');
-    } else if (scenarioKey === 'denied') {
-      showToast(currentLang === 'ar' ? 'تم قفل الوصول: يتطلب تصريح مستوى 1' : 'Access Restricted: Requires Board Clearance');
-    }
+  const addReminder = (title) => {
+    const newId = Date.now();
+    setRemindersList((prev) => [
+      ...prev,
+      { id: newId, titleKey: '', timeKey: '', customTitle: title, customTime: 'Due today · 17:00', done: false }
+    ]);
+    showToast(currentLang === 'ar' ? 'تمت إضافة التذكير' : 'Reminder Created');
   };
 
   const toggleReminder = (id) => {
     setRemindersList((prev) =>
       prev.map((r) => (r.id === id ? { ...r, done: !r.done } : r))
     );
-  };
-
-  const addReminder = (text, timePill = 'Today 16:00') => {
-    if (!text.trim()) return;
-    const newRem = {
-      id: Date.now(),
-      titleKey: null,
-      timeKey: null,
-      customTitle: text,
-      customTime: timePill,
-      done: false
-    };
-    setRemindersList((prev) => [...prev, newRem]);
-    showToast(currentLang === 'ar' ? 'تمت إضافة التذكير بنجاح' : 'Executive Reminder Added');
-  };
-
-  const executeAskQuery = (queryText) => {
-    setAskQuery(queryText);
-    switchTab('answer');
   };
 
   const currentMeetingData = meetingsData[activeMeetingId] || meetingsData.ops;
@@ -173,12 +162,13 @@ export const AppProvider = ({ children }) => {
         switchTab,
         currentLang,
         toggleLanguage,
-        t,
+        theme,
+        setTheme,
+        toggleTheme,
         isRecording,
-        recSeconds,
         startRecording,
         stopRecording,
-        toggleRecording,
+        recSeconds,
         isPresented,
         togglePresentMode,
         scenario,
@@ -187,19 +177,19 @@ export const AppProvider = ({ children }) => {
         outputStatus,
         openMeetingOutput,
         approveCurrentMeeting,
-        currentMeetingData,
-        remindersList,
-        toggleReminder,
-        addReminder,
         activeSheet,
         setActiveSheet,
-        openApprovalModal,
-        closeSheet,
+        closeSheet: () => setActiveSheet(null),
         toastMessage,
         showToast,
         askQuery,
         setAskQuery,
-        executeAskQuery
+        executeAskQuery,
+        remindersList,
+        addReminder,
+        toggleReminder,
+        currentMeetingData,
+        t,
       }}
     >
       {children}

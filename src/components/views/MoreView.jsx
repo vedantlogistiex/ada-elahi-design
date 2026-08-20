@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const MoreView = () => {
-  const { t, currentLang, toggleLanguage } = useApp();
+  const { t, currentLang, toggleLanguage, theme, toggleTheme } = useApp();
 
   return (
     <section className="screen-view active" id="viewMore">
@@ -31,6 +31,14 @@ export const MoreView = () => {
       <div className="section-label" style={{ marginTop: '20px' }}>{t('prefsKicker')}</div>
 
       <div className="card" style={{ padding: '4px 0' }}>
+        <div className="card-row" style={{ cursor: 'pointer' }} onClick={toggleTheme}>
+          <span style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--ada-navy)' }}>
+            {currentLang === 'ar' ? 'مظهر الواجهة' : 'Appearance Theme'}
+          </span>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--ada-blue)' }}>
+            {theme === 'dark' ? (currentLang === 'ar' ? '🌙 الوضع الليلي الفاخر' : '🌙 Obsidian Dark') : (currentLang === 'ar' ? '☀️ الوضع النهاري' : '☀️ Executive Light')}
+          </span>
+        </div>
         <div className="card-row" style={{ cursor: 'pointer' }} onClick={toggleLanguage}>
           <span style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--ada-navy)' }}>{t('langPrefTitle')}</span>
           <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--ada-blue)' }}>

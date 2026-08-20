@@ -1219,20 +1219,21 @@ body.is-presenting .device-frame {
 }
 
 .anees-black-dock {
-  background: var(--ada-navy);
+  background: #08111D;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--r-pill);
   padding: 11px 20px;
   display: flex;
   align-items: center;
   gap: 18px;
-  box-shadow: var(--shadow-dock);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   pointer-events: auto;
 }
 
 .dock-icon-btn {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1253,7 +1254,7 @@ body.is-presenting .device-frame {
 }
 
 .dock-icon-btn.active {
-  color: #FFFFFF;
+  color: #38BDF8;
 }
 
 .dock-icon-btn.active::after {
@@ -1262,8 +1263,9 @@ body.is-presenting .device-frame {
   bottom: -2px;
   width: 4px;
   height: 4px;
-  background: var(--ada-teal);
+  background: #38BDF8;
   border-radius: 50%;
+  box-shadow: 0 0 8px #38BDF8;
 }
 
 .anees-rec-action-btn {
@@ -1737,12 +1739,14 @@ body.is-presenting .device-frame {
   overflow-y: auto;
   box-shadow: var(--shadow-sheet);
   transform: translateY(100%);
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s;
+  visibility: hidden;
   z-index: 210;
 }
 
 .bottom-sheet.active {
   transform: translateY(0);
+  visibility: visible;
 }
 
 .sheet-handle {
@@ -1863,3 +1867,648 @@ body.is-presenting .device-frame {
   font-size: 12.5px;
   color: var(--ada-grey);
 }
+
+/* ============================================================
+   🌙 EXECUTIVE OBSIDIAN DARK MODE THEME SYSTEM
+   ============================================================ */
+[data-theme="dark"],
+body.dark-mode {
+  --ada-navy: #F8FAFC;
+  --ada-navy-subtle: #E2E8F0;
+  --ada-slate: #CBD5E1;
+  --ada-grey: #94A3B8;
+  --ada-faint: #64748B;
+  --ada-blue: #38BDF8;
+  --ada-teal: #2DD4BF;
+  --ada-sky: rgba(56, 189, 248, 0.14);
+  --ada-sand: rgba(212, 175, 55, 0.16);
+  --ada-white: #08111D;
+  --ada-surface: #0E1B2A;
+  --ada-border: rgba(255, 255, 255, 0.08);
+
+  --bg-app: #08111D;
+  --bg-surface: #0E1B2A;
+  --bg-card: #0F2033;
+  --bg-card-subtle: #14283E;
+  --bg-pill-inactive: #142538;
+
+  --ink: #F8FAFC;
+  --ink-secondary: #CBD5E1;
+  --ink-muted: #94A3B8;
+  --ink-faint: #64748B;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-card: rgba(255, 255, 255, 0.09);
+  --border-navy: #38BDF8;
+
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-dock: 0 16px 48px rgba(0, 0, 0, 0.65);
+}
+
+/* Dark Mode Body & Background */
+[data-theme="dark"] body,
+body.dark-mode {
+  background: #050B14;
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] body::before,
+body.dark-mode::before {
+  background: radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.06) 0%, rgba(45, 212, 191, 0.03) 45%, transparent 70%);
+}
+
+/* Dark Studio Toolbar */
+[data-theme="dark"] .studio-bar,
+body.dark-mode .studio-bar {
+  background: rgba(8, 17, 29, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .studio-brand-tag,
+body.dark-mode .studio-brand-tag {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .studio-btn,
+body.dark-mode .studio-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .studio-btn:hover,
+body.dark-mode .studio-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #38BDF8;
+}
+
+[data-theme="dark"] .studio-btn.active,
+body.dark-mode .studio-btn.active {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: #38BDF8;
+  color: #38BDF8;
+}
+
+/* Dark Device Frame */
+[data-theme="dark"] .device-frame,
+body.dark-mode .device-frame {
+  background: #08111D;
+  border: 3.5px solid #1A2E44;
+  box-shadow:
+    0 0 0 10px #0E1B2A,
+    0 0 0 12px rgba(0, 0, 0, 0.6),
+    0 32px 80px rgba(0, 0, 0, 0.7);
+}
+
+/* Dark Cards & Containers */
+[data-theme="dark"] .exec-card,
+body.dark-mode .exec-card,
+[data-theme="dark"] .card,
+body.dark-mode .card,
+[data-theme="dark"] .spaced-card,
+body.dark-mode .spaced-card {
+  background: #0F2033;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .exec-card:hover,
+body.dark-mode .exec-card:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .exec-card.is-spotlight,
+body.dark-mode .exec-card.is-spotlight {
+  background: linear-gradient(180deg, #12253B 0%, #0F2033 100%);
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+[data-theme="dark"] .spotlight-focus-box,
+body.dark-mode .spotlight-focus-box {
+  background: #091522;
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .exec-card-footer,
+body.dark-mode .exec-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Dark KPI metrics */
+[data-theme="dark"] .kpi-unit,
+body.dark-mode .kpi-unit {
+  background: #0F2033;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .kpi-val,
+body.dark-mode .kpi-val {
+  color: #F8FAFC;
+}
+
+/* Dark Chips */
+[data-theme="dark"] .exec-chip,
+body.dark-mode .exec-chip {
+  background: #142538;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .exec-chip.active-blue,
+body.dark-mode .exec-chip.active-blue {
+  background: rgba(56, 189, 248, 0.14);
+  color: #38BDF8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+/* Dark Segmented Control */
+[data-theme="dark"] .seg-bar,
+body.dark-mode .seg-bar {
+  background: #07101B;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .seg-btn,
+body.dark-mode .seg-btn {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .seg-btn.active,
+body.dark-mode .seg-btn.active {
+  background: #162C44;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark Inputs & Textareas */
+[data-theme="dark"] .ask-input-wrap,
+body.dark-mode .ask-input-wrap,
+[data-theme="dark"] .search-input-wrap,
+body.dark-mode .search-input-wrap {
+  background: #0F2033;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .ask-textarea,
+body.dark-mode .ask-textarea,
+[data-theme="dark"] .search-input,
+body.dark-mode .search-input {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .ask-footer,
+body.dark-mode .ask-footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Dark Bottom Sheets & Modals */
+[data-theme="dark"] .bottom-sheet,
+body.dark-mode .bottom-sheet,
+[data-theme="dark"] .approval-card,
+body.dark-mode .approval-card {
+  background: #091522;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .sheet-handle,
+body.dark-mode .sheet-handle {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .sheet-close,
+body.dark-mode .sheet-close {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+/* Dark Profile */
+[data-theme="dark"] .profile-avatar,
+body.dark-mode .profile-avatar {
+  background: #162C44;
+  border-color: #38BDF8;
+  color: #38BDF8;
+}
+
+/* Dark Specific Components for a-inspired branch */
+[data-theme="dark"] .anees-highlight-card,
+body.dark-mode .anees-highlight-card {
+  background: #0E1F30;
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .anees-highlight-card:hover,
+body.dark-mode .anees-highlight-card:hover {
+  box-shadow: 0 6px 0 0 #38BDF8;
+}
+
+[data-theme="dark"] .anees-highlight-title,
+body.dark-mode .anees-highlight-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .anees-highlight-meta,
+body.dark-mode .anees-highlight-meta {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .anees-highlight-quote,
+body.dark-mode .anees-highlight-quote {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .anees-highlight-tag,
+body.dark-mode .anees-highlight-tag {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38BDF8;
+}
+
+[data-theme="dark"] .anees-dot,
+body.dark-mode .anees-dot {
+  background: #334155;
+}
+
+[data-theme="dark"] .anees-dot.active,
+body.dark-mode .anees-dot.active {
+  background: #38BDF8;
+}
+
+/* Dark mode bottom dock */
+[data-theme="dark"] .anees-tab-bar,
+body.dark-mode .anees-tab-bar {
+  background: rgba(10, 22, 36, 0.92);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .anees-tab-item,
+body.dark-mode .anees-tab-item {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .anees-tab-item.active,
+body.dark-mode .anees-tab-item.active {
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.15);
+}
+
+[data-theme="dark"] .card,
+body.dark-mode .card {
+  background: #0F2033;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .card-row,
+body.dark-mode .card-row {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .pill.ok,
+body.dark-mode .pill.ok {
+  background: rgba(45, 212, 191, 0.15);
+  color: #2DD4BF;
+  border-color: rgba(45, 212, 191, 0.3);
+}
+
+[data-theme="dark"] .pill.err,
+body.dark-mode .pill.err {
+  background: rgba(248, 113, 113, 0.15);
+  color: #F87171;
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+[data-theme="dark"] .pill.warn,
+body.dark-mode .pill.warn {
+  background: rgba(251, 191, 36, 0.15);
+  color: #FBBF24;
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+/* Dark Mode Spaced Cards & Feeds */
+[data-theme="dark"] .spaced-card,
+body.dark-mode .spaced-card {
+  background: #0F2033;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .spaced-card:hover,
+body.dark-mode .spaced-card:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .spaced-card-title,
+body.dark-mode .spaced-card-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .spaced-card-snippet,
+body.dark-mode .spaced-card-snippet {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .spaced-tag,
+body.dark-mode .spaced-tag {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38BDF8;
+}
+
+[data-theme="dark"] .spaced-tag.count,
+body.dark-mode .spaced-tag.count {
+  background: #162C44;
+  color: #94A3B8;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Dark Mode Answer View */
+[data-theme="dark"] .answer-card,
+body.dark-mode .answer-card {
+  background: #0F2033;
+  border: 2px solid #38BDF8;
+  box-shadow: 0 4px 0 0 #38BDF8, 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .answer-headline,
+body.dark-mode .answer-headline {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .answer-bullet,
+body.dark-mode .answer-bullet {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .bullet-dot,
+body.dark-mode .bullet-dot {
+  background: #38BDF8;
+}
+
+[data-theme="dark"] .answer-footer,
+body.dark-mode .answer-footer {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Dark Mode Prompts & Inquiries */
+[data-theme="dark"] .prompt-item,
+body.dark-mode .prompt-item {
+  background: #0F2033;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  color: #F8FAFC;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .prompt-item:hover,
+body.dark-mode .prompt-item:hover {
+  background: #14283E;
+  border-color: #38BDF8;
+}
+
+/* Dark Mode Transcripts & Briefs */
+[data-theme="dark"] .transcript-bubble,
+body.dark-mode .transcript-bubble {
+  background: #0F2033;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .transcript-bubble.ai,
+body.dark-mode .transcript-bubble.ai {
+  background: #112840;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+[data-theme="dark"] .transcript-speaker,
+body.dark-mode .transcript-speaker {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .brief-body,
+body.dark-mode .brief-body,
+[data-theme="dark"] .brief-list,
+body.dark-mode .brief-list {
+  color: #CBD5E1;
+}
+
+/* Dark Mode Buttons & Toast */
+[data-theme="dark"] .btn-ghost,
+body.dark-mode .btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-ghost:hover,
+body.dark-mode .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .ios-toast,
+body.dark-mode .ios-toast {
+  background: #08111D;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #F8FAFC;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+}
+
+/* Dark Mode Sheets & Callouts */
+[data-theme="dark"] .source-icon,
+body.dark-mode .source-icon {
+  background: #14283E;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .source-title,
+body.dark-mode .source-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .source-meta,
+body.dark-mode .source-meta {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .limit-box,
+body.dark-mode .limit-box {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  color: #FBBF24;
+}
+
+[data-theme="dark"] .consequence-box,
+body.dark-mode .consequence-box {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  color: #F87171;
+}
+
+/* Dark Mode Hero Voice Banner */
+[data-theme="dark"] .elahi-hero-banner,
+body.dark-mode .elahi-hero-banner {
+  background: #0F2033;
+  border-color: rgba(56, 189, 248, 0.25);
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .banner-icon-box,
+body.dark-mode .banner-icon-box {
+  background: #162C44;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+[data-theme="dark"] .banner-title,
+body.dark-mode .banner-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .banner-pill,
+body.dark-mode .banner-pill {
+  background: #38BDF8;
+  color: #08111D;
+}
+
+/* ════════════════════════════════════════════════════════════
+   🌙 SPECIFIC COMPONENT DARK CONVERSIONS
+   ════════════════════════════════════════════════════════════ */
+
+/* 1. DYNAMIC ISLAND DARK THEME */
+[data-theme="dark"] .ios-island,
+body.dark-mode .ios-island {
+  background: #08111D;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .ios-island.is-recording,
+body.dark-mode .ios-island.is-recording {
+  background: #08111D;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .island-pulse-orb,
+body.dark-mode .island-pulse-orb {
+  background: #2DD4BF;
+  box-shadow: 0 0 10px #2DD4BF;
+}
+
+[data-theme="dark"] .wave-bar,
+body.dark-mode .wave-bar {
+  background: #38BDF8;
+}
+
+[data-theme="dark"] .island-rec-dot,
+body.dark-mode .island-rec-dot {
+  background: #EF4444;
+  box-shadow: 0 0 10px #EF4444;
+}
+
+/* 2. NOTIFICATION BUTTON IN TOPBAR DARK THEME */
+[data-theme="dark"] .ios-notif-btn,
+body.dark-mode .ios-notif-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .ios-notif-btn:hover,
+body.dark-mode .ios-notif-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #38BDF8;
+}
+
+[data-theme="dark"] .ios-notif-badge,
+body.dark-mode .ios-notif-badge {
+  background: #EF4444;
+  color: #FFFFFF;
+  box-shadow: 0 0 0 2px #08111D;
+}
+
+/* 3. MEETING RECORDING CONTROLS & LIVE DIARIZATION PILL */
+[data-theme="dark"] .anees-live-recording-pill,
+body.dark-mode .anees-live-recording-pill {
+  background: #08111D;
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.75), 0 0 24px rgba(56, 189, 248, 0.15);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .live-rec-timer,
+body.dark-mode .live-rec-timer {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .live-rec-mode,
+body.dark-mode .live-rec-mode {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .live-rec-mode:hover,
+body.dark-mode .live-rec-mode:hover {
+  color: #38BDF8;
+}
+
+[data-theme="dark"] .live-rec-stop-btn,
+body.dark-mode .live-rec-stop-btn {
+  background: #FFFFFF;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .live-rec-stop-square,
+body.dark-mode .live-rec-stop-square {
+  background: #EF4444;
+}
+
+[data-theme="dark"] .live-rec-cancel-btn,
+body.dark-mode .live-rec-cancel-btn {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .live-rec-cancel-btn:hover,
+body.dark-mode .live-rec-cancel-btn:hover {
+  color: #EF4444;
+}
+
+[data-theme="dark"] .anees-rec-action-btn,
+body.dark-mode .anees-rec-action-btn {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+}
+
+[data-theme="dark"] .anees-rec-action-btn:hover,
+body.dark-mode .anees-rec-action-btn:hover {
+  background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
+}
+
+/* 4. INSTITUTIONAL MEMORY CARD BADGES DARK THEME */
+[data-theme="dark"] .spaced-tag.memory-badge,
+body.dark-mode .spaced-tag.memory-badge {
+  background: rgba(45, 212, 191, 0.16);
+  color: #2DD4BF;
+  border: 1px solid rgba(45, 212, 191, 0.35);
+}
+
+[data-theme="dark"] .spaced-tag.count,
+body.dark-mode .spaced-tag.count {
+  background: #14283E;
+  color: #94A3B8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .spaced-card-meta-stats,
+body.dark-mode .spaced-card-meta-stats {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .spaced-card-time,
+body.dark-mode .spaced-card-time {
+  color: #94A3B8;
+}

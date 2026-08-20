@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const StudioBar = () => {
-  const { scenario, setScenario, currentLang, toggleLanguage, togglePresentMode } = useApp();
+  const { scenario, setScenario, currentLang, toggleLanguage, togglePresentMode, theme, toggleTheme } = useApp();
 
   return (
     <aside className="studio-bar">
@@ -47,6 +47,9 @@ export const StudioBar = () => {
           type="button"
         >
           ⏳ AI Loading
+        </button>
+        <button className="studio-btn" id="btnThemeToggle" onClick={toggleTheme} type="button">
+          {theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}
         </button>
         <button className="studio-btn" onClick={toggleLanguage} type="button">
           🌐 <span id="studioLangText">{currentLang === 'en' ? 'العربية RTL' : 'English LTR'}</span>
