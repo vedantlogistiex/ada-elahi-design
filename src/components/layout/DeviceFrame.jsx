@@ -31,63 +31,66 @@ export const DeviceFrame = ({ children }) => {
 
   return (
     <div className="device-frame" id="deviceFrame">
-      {/* iOS Dynamic Island */}
-      <DynamicIsland />
+      {/* Dark Theme Executive Header Bar */}
+      <div className="app-top-header-dark">
+        {/* iOS Dynamic Island */}
+        <DynamicIsland />
 
-      {/* iOS Native Status Bar */}
-      <header className="ios-status-bar">
-        <span id="clockDisplay">{clock}</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          {/* Signal bars */}
-          <svg width="15" height="12" viewBox="0 0 18 14" fill="currentColor">
-            <rect x="0" y="10" width="3" height="4" rx="0.5" />
-            <rect x="5" y="7" width="3" height="7" rx="0.5" />
-            <rect x="10" y="4" width="3" height="10" rx="0.5" />
-            <rect x="15" y="0" width="3" height="14" rx="0.5" />
-          </svg>
-          {/* Wifi */}
-          <svg width="15" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-            <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-            <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-            <line x1="12" y1="20" x2="12.01" y2="20" strokeWidth="3" />
-          </svg>
-          {/* Battery */}
-          <svg width="20" height="12" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="1" y="1" width="18" height="12" rx="3" />
-            <path d="M22 4.5v5" strokeLinecap="round" />
-            <rect x="3" y="3" width="12" height="8" rx="1.5" fill="currentColor" />
-          </svg>
-        </div>
-      </header>
+        {/* iOS Native Status Bar */}
+        <header className="ios-status-bar">
+          <span id="clockDisplay">{clock}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            {/* Signal bars */}
+            <svg width="15" height="11" viewBox="0 0 18 14" fill="currentColor">
+              <rect x="0" y="10" width="3" height="4" rx="0.5" />
+              <rect x="5" y="7" width="3" height="7" rx="0.5" />
+              <rect x="10" y="4" width="3" height="10" rx="0.5" />
+              <rect x="15" y="0" width="3" height="14" rx="0.5" />
+            </svg>
+            {/* Wifi */}
+            <svg width="14" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+              <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+              <line x1="12" y1="20" x2="12.01" y2="20" strokeWidth="3" />
+            </svg>
+            {/* Battery */}
+            <svg width="19" height="11" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="1.9">
+              <rect x="1" y="1" width="18" height="12" rx="3" />
+              <path d="M22 4.5v5" strokeLinecap="round" />
+              <rect x="3" y="3" width="12" height="8" rx="1.5" fill="currentColor" />
+            </svg>
+          </div>
+        </header>
 
-      {/* Navigation Header */}
-      <AppHeader />
+        {/* Navigation Header */}
+        <AppHeader />
+      </div>
 
       {/* Toast Feedback */}
       <Toast />
 
       {/* Scrollable Viewport */}
       <div className="app-viewport" id="appViewport">
-        {/* Analyzing banner matching Anees Image 3 */}
+        {/* Analyzing banner */}
         {scenario === 'loading' && (
-          <div className="anees-analyzing-pill" id="stateBannerLoading">
-            <div className="analyzing-spinner" />
-            <span>{currentLang === 'ar' ? 'جاري تحليل المحادثة الأخيرة...' : 'Analyzing latest conversation...'}</span>
+          <div className="exec-card" style={{ background: '#F0F7FC', borderColor: 'rgba(2, 132, 199, 0.25)', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--ada-blue)', animation: 'pulse-glow 1.5s infinite' }} />
+            <span style={{ fontSize: '12.5px', color: 'var(--ada-navy)', fontWeight: 600 }}>{currentLang === 'ar' ? 'جاري تحليل المحادثة الأخيرة...' : 'Analyzing latest conversation...'}</span>
           </div>
         )}
 
         {scenario === 'error' && (
-          <div className="card" style={{ borderLeft: '4px solid var(--accent-red)', padding: '14px 16px', marginBottom: '14px' }}>
-            <b style={{ color: 'var(--accent-red)', fontSize: '13px' }}>{t('commErrorTitle')}</b>
-            <p style={{ fontSize: '12px', marginTop: '3px', color: 'var(--ink-secondary)' }}>{t('commErrorDesc')}</p>
+          <div className="exec-card accent-red" style={{ padding: '14px 16px', marginBottom: '14px' }}>
+            <b style={{ color: 'var(--ada-critical)', fontSize: '13px' }}>{t('commErrorTitle')}</b>
+            <p style={{ fontSize: '12px', marginTop: '3px', color: 'var(--ada-slate)' }}>{t('commErrorDesc')}</p>
           </div>
         )}
 
         {scenario === 'denied' && (
-          <div className="card" style={{ borderLeft: '4px solid var(--accent-amber)', padding: '14px 16px', marginBottom: '14px' }}>
-            <b style={{ color: 'var(--accent-amber)', fontSize: '13px' }}>{t('securityNoticeTitle')}</b>
-            <p style={{ fontSize: '12px', marginTop: '3px', color: 'var(--ink-secondary)' }}>{t('securityNoticeDesc')}</p>
+          <div className="exec-card accent-amber" style={{ padding: '14px 16px', marginBottom: '14px' }}>
+            <b style={{ color: 'var(--ada-attention)', fontSize: '13px' }}>{t('securityNoticeTitle')}</b>
+            <p style={{ fontSize: '12px', marginTop: '3px', color: 'var(--ada-slate)' }}>{t('securityNoticeDesc')}</p>
           </div>
         )}
 
@@ -95,16 +98,16 @@ export const DeviceFrame = ({ children }) => {
         {children}
       </div>
 
-      {/* Anees Live Recording Bar (Matching Image 2: 2_anees_home_recording) */}
+      {/* Live Recording Bar */}
       {isRecording && (
         <div className="anees-live-recording-pill" id="liveRecordingPill">
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="island-waveform" style={{ gap: '2.5px' }}>
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
-              <span className="wave-bar" style={{ background: '#FFFFFF' }} />
+            <div className="island-waveform" style={{ gap: '2px' }}>
+              <span className="wave-bar" style={{ background: '#38BDF8' }} />
+              <span className="wave-bar" style={{ background: '#38BDF8' }} />
+              <span className="wave-bar" style={{ background: '#38BDF8' }} />
+              <span className="wave-bar" style={{ background: '#38BDF8' }} />
+              <span className="wave-bar" style={{ background: '#38BDF8' }} />
             </div>
             <span className="live-rec-timer">{timerDisplay}</span>
           </div>

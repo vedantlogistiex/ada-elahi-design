@@ -25,7 +25,7 @@ export const WhyThisAnswerSheet = () => {
           <button className="sheet-close" onClick={closeSheet} type="button">✕</button>
         </div>
 
-        <div className="section-label" style={{ marginTop: '8px', fontSize: '15px' }}>
+        <div className="section-label" style={{ marginTop: '6px', fontSize: '14px' }}>
           {t('approvedSourcesKicker')}
         </div>
 
@@ -33,27 +33,27 @@ export const WhyThisAnswerSheet = () => {
           {sources.map((s, i) => (
             <div
               key={i}
-              className="spaced-card"
+              className="exec-card"
               style={{
-                padding: '14px 18px',
-                marginBottom: '10px',
+                padding: '12px 14px',
+                marginBottom: '8px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '14px',
+                gap: '12px',
               }}
             >
-              <div className="source-icon" style={{ flexShrink: 0 }}>{s.icon}</div>
+              <div style={{ fontSize: '18px', flexShrink: 0 }}>{s.icon}</div>
               <div>
-                <div className="source-title">{t(s.titleKey)}</div>
-                <div className="source-meta" style={{ marginTop: '2px' }}>{t(s.metaKey)}</div>
+                <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--ada-navy)' }}>{t(s.titleKey)}</div>
+                <div style={{ fontSize: '11px', color: 'var(--ada-grey)', marginTop: '2px' }}>{t(s.metaKey)}</div>
               </div>
             </div>
           ))}
         </div>
 
         <div className="limit-box">
-          <strong style={{ color: 'var(--ada-attention)', fontSize: '13px' }}>{t('limitationTitle')}</strong>
-          <div style={{ marginTop: '4px', fontSize: '12.5px', lineHeight: 1.48 }}>{t('limitationDesc')}</div>
+          <strong style={{ color: 'var(--ada-attention)', fontSize: '12px' }}>{t('limitationTitle')}</strong>
+          <div style={{ marginTop: '3px', fontSize: '11.5px', lineHeight: 1.5, color: 'var(--ada-slate)' }}>{t('limitationDesc')}</div>
         </div>
       </div>
     </>

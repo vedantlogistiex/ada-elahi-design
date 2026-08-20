@@ -7,27 +7,33 @@ export const MeetingsView = () => {
 
   const scheduleItems = [
     {
-      time: currentLang === 'ar' ? 'اليوم · 10:30 ص · خلال 48 د' : 'Today · 10:30 AM · In 48 mins',
+      time: currentLang === 'ar' ? 'اليوم · 10:30 ص' : 'Today · 10:30 AM',
+      relative: currentLang === 'ar' ? 'خلال 48 د' : 'In 48 mins',
+      eyebrow: currentLang === 'ar' ? 'إحاطة جاهزة' : 'Brief Ready',
       title: t('m1Title'),
       snippet: t('m1Desc'),
-      tags: [currentLang === 'ar' ? 'الموجز جاهز' : 'Brief Ready', 'Boardroom A'],
-      stats: '👤 6 · ⏳ 45 mins',
+      location: 'Boardroom A / Secure Video',
+      attendees: '6 ELT Members · 45 mins',
       onClick: () => switchTab('premeeting'),
     },
     {
-      time: currentLang === 'ar' ? 'اليوم · 02:00 م · خلال 3.5 س' : 'Today · 02:00 PM · In 3h 30m',
+      time: currentLang === 'ar' ? 'اليوم · 02:00 م' : 'Today · 02:00 PM',
+      relative: currentLang === 'ar' ? 'خلال 3.5 س' : 'In 3h 30m',
+      eyebrow: currentLang === 'ar' ? 'مسودة ذكية' : 'Draft Agenda',
       title: t('m2Title'),
       snippet: t('m2Desc'),
-      tags: [currentLang === 'ar' ? 'مسودة ذكية' : 'AI Draft', 'Commercial'],
-      stats: '👤 4 · ⏳ 30 mins',
+      location: 'Executive Suite',
+      attendees: '4 Retail Leads · 30 mins',
       onClick: () => openMeetingOutput('retail', 'draft'),
     },
     {
       time: currentLang === 'ar' ? 'اليوم · 04:30 م' : 'Today · 04:30 PM',
+      relative: currentLang === 'ar' ? 'مجدول' : 'Scheduled',
+      eyebrow: currentLang === 'ar' ? 'تنسيق أمني' : 'Joint Security',
       title: t('m3Title'),
       snippet: t('m3Desc'),
-      tags: [currentLang === 'ar' ? 'مجدول' : 'Scheduled', 'Customs/Police'],
-      stats: '👤 8 · ⏳ 60 mins',
+      location: 'Customs & Border Control Command',
+      attendees: '8 Agency Leads · 60 mins',
       onClick: () => {},
     },
   ];
@@ -35,34 +41,38 @@ export const MeetingsView = () => {
   const historyItems = [
     {
       time: currentLang === 'ar' ? 'اليوم · 10:30 ص' : 'Today · 10:30 AM',
+      eyebrow: currentLang === 'ar' ? 'بانتظار الاعتماد' : 'Needs Sign-off',
       title: t('rec1Title'),
       snippet: t('rec1Desc'),
-      tags: [currentLang === 'ar' ? 'بانتظار الاعتماد' : 'Needs Sign-off', 'ELT Review'],
-      stats: '👤 6 · ⏳ 42s',
+      tag: 'ELT Operations',
+      duration: '42s synthesized audio',
       onClick: () => openMeetingOutput('ops', 'draft'),
     },
     {
       time: currentLang === 'ar' ? '19 أغسطس · 14:00' : '19 Aug · 14:00',
+      eyebrow: currentLang === 'ar' ? 'سجل مختوم' : 'Sealed Record',
       title: t('rec2Title'),
       snippet: t('rec2Desc'),
-      tags: [currentLang === 'ar' ? 'مختوم' : 'Sealed', 'Retail Ops'],
-      stats: '👤 5 · ⏳ 38s',
+      tag: 'Retail Ops & Leasing',
+      duration: '38s synthesized audio',
       onClick: () => openMeetingOutput('retail', 'approved'),
     },
     {
       time: currentLang === 'ar' ? '18 أغسطس · 09:00' : '18 Aug · 09:00',
+      eyebrow: currentLang === 'ar' ? 'سجل مختوم' : 'Sealed Record',
       title: t('rec3Title'),
       snippet: t('rec3Desc'),
-      tags: [currentLang === 'ar' ? 'مختوم' : 'Sealed', 'GCAA Directive'],
-      stats: '👤 5 · ⏳ 31s',
+      tag: 'GCAA Directive',
+      duration: '31s synthesized audio',
       onClick: () => openMeetingOutput('runway', 'approved'),
     },
     {
       time: currentLang === 'ar' ? '17 أغسطس · 11:30' : '17 Aug · 11:30',
+      eyebrow: currentLang === 'ar' ? 'سجل مختوم' : 'Sealed Record',
       title: t('rec4Title'),
       snippet: t('rec4Desc'),
-      tags: [currentLang === 'ar' ? 'مختوم' : 'Sealed', 'Etihad SLA'],
-      stats: '👤 4 · ⏳ 40s',
+      tag: 'Etihad SLA Bilateral',
+      duration: '40s synthesized audio',
       onClick: () => {},
     },
   ];
@@ -70,7 +80,7 @@ export const MeetingsView = () => {
   return (
     <section className="screen-view active" id="viewMeetings">
       <div className="greeting">
-        <h1 className="page-title" data-i18n="meetingsTitle">{t('meetingsTitle')}</h1>
+        <h1 className="page-title">{t('meetingsTitle')}</h1>
         <div className="page-sub">{t('meetingsSubtitle')}</div>
       </div>
 
@@ -94,34 +104,33 @@ export const MeetingsView = () => {
         </button>
       </div>
 
-      {/* UPCOMING SCHEDULE (Spaced-out Cards) */}
+      {/* UPCOMING SCHEDULE */}
       {tab === 'schedule' && (
         <div>
           {scheduleItems.map((item, idx) => (
-            <div className="spaced-card" key={idx} onClick={item.onClick}>
-              <div className="spaced-card-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-                <span>{item.time}</span>
+            <div className="exec-card" key={idx} onClick={item.onClick}>
+              <div className="exec-card-header">
+                <span className="exec-card-eyebrow">
+                  {item.eyebrow}
+                </span>
+                <span className="exec-card-time">{item.time} · {item.relative}</span>
               </div>
 
-              <div className="spaced-card-title">
+              <div className="exec-card-title">
                 {item.title}
               </div>
 
-              <div className="spaced-card-snippet">
+              <div className="exec-card-body">
                 {item.snippet}
               </div>
 
-              <div className="spaced-card-footer">
-                <div className="spaced-card-tags">
-                  <span className="spaced-tag">{item.tags[0]}</span>
-                  {item.tags[1] && <span className="spaced-tag count">{item.tags[1]}</span>}
+              <div className="exec-card-footer">
+                <div className="exec-card-meta-tags">
+                  <span className="exec-chip">{item.location}</span>
+                  <span className="exec-chip">{item.attendees}</span>
                 </div>
-                <div className="spaced-card-meta-stats">
-                  {item.stats}
+                <div className="exec-card-action-link">
+                  <span>{currentLang === 'ar' ? 'عرض الإحاطة ←' : 'Open Brief →'}</span>
                 </div>
               </div>
             </div>
@@ -129,34 +138,33 @@ export const MeetingsView = () => {
         </div>
       )}
 
-      {/* RECORDED HISTORY (Spaced-out Cards) */}
+      {/* RECORDED HISTORY */}
       {tab === 'history' && (
         <div>
           {historyItems.map((item, idx) => (
-            <div className="spaced-card" key={idx} onClick={item.onClick}>
-              <div className="spaced-card-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-                <span>{item.time}</span>
+            <div className="exec-card" key={idx} onClick={item.onClick}>
+              <div className="exec-card-header">
+                <span className={`exec-chip ${idx === 0 ? 'active-blue' : ''}`}>
+                  {item.eyebrow}
+                </span>
+                <span className="exec-card-time">{item.time}</span>
               </div>
 
-              <div className="spaced-card-title">
+              <div className="exec-card-title">
                 {item.title}
               </div>
 
-              <div className="spaced-card-snippet">
+              <div className="exec-card-body">
                 {item.snippet}
               </div>
 
-              <div className="spaced-card-footer">
-                <div className="spaced-card-tags">
-                  <span className="spaced-tag">{item.tags[0]}</span>
-                  {item.tags[1] && <span className="spaced-tag count">{item.tags[1]}</span>}
+              <div className="exec-card-footer">
+                <div className="exec-card-meta-tags">
+                  <span className="exec-chip">{item.tag}</span>
+                  <span className="exec-chip">{item.duration}</span>
                 </div>
-                <div className="spaced-card-meta-stats">
-                  {item.stats}
+                <div className="exec-card-action-link">
+                  <span>{currentLang === 'ar' ? 'فتح المحضر ←' : 'Open Minutes →'}</span>
                 </div>
               </div>
             </div>

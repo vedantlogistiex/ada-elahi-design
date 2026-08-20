@@ -12,7 +12,7 @@ export const TodayView = () => {
       meta: t('card1Meta'),
       snippet: t('card1Snippet'),
       cta: t('card1Action'),
-      tag: currentLang === 'ar' ? 'اجتماع تنفيذي' : 'Executive Meeting',
+      eyebrow: currentLang === 'ar' ? 'اجتماع تنفيذي عاجل' : 'Executive Leadership Brief',
       onClick: () => switchTab('premeeting'),
     },
     {
@@ -21,7 +21,7 @@ export const TodayView = () => {
       meta: 'GCAA · Priority Sovereign Directive',
       snippet: t('card2Snippet'),
       cta: t('card2Action'),
-      tag: currentLang === 'ar' ? 'توجيه سيادي' : 'Priority Directive',
+      eyebrow: currentLang === 'ar' ? 'توجيه سيادي' : 'Sovereign Directive',
       onClick: () => setActiveSheet('approval'),
     },
     {
@@ -30,7 +30,7 @@ export const TodayView = () => {
       meta: t('card3Meta'),
       snippet: t('card3Snippet'),
       cta: t('card3Action'),
-      tag: currentLang === 'ar' ? 'مراجعة تجارية' : 'Commercial Review',
+      eyebrow: currentLang === 'ar' ? 'مراجعة تجارية' : 'Commercial Review',
       onClick: () => openMeetingOutput('retail', 'draft'),
     },
     {
@@ -39,7 +39,7 @@ export const TodayView = () => {
       meta: t('card4Sender'),
       snippet: t('card4Snippet'),
       cta: t('card4Action'),
-      tag: currentLang === 'ar' ? 'بريد العمليات' : 'Operations Mail',
+      eyebrow: currentLang === 'ar' ? 'بريد العمليات' : 'Operations Intelligence',
       onClick: () => switchTab('answer'),
     },
   ];
@@ -47,26 +47,29 @@ export const TodayView = () => {
   const feedItems = [
     {
       time: currentLang === 'ar' ? 'اليوم · 10:30 ص' : 'Today · 10:30 AM',
+      eyebrow: currentLang === 'ar' ? 'إحاطة تنفيذية' : 'Executive Meeting',
       title: t('card1Title'),
       snippet: t('card1Snippet'),
-      tags: [currentLang === 'ar' ? 'اجتماع تنفيذي' : 'Executive Meeting', '+2'],
-      stats: '👤 6 · ⏳ 45 mins',
+      attendees: '6 ELT Members',
+      duration: '45 mins',
       onClick: () => switchTab('premeeting'),
     },
     {
       time: currentLang === 'ar' ? 'اليوم · 08:45 ص' : 'Today · 8:45 AM',
+      eyebrow: currentLang === 'ar' ? 'توجيه GCAA' : 'GCAA Regulatory',
       title: t('card2Title'),
       snippet: t('card2Snippet'),
-      tags: [currentLang === 'ar' ? 'توجيه GCAA' : 'GCAA Directive', '+3'],
-      stats: '👤 5 · ⏳ Due 14:00',
+      attendees: 'Airspace Authority',
+      duration: 'Due 14:00',
       onClick: () => setActiveSheet('approval'),
     },
     {
       time: currentLang === 'ar' ? 'اليوم · 02:00 م' : 'Today · 2:00 PM',
+      eyebrow: currentLang === 'ar' ? 'مراجعة تجارية' : 'Commercial Strategy',
       title: t('card3Title'),
       snippet: t('card3Snippet'),
-      tags: [currentLang === 'ar' ? 'مراجعة تجارية' : 'Commercial Review', '+2'],
-      stats: '👤 4 · ⏳ 30 mins',
+      attendees: 'Retail Operations',
+      duration: '30 mins',
       onClick: () => openMeetingOutput('retail', 'draft'),
     },
   ];
@@ -83,7 +86,7 @@ export const TodayView = () => {
         </h1>
       </div>
 
-      {/* Spacious KPI Strip */}
+      {/* Spacious Clean KPI Strip */}
       <div className="kpi-row">
         <div className="kpi-unit">
           <div className="kpi-val" style={{ color: 'var(--ada-success)' }}>91.4%</div>
@@ -94,74 +97,62 @@ export const TodayView = () => {
           <div className="kpi-lbl">{t('kpiBaggage')}</div>
         </div>
         <div className="kpi-unit">
-          <div className="kpi-val" style={{ color: 'var(--ada-success)', fontSize: '16px', paddingTop: '3px' }}>
-            {currentLang === 'ar' ? 'مستقر' : 'Stable'}
+          <div className="kpi-val" style={{ color: 'var(--ada-teal)', fontSize: '16px', paddingTop: '2px' }}>
+            {currentLang === 'ar' ? 'مستقر' : 'Optimal'}
           </div>
           <div className="kpi-lbl">{t('kpiTerminal')}</div>
         </div>
       </div>
 
-      {/* Highlight Carousel Card with Anees Outline */}
+      {/* Bespoke Executive Spotlight Card */}
       <div
-        className="anees-highlight-card"
+        className="exec-card is-spotlight"
         onClick={highlightCards[activeCard].onClick}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <div className="anees-highlight-tag">
-            {highlightCards[activeCard].tag}
-          </div>
-          <span style={{ fontSize: '12px', color: 'var(--ada-grey)', fontWeight: 600 }}>
+        <div className="exec-card-header">
+          <span className="exec-card-eyebrow">
+            {highlightCards[activeCard].eyebrow}
+          </span>
+          <span className="exec-card-time">
             {highlightCards[activeCard].time}
           </span>
         </div>
 
-        <div className="anees-highlight-title">
+        <div className="exec-card-title">
           {highlightCards[activeCard].title}
         </div>
 
-        <div className="anees-highlight-meta">
+        <div style={{ fontSize: '12px', color: 'var(--ada-grey)', marginBottom: '10px' }}>
           {highlightCards[activeCard].meta}
         </div>
 
-        <div className="anees-highlight-quote">
-          “{highlightCards[activeCard].snippet}”
+        <div className="spotlight-focus-box">
+          {highlightCards[activeCard].snippet}
         </div>
 
-        <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--ada-blue)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-          {highlightCards[activeCard].cta}
+        <div className="exec-card-footer" style={{ borderTop: 'none', paddingTop: '4px' }}>
+          <span className="exec-chip active-blue">
+            {currentLang === 'ar' ? 'جاهز للعرض' : 'Brief Ready'}
+          </span>
+          <div className="exec-card-action-link">
+            <span>{highlightCards[activeCard].cta}</span>
+          </div>
         </div>
       </div>
 
-      {/* Anees Pagination Dots */}
-      <div className="anees-pagination-dots">
+      {/* Minimal Pagination Indicator */}
+      <div className="pagination-dots">
         {highlightCards.map((_, i) => (
           <div
             key={i}
-            className={`anees-dot ${activeCard === i ? 'active' : ''}`}
+            className={`pagination-dot ${activeCard === i ? 'active' : ''}`}
             onClick={() => setActiveCard(i)}
             style={{ cursor: 'pointer' }}
           />
         ))}
       </div>
 
-      {/* Elahi Hero Voice Recording Banner */}
-      <div
-        className="elahi-hero-banner"
-        onClick={startRecording}
-        role="button"
-        tabIndex={0}
-      >
-        <div className="banner-left">
-          <div className="banner-icon-box">🎙️</div>
-          <div>
-            <div className="banner-title">{t('heroRecTitle')}</div>
-            <div className="banner-sub">{t('heroRecSub')}</div>
-          </div>
-        </div>
-        <span className="banner-pill">{t('heroRecBtn')}</span>
-      </div>
-
-      {/* Section: Important Mails & Meetings (Spaced-out Cards Matching Reference) */}
+      {/* Section: Important Mails & Meetings */}
       <div className="section-label">
         <span>{t('mailsAndMeetingsKicker')}</span>
         <span className="view-all-link" onClick={() => switchTab('meetings')}>
@@ -170,100 +161,119 @@ export const TodayView = () => {
       </div>
 
       {feedItems.map((item, idx) => (
-        <div className="spaced-card" key={idx} onClick={item.onClick}>
-          <div className="spaced-card-time">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-            <span>{item.time}</span>
+        <div className="exec-card" key={idx} onClick={item.onClick}>
+          <div className="exec-card-header">
+            <span className="exec-card-eyebrow">
+              {item.eyebrow}
+            </span>
+            <span className="exec-card-time">{item.time}</span>
           </div>
 
-          <div className="spaced-card-title">
+          <div className="exec-card-title">
             {item.title}
           </div>
 
-          <div className="spaced-card-snippet">
+          <div className="exec-card-body">
             {item.snippet}
           </div>
 
-          <div className="spaced-card-footer">
-            <div className="spaced-card-tags">
-              <span className="spaced-tag">{item.tags[0]}</span>
-              {item.tags[1] && <span className="spaced-tag count">{item.tags[1]}</span>}
+          <div className="exec-card-footer">
+            <div className="exec-card-meta-tags">
+              <span className="exec-chip">{item.attendees}</span>
+              <span className="exec-chip">{item.duration}</span>
             </div>
-            <div className="spaced-card-meta-stats">
-              {item.stats}
+            <div className="exec-card-action-link">
+              <span>{currentLang === 'ar' ? 'فتح التفاصيل ←' : 'View →'}</span>
             </div>
           </div>
         </div>
       ))}
 
-      {/* Section: What Needs Attention (Spaced-out Individual Cards) */}
-      <div className="section-label" style={{ marginTop: '26px' }}>{t('whatNeedsAttention')}</div>
+      {/* Section: What Needs Attention */}
+      <div className="section-label" style={{ marginTop: '26px' }}>
+        {t('whatNeedsAttention')}
+      </div>
 
       {/* Priority 1 */}
-      <div className="spaced-card" onClick={() => switchTab('answer')}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-          <span className="pill warn">{t('badgeAttention')}</span>
-          <span style={{ fontSize: '12px', color: 'var(--ada-grey)', fontWeight: 600 }}>09:40</span>
+      <div className="exec-card accent-amber" onClick={() => switchTab('answer')}>
+        <div className="exec-card-header">
+          <span className="exec-card-eyebrow attention">
+            {t('badgeAttention')}
+          </span>
+          <span className="exec-card-time">09:40 Refreshed</span>
         </div>
-        <div className="spaced-card-title" style={{ fontSize: '16px' }}>{t('pri1Title')}</div>
-        <div className="spaced-card-snippet" style={{ marginBottom: '12px' }}>{t('pri1Desc')}</div>
-        <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--ada-blue)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-          {currentLang === 'ar' ? 'فحص التحليل التنفيذي ←' : 'Inspect Executive Analysis →'}
+        <div className="exec-card-title">{t('pri1Title')}</div>
+        <div className="exec-card-body">{t('pri1Desc')}</div>
+        <div className="exec-card-footer">
+          <span className="exec-chip active-blue">2 Routes Impacted</span>
+          <div className="exec-card-action-link">
+            <span>{currentLang === 'ar' ? 'فحص التحليل التنفيذي ←' : 'Inspect Analysis →'}</span>
+          </div>
         </div>
       </div>
 
       {/* Priority 2 */}
-      <div className="spaced-card" onClick={() => setActiveSheet('approval')}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-          <span className="pill err">{t('badgeActionRequired')}</span>
-          <span style={{ fontSize: '12px', color: 'var(--ada-grey)', fontWeight: 600 }}>14:00 Deadline</span>
+      <div className="exec-card accent-red" onClick={() => setActiveSheet('approval')}>
+        <div className="exec-card-header">
+          <span className="exec-card-eyebrow urgent">
+            {t('badgeActionRequired')}
+          </span>
+          <span className="exec-card-time">14:00 Deadline</span>
         </div>
-        <div className="spaced-card-title" style={{ fontSize: '16px' }}>{t('pri2Title')}</div>
-        <div className="spaced-card-snippet" style={{ marginBottom: '12px' }}>{t('pri2Desc')}</div>
-        <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--ada-blue)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-          {currentLang === 'ar' ? 'مراجعة وتوقيع الاعتماد ←' : 'Review & Sign-off →'}
+        <div className="exec-card-title">{t('pri2Title')}</div>
+        <div className="exec-card-body">{t('pri2Desc')}</div>
+        <div className="exec-card-footer">
+          <span className="exec-chip" style={{ color: 'var(--ada-critical)', borderColor: '#FECDD3', background: '#FFF1F2' }}>
+            Sign-off Required
+          </span>
+          <div className="exec-card-action-link">
+            <span>{currentLang === 'ar' ? 'مراجعة وتوقيع الاعتماد ←' : 'Review & Sign →'}</span>
+          </div>
         </div>
       </div>
 
       {/* Priority 3 */}
-      <div className="spaced-card" onClick={() => switchTab('premeeting')}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-          <span className="pill ok">{t('badgeVerified')}</span>
-          <span style={{ fontSize: '12px', color: 'var(--ada-grey)', fontWeight: 600 }}>09:35 Refreshed</span>
+      <div className="exec-card accent-teal" onClick={() => switchTab('premeeting')}>
+        <div className="exec-card-header">
+          <span className="exec-card-eyebrow" style={{ color: 'var(--ada-teal)' }}>
+            {t('badgeVerified')}
+          </span>
+          <span className="exec-card-time">09:35 Refreshed</span>
         </div>
-        <div className="spaced-card-title" style={{ fontSize: '16px' }}>{t('pri3Title')}</div>
-        <div className="spaced-card-snippet" style={{ marginBottom: '12px' }}>{t('pri3Desc')}</div>
-        <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--ada-blue)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-          {t('open60sBrief')}
+        <div className="exec-card-title">{t('pri3Title')}</div>
+        <div className="exec-card-body">{t('pri3Desc')}</div>
+        <div className="exec-card-footer">
+          <span className="exec-chip">Boardroom A</span>
+          <div className="exec-card-action-link">
+            <span>{t('open60sBrief')}</span>
+          </div>
         </div>
       </div>
 
-      {/* Conversational Ask Trigger Capsule */}
+      {/* Conversational Query Bar */}
       <div
-        className="spaced-card"
+        className="exec-card"
         style={{
-          background: 'var(--ada-sky)',
-          borderColor: 'rgba(23, 105, 170, 0.25)',
-          padding: '16px 20px',
-          marginTop: '10px'
+          background: '#F8FAFC',
+          borderColor: '#CBD5E1',
+          padding: '14px 18px',
+          marginTop: '14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
         onClick={() => switchTab('ask')}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ada-blue)" strokeWidth="2">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <span style={{ fontSize: '13.5px', color: 'var(--ada-navy)', fontWeight: 700 }}>
-              {t('askPlaceholder')}
-            </span>
-          </div>
-          <span style={{ color: 'var(--ada-blue)', fontWeight: 800, fontSize: '18px' }}>→</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ada-blue)" strokeWidth="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <span style={{ fontSize: '13px', color: 'var(--ada-navy)', fontWeight: 600 }}>
+            {t('askPlaceholder')}
+          </span>
         </div>
+        <span style={{ color: 'var(--ada-blue)', fontWeight: 700, fontSize: '16px' }}>→</span>
       </div>
     </section>
   );

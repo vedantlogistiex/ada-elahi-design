@@ -19,32 +19,33 @@ export const MeetingOutputView = () => {
   return (
     <section className="screen-view active" id="viewMeetingOutput">
       {/* Top Navigation & Status Badge */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 0 14px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 0 16px' }}>
         <button className="btn-link" onClick={() => switchTab('meetings')} type="button">
-          <span style={{ fontSize: '18px', fontWeight: 800 }}>‹</span>
-          <span style={{ marginInlineStart: '4px' }}>{t('backToMeetings')}</span>
+          <span>{currentLang === 'ar' ? '→ العودة إلى الاجتماعات' : '← Back to Meetings'}</span>
         </button>
         <span className={`pill ${isApproved ? 'ok' : 'err'}`}>
           {isApproved
-            ? (currentLang === 'ar' ? 'سجل رسمي مختوم' : 'Sealed')
-            : (currentLang === 'ar' ? 'مسودة ذكية' : 'AI Draft')}
+            ? (currentLang === 'ar' ? 'سجل رسمي مختوم' : 'Sealed Record')
+            : (currentLang === 'ar' ? 'مسودة ذكية' : 'Draft Synthesis')}
         </span>
       </div>
 
       {/* Meeting Title & Meta */}
-      <h1 className="page-title" style={{ fontSize: '22px', marginBottom: '6px' }}>
+      <h1 className="page-title" style={{ fontSize: '20px', marginBottom: '4px' }}>
         {currentMeetingData.title[currentLang] || currentMeetingData.title.en}
       </h1>
-      <div className="page-sub" style={{ marginBottom: '14px' }}>
+      <div className="page-sub" style={{ marginBottom: '16px' }}>
         {currentMeetingData.subtitle[currentLang] || currentMeetingData.subtitle.en}
       </div>
 
       {/* Synthesis Summary */}
-      <div style={{ fontSize: '13.5px', color: 'var(--ada-slate)', lineHeight: 1.6, marginBottom: '20px' }}>
-        {currentMeetingData.summary[currentLang] || currentMeetingData.summary.en}
+      <div className="exec-card" style={{ background: '#F8FAFC', marginBottom: '16px' }}>
+        <div style={{ fontSize: '13px', color: 'var(--ada-slate)', lineHeight: 1.6 }}>
+          {currentMeetingData.summary[currentLang] || currentMeetingData.summary.en}
+        </div>
       </div>
 
-      {/* Anees-Style Segmented Control Switch */}
+      {/* Segmented Control Switch */}
       <div className="seg-bar">
         <button
           className={`seg-btn ${seg === 'decisions' ? 'active' : ''}`}
@@ -63,18 +64,18 @@ export const MeetingOutputView = () => {
         </button>
       </div>
 
-      {/* ─── TAB 1: DECISIONS & ACTIONS (Spaced-out Cards) ─── */}
+      {/* ─── TAB 1: DECISIONS & ACTIONS ─── */}
       {seg === 'decisions' && (
         <div>
           <div className="section-label" style={{ marginTop: '12px' }}>
             {t('agentDecisionsKicker')}
           </div>
           {currentMeetingData.decisions.map((dec, i) => (
-            <div className="spaced-card" key={i} style={{ marginBottom: '12px' }}>
-              <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--ada-navy)', marginBottom: '5px' }}>
+            <div className="exec-card accent-teal" key={i}>
+              <div className="exec-card-title" style={{ fontSize: '14.5px' }}>
                 {dec.title[currentLang] || dec.title.en}
               </div>
-              <div style={{ fontSize: '13px', color: 'var(--ada-slate)', lineHeight: 1.5 }}>
+              <div className="exec-card-body" style={{ margin: 0 }}>
                 {dec.desc[currentLang] || dec.desc.en}
               </div>
             </div>
@@ -83,17 +84,17 @@ export const MeetingOutputView = () => {
           <div className="section-label" style={{ marginTop: '24px' }}>{t('pendingActionsKicker')}</div>
           {currentMeetingData.actions.map((act, i) => (
             <div
-              className="spaced-card"
+              className={`exec-card ${act.type === 'sign' ? 'accent-red' : act.type === 'ping' ? 'accent-amber' : ''}`}
               key={i}
-              style={{ marginBottom: '12px', cursor: act.type === 'sign' ? 'pointer' : 'default' }}
+              style={{ cursor: act.type === 'sign' ? 'pointer' : 'default' }}
               onClick={act.type === 'sign' ? () => setActiveSheet('approval') : undefined}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--ada-navy)' }}>
+                  <div className="exec-card-title" style={{ fontSize: '14.5px', marginBottom: '3px' }}>
                     {act.title[currentLang] || act.title.en}
                   </div>
-                  <div style={{ fontSize: '12px', color: 'var(--ada-grey)', marginTop: '4px' }}>
+                  <div style={{ fontSize: '12px', color: 'var(--ada-grey)' }}>
                     {act.meta[currentLang] || act.meta.en}
                   </div>
                 </div>
@@ -123,13 +124,13 @@ export const MeetingOutputView = () => {
             </div>
           ))}
 
-          <div style={{ marginTop: '20px' }}>
+          <div style={{ marginTop: '22px' }}>
             {!isApproved ? (
               <button className="btn-primary" style={{ width: '100%' }} onClick={approveCurrentMeeting} type="button">
                 {t('approveRecordBtn')}
               </button>
             ) : (
-              <div style={{ textAlign: 'center', fontSize: '13.5px', color: 'var(--ada-success)', fontWeight: 700, padding: '14px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+              <div style={{ textAlign: 'center', fontSize: '13px', color: 'var(--ada-success)', fontWeight: 600, padding: '14px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                 <span>✓</span> {currentLang === 'ar' ? 'سجل رسمي مختوم في الذاكرة المؤسسية' : 'Sealed in Institutional Sovereign Memory'}
               </div>
             )}
@@ -141,14 +142,14 @@ export const MeetingOutputView = () => {
       {seg === 'transcript' && (
         <div style={{ paddingBottom: '16px' }}>
           {currentMeetingData.transcripts.map((row, i) => (
-            <div key={i} className={`transcript-bubble ${row.isAi ? 'ai' : ''}`}>
-              <div className="transcript-speaker">
-                {row.speaker}
-                <span style={{ fontWeight: 500, marginInlineStart: '8px', color: 'var(--ada-grey)', fontSize: '11.5px' }}>
-                  {row.time}
-                </span>
+            <div key={i} className="exec-card" style={{ marginBottom: '10px', background: row.isAi ? '#F0F7FC' : '#FFFFFF' }}>
+              <div className="exec-card-header" style={{ marginBottom: '4px' }}>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--ada-navy)' }}>{row.speaker}</span>
+                <span className="exec-card-time">{row.time}</span>
               </div>
-              "{row.quote[currentLang] || row.quote.en}"
+              <div style={{ fontSize: '12.5px', color: 'var(--ada-slate)', lineHeight: 1.55 }}>
+                "{row.quote[currentLang] || row.quote.en}"
+              </div>
             </div>
           ))}
         </div>

@@ -16,20 +16,20 @@ export const DynamicIsland = () => {
     >
       {!isRecording ? (
         /* ── IDLE Elahi AMBIENT STATE ── */
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 16px' }}>
-          <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#E2E8F0', letterSpacing: '0.4px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 14px' }}>
+          <span style={{ fontSize: '11px', fontWeight: 600, color: '#E2E8F0', letterSpacing: '0.3px' }}>
             Elahi AI
           </span>
           <span className="island-pulse-orb" />
         </div>
       ) : (
         /* ── ACTIVE RECORDING / AMBIENT SYNTHESIS STATE ── */
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 14px', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 12px', gap: '8px' }}>
           {/* Red pulse dot */}
           <span className="island-rec-dot" />
 
           {/* Label */}
-          <span style={{ fontSize: '11px', fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.2px' }}>
+          <span style={{ fontSize: '10.5px', fontWeight: 600, color: '#FFFFFF', letterSpacing: '0.1px' }}>
             {currentLang === 'ar' ? 'إلهي يستمع...' : 'Elahi Ambient'}
           </span>
 
@@ -41,7 +41,7 @@ export const DynamicIsland = () => {
           </div>
 
           {/* Live Timer */}
-          <span style={{ fontSize: '11px', color: '#94A3B8', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.5px', fontWeight: 600 }}>
+          <span style={{ fontSize: '10.5px', color: '#94A3B8', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.3px', fontWeight: 500 }}>
             {timer}
           </span>
         </div>

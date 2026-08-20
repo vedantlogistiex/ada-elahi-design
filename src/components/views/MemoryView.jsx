@@ -51,7 +51,7 @@ export const MemoryView = () => {
 
       {/* Search Input */}
       <div className="search-input-wrap">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ada-grey)" strokeWidth="2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ada-grey)" strokeWidth="2">
           <circle cx="11" cy="11" r="8" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
@@ -64,7 +64,7 @@ export const MemoryView = () => {
         />
       </div>
 
-      {/* Anees Segmented Filter Pills */}
+      {/* Filter Bar */}
       <div className="seg-bar">
         <button
           className={`seg-btn ${filter === 'all' ? 'active' : ''}`}
@@ -89,44 +89,40 @@ export const MemoryView = () => {
         </button>
       </div>
 
-      {/* Memory Records (Spaced-out Cards) */}
+      {/* Memory Records */}
       <div>
         {visible.length === 0 && (
-          <div style={{ padding: '30px 0', fontSize: '13.5px', color: 'var(--ada-grey)', textAlign: 'center' }}>
+          <div style={{ padding: '30px 0', fontSize: '13px', color: 'var(--ada-grey)', textAlign: 'center' }}>
             {currentLang === 'ar' ? 'لا توجد سجلات مطابقة' : 'No matching records found'}
           </div>
         )}
         {visible.map((item) => (
           <div
-            className="spaced-card"
+            className="exec-card accent-teal"
             key={item.id}
             onClick={() => setActiveSheet('why')}
           >
-            <div className="spaced-card-time">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              <span>{item.date}</span>
+            <div className="exec-card-header">
+              <span className="exec-chip active-blue">
+                {t(item.tagKey)}
+              </span>
+              <span className="exec-card-time">{item.date}</span>
             </div>
 
-            <div className="spaced-card-title">
+            <div className="exec-card-title">
               {t(item.titleKey)}
             </div>
 
-            <div className="spaced-card-snippet">
+            <div className="exec-card-body">
               {t(item.descKey)}
             </div>
 
-            <div className="spaced-card-footer">
-              <div className="spaced-card-tags">
-                <span className="spaced-tag" style={{ background: '#E6F3F4', color: 'var(--ada-teal)' }}>
-                  {t(item.tagKey)}
-                </span>
-                <span className="spaced-tag count">+3</span>
-              </div>
-              <div className="spaced-card-meta-stats">
+            <div className="exec-card-footer">
+              <span style={{ fontSize: '11.5px', color: 'var(--ada-grey)', fontWeight: 500 }}>
                 {item.stats}
+              </span>
+              <div className="exec-card-action-link">
+                <span>{currentLang === 'ar' ? 'فحص السجل ←' : 'Audit Trail →'}</span>
               </div>
             </div>
           </div>

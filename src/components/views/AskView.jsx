@@ -22,7 +22,7 @@ export const AskView = () => {
         <h1 className="page-title">{t('askHeader')}</h1>
       </div>
 
-      {/* Spacious Conversational Input Wrap */}
+      {/* Spacious Conversational Input Box */}
       <div className="ask-input-wrap">
         <textarea
           className="ask-textarea"
@@ -33,8 +33,8 @@ export const AskView = () => {
         <div className="ask-footer">
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--ada-teal)', display: 'inline-block' }} />
-            <span style={{ fontSize: '11px', color: 'var(--ada-grey)', fontWeight: 600 }}>
-              {currentLang === 'ar' ? 'سري · معالجة سيادية معزولة' : 'Confidential · Air-gapped Sovereign AI'}
+            <span style={{ fontSize: '11px', color: 'var(--ada-grey)', fontWeight: 500 }}>
+              {currentLang === 'ar' ? 'سري · معالجة سيادية معزولة' : 'Confidential · Sovereign Air-Gapped AI'}
             </span>
           </div>
           <button
@@ -47,30 +47,39 @@ export const AskView = () => {
         </div>
       </div>
 
-      {/* Suggested Prompts with Anees Pill Styling */}
+      {/* Suggested Inquiries */}
       <div className="section-label">{t('suggestedPromptsKicker')}</div>
 
       {prompts.map((p, i) => (
-        <div className="prompt-item" key={i} onClick={() => executeAskQuery(p)}>
-          <span style={{ lineHeight: 1.45 }}>{p}</span>
-          <span style={{ color: 'var(--ada-blue)', fontSize: '15px', fontWeight: 700, marginInlineStart: '10px' }}>→</span>
+        <div className="exec-card" key={i} style={{ padding: '13px 16px', marginBottom: '8px' }} onClick={() => executeAskQuery(p)}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--ada-navy)', lineHeight: 1.4 }}>{p}</span>
+            <span style={{ color: 'var(--ada-blue)', fontSize: '14px', fontWeight: 600, marginInlineStart: '10px' }}>→</span>
+          </div>
         </div>
       ))}
 
       {/* Recent Intelligence Queries */}
-      <div className="section-label">{t('recentQueriesKicker')}</div>
+      <div className="section-label" style={{ marginTop: '24px' }}>{t('recentQueriesKicker')}</div>
       <div
-        className="card"
-        style={{ padding: '14px 18px', cursor: 'pointer' }}
+        className="exec-card"
+        style={{ cursor: 'pointer' }}
         onClick={() => executeAskQuery('Compare Terminal A retail yield vs Q2 benchmark')}
       >
-        <div style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--ada-navy)' }}>
+        <div className="exec-card-header">
+          <span className="exec-chip active-blue">Executive Analytics</span>
+          <span className="exec-card-time">Yesterday · 16:40</span>
+        </div>
+        <div className="exec-card-title" style={{ fontSize: '14px' }}>
           Compare Terminal A retail yield vs Q2 benchmark
         </div>
-        <div style={{ fontSize: '11.5px', color: 'var(--ada-grey)', marginTop: '3px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span>Yesterday</span>
-          <span>·</span>
-          <span style={{ color: 'var(--ada-teal)', fontWeight: 600 }}>3 verified sovereign sources</span>
+        <div className="exec-card-footer" style={{ borderTop: 'none', paddingTop: '4px' }}>
+          <span style={{ fontSize: '11.5px', color: 'var(--ada-teal)', fontWeight: 600 }}>
+            3 verified sovereign sources
+          </span>
+          <div className="exec-card-action-link">
+            <span>{currentLang === 'ar' ? 'إعادة الفحص ←' : 'Re-run →'}</span>
+          </div>
         </div>
       </div>
     </section>

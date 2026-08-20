@@ -6,9 +6,9 @@ export const NotificationsSheet = () => {
   const isOpen = activeSheet === 'notif';
 
   const alerts = [
-    { type: 'err', title: t('notif1Title'), desc: t('notif1Desc'), time: '09:40' },
-    { type: 'warn', title: t('notif2Title'), desc: t('notif2Desc'), time: '14:00 Deadline' },
-    { type: 'blue', title: t('notif3Title'), desc: t('notif3Desc'), time: '09:35' },
+    { type: 'err', title: t('notif1Title'), desc: t('notif1Desc'), time: '09:40', tag: 'Critical Alert', accent: 'accent-red' },
+    { type: 'warn', title: t('notif2Title'), desc: t('notif2Desc'), time: '14:00 Deadline', tag: 'Action Required', accent: 'accent-amber' },
+    { type: 'blue', title: t('notif3Title'), desc: t('notif3Desc'), time: '09:35', tag: 'Briefing Ready', accent: 'accent-teal' },
   ];
 
   return (
@@ -25,23 +25,29 @@ export const NotificationsSheet = () => {
           <button className="sheet-close" onClick={closeSheet} type="button">✕</button>
         </div>
 
-        {/* Priority Alerts (Spaced-out Cards) */}
-        <div className="section-label" style={{ marginTop: '8px', fontSize: '15px' }}>{t('notifSectionTitle')}</div>
+        {/* Priority Alerts */}
+        <div className="section-label" style={{ marginTop: '6px', fontSize: '14px' }}>{t('notifSectionTitle')}</div>
         <div style={{ marginBottom: '18px' }}>
           {alerts.map((a, i) => (
             <div
               key={i}
-              className="spaced-card"
-              style={{ padding: '16px 18px', marginBottom: '10px' }}
+              className={`exec-card ${a.accent}`}
+              style={{ marginBottom: '8px' }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <span className={`pill ${a.type}`}>{a.type === 'err' ? 'Critical' : a.type === 'warn' ? 'Attention' : 'Brief'}</span>
-                <span style={{ fontSize: '12px', color: 'var(--ada-grey)', fontWeight: 600 }}>{a.time}</span>
+              <div className="exec-card-header">
+                <span className="exec-chip" style={{
+                  color: a.type === 'err' ? 'var(--ada-critical)' : a.type === 'warn' ? 'var(--ada-attention)' : 'var(--ada-teal)',
+                  background: a.type === 'err' ? '#FFF1F2' : a.type === 'warn' ? '#FFFBEB' : '#F0FDFA',
+                  borderColor: a.type === 'err' ? '#FECDD3' : a.type === 'warn' ? '#FDE68A' : '#CCFBF1',
+                }}>
+                  {a.tag}
+                </span>
+                <span className="exec-card-time">{a.time}</span>
               </div>
-              <div style={{ fontSize: '14px', fontWeight: 800, color: 'var(--ada-navy)', margin: '4px 0 2px' }}>
+              <div className="exec-card-title" style={{ fontSize: '13.5px', marginBottom: '3px' }}>
                 {a.title}
               </div>
-              <div style={{ fontSize: '12.5px', color: 'var(--ada-slate)', lineHeight: 1.45 }}>
+              <div className="exec-card-body" style={{ margin: 0 }}>
                 {a.desc}
               </div>
             </div>
@@ -50,10 +56,10 @@ export const NotificationsSheet = () => {
 
         {/* Executive Reminders */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-          <div className="section-label" style={{ margin: 0, fontSize: '15px' }}>{t('remindersSectionTitle')}</div>
+          <div className="section-label" style={{ margin: 0, fontSize: '14px' }}>{t('remindersSectionTitle')}</div>
           <button
             className="btn-link"
-            style={{ fontSize: '13px', fontWeight: 700 }}
+            style={{ fontSize: '12.5px', fontWeight: 600 }}
             onClick={() => addReminder(currentLang === 'ar' ? 'متابعة تقرير العمليات' : 'Follow-up with Operations')}
             type="button"
           >
@@ -63,20 +69,20 @@ export const NotificationsSheet = () => {
 
         <div>
           {remindersList.length === 0 && (
-            <div style={{ padding: '20px 0', fontSize: '13px', color: 'var(--ada-grey)', textAlign: 'center' }}>
+            <div style={{ padding: '20px 0', fontSize: '12.5px', color: 'var(--ada-grey)', textAlign: 'center' }}>
               {currentLang === 'ar' ? 'لا توجد تذكيرات مسجلة' : 'No active reminders'}
             </div>
           )}
           {remindersList.map((r) => (
             <div
               key={r.id}
-              className="spaced-card"
+              className="exec-card"
               style={{
-                padding: '14px 18px',
-                marginBottom: '10px',
+                padding: '12px 14px',
+                marginBottom: '8px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '14px',
+                gap: '12px',
                 opacity: r.done ? 0.45 : 1,
                 cursor: 'pointer',
               }}
@@ -84,10 +90,10 @@ export const NotificationsSheet = () => {
             >
               {/* Checkbox */}
               <div style={{
-                width: '20px',
-                height: '20px',
-                border: `2px solid ${r.done ? 'var(--ada-navy)' : '#CBD5E1'}`,
-                borderRadius: '6px',
+                width: '18px',
+                height: '18px',
+                border: `1.5px solid ${r.done ? 'var(--ada-navy)' : '#CBD5E1'}`,
+                borderRadius: '5px',
                 flexShrink: 0,
                 display: 'flex',
                 alignItems: 'center',
@@ -95,20 +101,20 @@ export const NotificationsSheet = () => {
                 background: r.done ? 'var(--ada-navy)' : 'transparent',
                 transition: 'all 0.15s ease',
               }}>
-                {r.done && <span style={{ fontSize: '11px', color: '#FFFFFF', fontWeight: 800 }}>✓</span>}
+                {r.done && <span style={{ fontSize: '10px', color: '#FFFFFF', fontWeight: 800 }}>✓</span>}
               </div>
               {/* Text */}
               <div style={{ flex: 1 }}>
                 <div style={{
-                  fontSize: '14px',
-                  fontWeight: 700,
+                  fontSize: '13px',
+                  fontWeight: 600,
                   color: 'var(--ada-navy)',
                   textDecoration: r.done ? 'line-through' : 'none',
                   lineHeight: 1.3,
                 }}>
                   {r.customTitle || (r.titleKey ? t(r.titleKey) : '')}
                 </div>
-                <div style={{ fontSize: '11.5px', color: 'var(--ada-grey)', marginTop: '2px' }}>
+                <div style={{ fontSize: '11px', color: 'var(--ada-grey)', marginTop: '2px' }}>
                   {r.customTime || (r.timeKey ? t(r.timeKey) : '')}
                 </div>
               </div>

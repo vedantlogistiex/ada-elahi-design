@@ -7,63 +7,74 @@ export const PreMeetingBriefView = () => {
   return (
     <section className="screen-view active" id="viewPreMeetingBrief">
       {/* Navigation */}
-      <div style={{ padding: '6px 0 14px' }}>
+      <div style={{ padding: '6px 0 16px' }}>
         <button className="btn-link" onClick={() => switchTab('meetings')} type="button">
-          <span style={{ fontSize: '18px', fontWeight: 800 }}>‹</span>
-          <span style={{ marginInlineStart: '4px' }}>{t('backToMeetings')}</span>
+          <span>{currentLang === 'ar' ? '→ العودة إلى الاجتماعات' : '← Back to Meetings'}</span>
         </button>
       </div>
 
       <div className="page-eyebrow">10:30 AM · 45 min · Executive Leadership Team</div>
       <h1 className="page-title" style={{ marginBottom: '16px' }}>{t('briefScreenTitle')}</h1>
 
-      {/* Hero Recording Action Banner */}
+      {/* Scribe Action Bar */}
       <div
-        className="elahi-hero-banner"
+        className="exec-scribe-bar"
         onClick={startRecording}
         role="button"
         tabIndex={0}
-        style={{ marginBottom: '18px' }}
       >
-        <div className="banner-left">
-          <div className="banner-icon-box">🎙️</div>
+        <div className="scribe-left">
+          <div className="scribe-icon-ring">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+              <line x1="12" y1="19" x2="12" y2="23" />
+              <line x1="8" y1="23" x2="16" y2="23" />
+            </svg>
+          </div>
           <div>
-            <div className="banner-title">{t('heroRecTitle')}</div>
-            <div className="banner-sub">Acoustic Diarization · Sovereign Action Extraction</div>
+            <div className="scribe-title">{t('heroRecTitle')}</div>
+            <div className="scribe-sub">Acoustic Diarization · Sovereign Action Extraction</div>
           </div>
         </div>
-        <span className="banner-pill">{t('heroRecBtn')}</span>
+        <button className="scribe-btn" type="button">
+          {t('heroRecBtn')}
+        </button>
       </div>
 
-      {/* Brief Card Container */}
-      <div className="anees-highlight-card" style={{ cursor: 'default', marginBottom: '18px' }}>
-        {/* Purpose */}
-        <div className="brief-section">
-          <div className="brief-kicker">{t('briefPurposeTitle')}</div>
-          <div className="brief-body">{t('briefPurposeText')}</div>
+      {/* Structured Executive Brief Cards */}
+      <div className="exec-card" style={{ marginBottom: '14px' }}>
+        <div className="exec-card-header">
+          <span className="exec-chip active-blue">{t('briefPurposeTitle')}</span>
+          <span className="exec-card-time">Objective</span>
         </div>
-
-        <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '12px 0' }} />
-
-        {/* What Changed */}
-        <div className="brief-section">
-          <div className="brief-kicker" style={{ color: 'var(--ada-attention)' }}>{t('briefChangedTitle')}</div>
-          <ul className="brief-list">
-            <li style={{ marginBottom: '5px' }}>{t('briefChanged1')}</li>
-            <li>{t('briefChanged2')}</li>
-          </ul>
+        <div className="exec-card-body" style={{ margin: 0 }}>
+          {t('briefPurposeText')}
         </div>
+      </div>
 
-        <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '12px 0' }} />
-
-        {/* Suggested Questions */}
-        <div className="brief-section" style={{ marginBottom: 0 }}>
-          <div className="brief-kicker" style={{ color: 'var(--ada-blue)' }}>{t('briefQuestionsTitle')}</div>
-          <ol className="brief-list">
-            <li style={{ marginBottom: '5px' }}>{t('briefQ1')}</li>
-            <li>{t('briefQ2')}</li>
-          </ol>
+      <div className="exec-card accent-amber" style={{ marginBottom: '14px' }}>
+        <div className="exec-card-header">
+          <span className="exec-chip" style={{ color: 'var(--ada-attention)', background: '#FFFBEB', borderColor: '#FDE68A' }}>
+            {t('briefChangedTitle')}
+          </span>
+          <span className="exec-card-time">Since 08:00</span>
         </div>
+        <ul className="brief-list" style={{ margin: 0, paddingInlineStart: '18px' }}>
+          <li style={{ marginBottom: '6px', fontSize: '12.5px', color: 'var(--ada-slate)' }}>{t('briefChanged1')}</li>
+          <li style={{ fontSize: '12.5px', color: 'var(--ada-slate)' }}>{t('briefChanged2')}</li>
+        </ul>
+      </div>
+
+      <div className="exec-card" style={{ marginBottom: '18px' }}>
+        <div className="exec-card-header">
+          <span className="exec-chip active-blue">{t('briefQuestionsTitle')}</span>
+          <span className="exec-card-time">Key Inquiries</span>
+        </div>
+        <ol className="brief-list" style={{ margin: 0, paddingInlineStart: '18px' }}>
+          <li style={{ marginBottom: '6px', fontSize: '12.5px', color: 'var(--ada-slate)' }}>{t('briefQ1')}</li>
+          <li style={{ fontSize: '12.5px', color: 'var(--ada-slate)' }}>{t('briefQ2')}</li>
+        </ol>
       </div>
 
       {/* Primary Action Button */}
