@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const StudioBar = () => {
-  const { scenario, setScenario, currentLang, toggleLanguage, isPresented, togglePresentMode } = useApp();
+  const { scenario, setScenario, currentLang, toggleLanguage, togglePresentMode } = useApp();
 
   return (
     <aside className="studio-bar">
@@ -15,36 +15,42 @@ export const StudioBar = () => {
       </div>
 
       <div className="studio-scenarios">
-        <span style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 600, textTransform: 'uppercase' }}>Quick State:</span>
+        <span style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 600, textTransform: 'uppercase' }}>
+          Quick State:
+        </span>
         <button
           className={`studio-btn ${scenario === 'normal' ? 'active' : ''}`}
+          id="btnSceneNormal"
           onClick={() => setScenario('normal')}
         >
           🟢 Normal (Happy)
         </button>
         <button
           className={`studio-btn ${scenario === 'conflict' ? 'active' : ''}`}
+          id="btnSceneConflict"
           onClick={() => setScenario('conflict')}
         >
           ⚠️ Conflicting Evidence
         </button>
         <button
           className={`studio-btn ${scenario === 'denied' ? 'active' : ''}`}
+          id="btnSceneDenied"
           onClick={() => setScenario('denied')}
         >
           🔒 Permission Denied
         </button>
         <button
           className={`studio-btn ${scenario === 'loading' ? 'active' : ''}`}
+          id="btnSceneLoading"
           onClick={() => setScenario('loading')}
         >
           ⏳ AI Loading State
         </button>
         <button className="studio-btn" onClick={toggleLanguage}>
-          🌐 Language (<span>{currentLang === 'ar' ? 'English LTR' : 'العربية RTL'}</span>)
+          🌐 Language (<span id="studioLangText">{currentLang === 'en' ? 'العربية RTL' : 'English LTR'}</span>)
         </button>
-        <button className={`studio-btn ${isPresented ? 'active' : ''}`} onClick={togglePresentMode}>
-          {isPresented ? '✕ Exit Present' : '📽 Present'}
+        <button className="studio-btn" id="btnPresentMode" onClick={togglePresentMode}>
+          📽 Present
         </button>
       </div>
     </aside>

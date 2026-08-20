@@ -1,201 +1,220 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { meetingsData } from '../../i18n/meetingsData';
 
 export const MeetingsView = () => {
-  const { t, currentLang, switchTab, openMeetingOutput } = useApp();
-  const [meetingTab, setMeetingTab] = useState('schedule'); // 'schedule' | 'history'
-
-  const isAr = currentLang === 'ar';
+  const { t, switchTab, openMeetingOutput } = useApp();
+  const [activeSubTab, setActiveSubTab] = useState('schedule'); // 'schedule' | 'history'
 
   return (
-    <section className="screen-view" id="viewMeetings">
-      <div>
-        <h2 className="screen-title">{t('meetingsTitle')}</h2>
-        <div className="screen-subtitle">{t('meetingsSubtitle')}</div>
+    <section className="screen-view active" id="viewMeetings">
+      <h1 className="screen-title" data-i18n="meetingsTitle">
+        {t('meetingsTitle')}
+      </h1>
+      <div className="screen-subtitle" data-i18n="meetingsSubtitle">
+        {t('meetingsSubtitle')}
       </div>
 
-      {/* Sub-Segment Switcher: Upcoming Schedule vs Recorded History */}
-      <div className="output-segment-bar" style={{ marginBottom: '12px' }}>
+      {/* Schedule vs Recorded History Switcher */}
+      <div className="output-segment-bar" style={{ marginBottom: '14px' }}>
         <button
-          className={`output-segment-btn ${meetingTab === 'schedule' ? 'active' : ''}`}
-          onClick={() => setMeetingTab('schedule')}
+          className={`output-segment-btn ${activeSubTab === 'schedule' ? 'active' : ''}`}
+          id="btnMtgSchedule"
+          onClick={() => setActiveSubTab('schedule')}
+          data-i18n="tabMtgSchedule"
         >
           {t('tabMtgSchedule')}
         </button>
         <button
-          className={`output-segment-btn ${meetingTab === 'history' ? 'active' : ''}`}
-          onClick={() => setMeetingTab('history')}
+          className={`output-segment-btn ${activeSubTab === 'history' ? 'active' : ''}`}
+          id="btnMtgHistory"
+          onClick={() => setActiveSubTab('history')}
+          data-i18n="tabMtgHistory"
         >
           {t('tabMtgHistory')}
         </button>
       </div>
 
-      {/* Schedule Tab */}
-      {meetingTab === 'schedule' && (
-        <div id="secMeetingSchedule" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {/* Meeting 1: ELT Review */}
+      {/* VIEW 1: UPCOMING SCHEDULE */}
+      {activeSubTab === 'schedule' && (
+        <div id="secMeetingSchedule">
+          {/* Meeting 1: Active Focus */}
           <div className="meeting-item-card" onClick={() => switchTab('premeeting')}>
             <div className="meeting-badge-row">
-              <span className="priority-badge att">10:30 AM · In 48 mins</span>
-              <span className="priority-badge ver">{t('briefReady')}</span>
+              <span className="priority-badge ver" data-i18n="briefReady">
+                {t('briefReady')}
+              </span>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--navy)' }}>
+                10:30 AM · 45 min
+              </span>
             </div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '4px' }}>
+            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '4px' }} data-i18n="m1Title">
               {t('m1Title')}
             </div>
-            <div style={{ fontSize: '12.5px', color: 'var(--secondary-grey)', marginBottom: '8px' }}>
+            <div style={{ fontSize: '13px', color: 'var(--secondary-grey)' }} data-i18n="m1Desc">
               {t('m1Desc')}
             </div>
-            <div style={{ fontSize: '13px', fontWeight: 650, color: 'var(--airport-blue)' }}>
-              {t('open60sBrief')}
+            <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '12px', color: 'var(--airport-blue)', fontWeight: 600 }} data-i18n="open60sBrief">
+                {t('open60sBrief')}
+              </span>
+              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)' }}>3 prior commitments</span>
             </div>
           </div>
 
-          {/* Meeting 2: Retail Concessionaire */}
-          <div className="meeting-item-card" onClick={() => openMeetingOutput('retail', 'approved')}>
+          {/* Meeting 2: Afternoon */}
+          <div className="meeting-item-card" style={{ marginTop: '12px' }} onClick={() => openMeetingOutput('retail', 'draft')}>
             <div className="meeting-badge-row">
-              <span className="priority-badge ver">02:00 PM</span>
-              <span className="priority-badge att">{t('aiDraftPending')}</span>
+              <span className="priority-badge att" data-i18n="aiDraftPending">
+                {t('aiDraftPending')}
+              </span>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--navy)' }}>
+                02:00 PM · 30 min
+              </span>
             </div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '4px' }}>
+            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '4px' }} data-i18n="m2Title">
               {t('m2Title')}
             </div>
-            <div style={{ fontSize: '12.5px', color: 'var(--secondary-grey)', marginBottom: '8px' }}>
+            <div style={{ fontSize: '13px', color: 'var(--secondary-grey)' }} data-i18n="m2Desc">
               {t('m2Desc')}
             </div>
-            <div style={{ fontSize: '13px', fontWeight: 650, color: 'var(--airport-blue)' }}>
-              {t('viewOutputBtn')}
+            <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '12px', color: 'var(--airport-blue)', fontWeight: 600 }} data-i18n="viewOutputBtn">
+                {t('viewOutputBtn')}
+              </span>
+              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)' }}>2 decisions · 3 actions</span>
             </div>
           </div>
 
-          {/* Meeting 3: Security & Border Control */}
-          <div className="meeting-item-card">
+          {/* Meeting 3: Evening Sync */}
+          <div className="meeting-item-card" style={{ marginTop: '12px', opacity: 0.85 }}>
             <div className="meeting-badge-row">
-              <span className="priority-badge ver">04:30 PM</span>
               <span className="priority-badge ver">Scheduled</span>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--navy)' }}>
+                04:30 PM · 30 min
+              </span>
             </div>
-            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '4px' }}>
+            <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '4px' }} data-i18n="m3Title">
               {t('m3Title')}
             </div>
-            <div style={{ fontSize: '12.5px', color: 'var(--secondary-grey)' }}>
+            <div style={{ fontSize: '13px', color: 'var(--secondary-grey)' }} data-i18n="m3Desc">
               {t('m3Desc')}
             </div>
           </div>
         </div>
       )}
 
-      {/* Recorded History Tab */}
-      {meetingTab === 'history' && (
-        <div id="secMeetingHistory" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {/* History Item 1: Ops Review */}
+      {/* VIEW 2: RECORDED MEETINGS HISTORY WITH TRANSCRIPT, DECISIONS & ACTIONS */}
+      {activeSubTab === 'history' && (
+        <div id="secMeetingHistory">
+          {/* Record 1: Operational Performance Review */}
           <div className="rec-meeting-card" onClick={() => openMeetingOutput('ops', 'draft')}>
             <div className="rec-meeting-badge-row">
               <span className="rec-tag-pill draft">
-                <span>⏱</span>
-                <span>{t('rec1Badge')}</span>
+                <span className="live-pulse" style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#EF4444' }} />
+                <span data-i18n="rec1Badge">{t('rec1Badge')}</span>
               </span>
-              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)', fontWeight: 600 }}>
-                {meetingsData.ops.subtitle[currentLang] || meetingsData.ops.subtitle.en}
-              </span>
+              <span style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }}>Today 10:30 AM</span>
             </div>
-            <div style={{ fontSize: '15px', fontWeight: 750, color: 'var(--navy)', marginBottom: '4px' }}>
-              {meetingsData.ops.title[currentLang] || meetingsData.ops.title.en}
+            <div style={{ fontSize: '15.5px', fontWeight: 750, color: 'var(--navy)', marginBottom: '3px' }} data-i18n="rec1Title">
+              {t('rec1Title')}
             </div>
-            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.35 }} data-i18n="rec1Desc">
               {t('rec1Desc')}
             </div>
             <div className="rec-meeting-chips">
-              <span className="rec-meta-chip">🎙 45m Audio</span>
-              <span className="rec-meta-chip">🤖 3 AI Decisions</span>
+              <span className="rec-meta-chip">🎙 45 min audio</span>
+              <span className="rec-meta-chip" style={{ color: 'var(--airport-blue)' }}>⚡ 3 Agent Decisions</span>
               <span className="rec-meta-chip" style={{ color: 'var(--critical)' }}>⚠️ 3 Pending Actions</span>
-              <span className="rec-meta-chip" style={{ color: 'var(--aviation-teal)' }}>Ref: ADA-ELT-2026-08-042</span>
             </div>
-            <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--airport-blue)', marginTop: '10px' }}>
-              {t('viewTranscriptDecisions')}
+            <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '8px' }}>
+              <span style={{ fontSize: '12px', color: 'var(--airport-blue)', fontWeight: 600 }} data-i18n="viewTranscriptDecisions">
+                {t('viewTranscriptDecisions')}
+              </span>
+              <span style={{ fontSize: '10.5px', color: 'var(--secondary-grey)' }}>Ref: ADA-ELT-2026-08-042</span>
             </div>
           </div>
 
-          {/* History Item 2: Retail Strategy */}
-          <div className="rec-meeting-card" onClick={() => openMeetingOutput('retail', 'approved')}>
+          {/* Record 2: Terminal A Concessionaire & Retail Strategy */}
+          <div className="rec-meeting-card" style={{ marginTop: '10px' }} onClick={() => openMeetingOutput('retail', 'approved')}>
             <div className="rec-meeting-badge-row">
               <span className="rec-tag-pill sealed">
                 <span>✓</span>
-                <span>{t('rec2Badge')}</span>
+                <span data-i18n="rec2Badge">{t('rec2Badge')}</span>
               </span>
-              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)', fontWeight: 600 }}>
-                {meetingsData.retail.subtitle[currentLang] || meetingsData.retail.subtitle.en}
-              </span>
+              <span style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }}>19 Aug 14:00</span>
             </div>
-            <div style={{ fontSize: '15px', fontWeight: 750, color: 'var(--navy)', marginBottom: '4px' }}>
-              {meetingsData.retail.title[currentLang] || meetingsData.retail.title.en}
+            <div style={{ fontSize: '15.5px', fontWeight: 750, color: 'var(--navy)', marginBottom: '3px' }} data-i18n="rec2Title">
+              {t('rec2Title')}
             </div>
-            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.35 }} data-i18n="rec2Desc">
               {t('rec2Desc')}
             </div>
             <div className="rec-meeting-chips">
-              <span className="rec-meta-chip">🎙 32m Audio</span>
-              <span className="rec-meta-chip">🤖 2 AI Decisions</span>
-              <span className="rec-meta-chip" style={{ color: 'var(--success)' }}>✓ 3 Ratified Actions</span>
-              <span className="rec-meta-chip" style={{ color: 'var(--aviation-teal)' }}>Ref: ADA-COM-2026-08-039</span>
+              <span className="rec-meta-chip">🎙 32 min audio</span>
+              <span className="rec-meta-chip" style={{ color: 'var(--airport-blue)' }}>⚡ 2 Agent Decisions</span>
+              <span className="rec-meta-chip" style={{ color: 'var(--success)' }}>✓ 3 Actions Assigned</span>
             </div>
-            <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--airport-blue)', marginTop: '10px' }}>
-              {t('viewTranscriptDecisions')}
+            <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '8px' }}>
+              <span style={{ fontSize: '12px', color: 'var(--airport-blue)', fontWeight: 600 }} data-i18n="viewTranscriptDecisions">
+                {t('viewTranscriptDecisions')}
+              </span>
+              <span style={{ fontSize: '10.5px', color: 'var(--secondary-grey)' }}>Ref: ADA-COM-2026-08-039</span>
             </div>
           </div>
 
-          {/* History Item 3: Runway Capacity & Noise */}
-          <div className="rec-meeting-card" onClick={() => openMeetingOutput('runway', 'approved')}>
+          {/* Record 3: Q3 Runway Capacity & Noise Abatement Verification */}
+          <div className="rec-meeting-card" style={{ marginTop: '10px' }} onClick={() => openMeetingOutput('runway', 'approved')}>
             <div className="rec-meeting-badge-row">
               <span className="rec-tag-pill sealed">
                 <span>✓</span>
-                <span>{t('rec3Badge')}</span>
+                <span data-i18n="rec3Badge">{t('rec3Badge')}</span>
               </span>
-              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)', fontWeight: 600 }}>
-                {meetingsData.runway.subtitle[currentLang] || meetingsData.runway.subtitle.en}
-              </span>
+              <span style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }}>18 Aug 09:00</span>
             </div>
-            <div style={{ fontSize: '15px', fontWeight: 750, color: 'var(--navy)', marginBottom: '4px' }}>
-              {meetingsData.runway.title[currentLang] || meetingsData.runway.title.en}
+            <div style={{ fontSize: '15.5px', fontWeight: 750, color: 'var(--navy)', marginBottom: '3px' }} data-i18n="rec3Title">
+              {t('rec3Title')}
             </div>
-            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.35 }} data-i18n="rec3Desc">
               {t('rec3Desc')}
             </div>
             <div className="rec-meeting-chips">
-              <span className="rec-meta-chip">🎙 48m Audio</span>
-              <span className="rec-meta-chip">🤖 2 AI Decisions</span>
-              <span className="rec-meta-chip" style={{ color: 'var(--success)' }}>✓ GCAA Ratified</span>
-              <span className="rec-meta-chip" style={{ color: 'var(--aviation-teal)' }}>Ref: ADA-GCAA-2026-08-035</span>
+              <span className="rec-meta-chip">🎙 48 min audio</span>
+              <span className="rec-meta-chip" style={{ color: 'var(--airport-blue)' }}>⚡ 4 Agent Decisions</span>
+              <span className="rec-meta-chip" style={{ color: 'var(--success)' }}>✓ 2 Actions Completed</span>
             </div>
-            <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--airport-blue)', marginTop: '10px' }}>
-              {t('viewTranscriptDecisions')}
+            <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '8px' }}>
+              <span style={{ fontSize: '12px', color: 'var(--airport-blue)', fontWeight: 600 }} data-i18n="viewTranscriptDecisions">
+                {t('viewTranscriptDecisions')}
+              </span>
+              <span style={{ fontSize: '10.5px', color: 'var(--secondary-grey)' }}>Ref: ADA-GCAA-2026-08-035</span>
             </div>
           </div>
 
-          {/* History Item 4: Etihad Joint Operations */}
-          <div className="rec-meeting-card" onClick={() => openMeetingOutput('etihad', 'approved')}>
+          {/* Record 4: Etihad Joint Operations SLA Alignment */}
+          <div className="rec-meeting-card" style={{ marginTop: '10px' }} onClick={() => openMeetingOutput('etihad', 'approved')}>
             <div className="rec-meeting-badge-row">
               <span className="rec-tag-pill sealed">
                 <span>✓</span>
-                <span>{t('rec4Badge')}</span>
+                <span data-i18n="rec4Badge">{t('rec4Badge')}</span>
               </span>
-              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)', fontWeight: 600 }}>
-                {meetingsData.etihad.subtitle[currentLang] || meetingsData.etihad.subtitle.en}
-              </span>
+              <span style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }}>15 Aug 11:15</span>
             </div>
-            <div style={{ fontSize: '15px', fontWeight: 750, color: 'var(--navy)', marginBottom: '4px' }}>
-              {meetingsData.etihad.title[currentLang] || meetingsData.etihad.title.en}
+            <div style={{ fontSize: '15.5px', fontWeight: 750, color: 'var(--navy)', marginBottom: '3px' }} data-i18n="rec4Title">
+              {t('rec4Title')}
             </div>
-            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '12.5px', color: 'var(--slate)', lineHeight: 1.35 }} data-i18n="rec4Desc">
               {t('rec4Desc')}
             </div>
             <div className="rec-meeting-chips">
-              <span className="rec-meta-chip">🎙 38m Audio</span>
-              <span className="rec-meta-chip">🤖 2 AI Decisions</span>
-              <span className="rec-meta-chip" style={{ color: 'var(--success)' }}>✓ Bilateral Signed</span>
-              <span className="rec-meta-chip" style={{ color: 'var(--aviation-teal)' }}>Ref: ADA-EY-2026-08-028</span>
+              <span className="rec-meta-chip">🎙 38 min audio</span>
+              <span className="rec-meta-chip" style={{ color: 'var(--airport-blue)' }}>⚡ 2 Agent Decisions</span>
+              <span className="rec-meta-chip" style={{ color: 'var(--success)' }}>✓ 2 Actions In Progress</span>
             </div>
-            <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--airport-blue)', marginTop: '10px' }}>
-              {t('viewTranscriptDecisions')}
+            <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '8px' }}>
+              <span style={{ fontSize: '12px', color: 'var(--airport-blue)', fontWeight: 600 }} data-i18n="viewTranscriptDecisions">
+                {t('viewTranscriptDecisions')}
+              </span>
+              <span style={{ fontSize: '10.5px', color: 'var(--secondary-grey)' }}>Ref: ADA-EY-2026-08-028</span>
             </div>
           </div>
         </div>

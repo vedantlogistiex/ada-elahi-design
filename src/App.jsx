@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useApp } from './context/AppContext';
 import { StudioBar } from './components/layout/StudioBar';
 import { PresentationHUD } from './components/layout/PresentationHUD';
 import { DeviceFrame } from './components/layout/DeviceFrame';
-import { Toast } from './components/layout/Toast';
 
-import { NotificationsSheet } from './components/sheets/NotificationsSheet';
-import { WhyThisAnswerSheet } from './components/sheets/WhyThisAnswerSheet';
-import { ApprovalModal } from './components/sheets/ApprovalModal';
-
+// Views
 import { TodayView } from './components/views/TodayView';
 import { AskView } from './components/views/AskView';
 import { AnswerView } from './components/views/AnswerView';
@@ -19,7 +15,20 @@ import { MemoryView } from './components/views/MemoryView';
 import { MoreView } from './components/views/MoreView';
 
 export const App = () => {
-  const { currentTab, isRecording, stopRecording, scenario, t, currentLang } = useApp();
+  const { currentTab, currentLang, isPresented } = useApp();
+
+  useEffect(() => {
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = currentLang;
+  }, [currentLang]);
+
+  useEffect(() => {
+    if (isPresented) {
+      document.body.classList.add('is-presenting');
+    } else {
+      document.body.classList.remove('is-presenting');
+    }
+  }, [isPresented]);
 
   const renderActiveView = () => {
     switch (currentTab) {
@@ -46,57 +55,20 @@ export const App = () => {
 
   return (
     <>
-      {/* Studio Bar for executive scenario & language testing */}
+      {/* QA & Scenario Simulator Bar */}
       <StudioBar />
 
-      {/* Main App Workspace */}
+      {/* Floating HUD when in Presentation Mode */}
+      {isPresented && <PresentationHUD />}
+
+      {/* Main Workspace Frame */}
       <main className="app-workspace">
         <DeviceFrame>
-          {/* Universal State Simulation Banners */}
-          {scenario === 'loading' && (
-            <div className="state-banner loading">
-              <div className="ios-spinner" />
-              <span>Elahi is querying 14 enterprise databases and running compliance verification...</span>
-            </div>
-          )}
-
-          {scenario === 'denied' && (
-            <div className="state-banner denied">
-              <b>🔒 Clearance Required: </b>
-              <span>Access restricted to Level 1 Executive Leadership (Board & COO).</span>
-            </div>
-          )}
-
-          {/* Sticky Live Recording Status Bar */}
-          {isRecording && (
-            <div className="live-recording-bar active">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="island-rec-dot" />
-                <span style={{ fontSize: '12px', fontWeight: 600 }}>
-                  {t('elahiListeningTitle')}
-                </span>
-              </div>
-              <button className="btn-rec-stop" onClick={stopRecording}>
-                {t('stopRecBtn')}
-              </button>
-            </div>
-          )}
-
-          {/* Dynamic Active Screen View */}
           {renderActiveView()}
         </DeviceFrame>
       </main>
-
-      {/* Bottom Sheets and Modals */}
-      <NotificationsSheet />
-      <WhyThisAnswerSheet />
-      <ApprovalModal />
-
-      {/* Floating Presentation HUD (Active when is-presenting) */}
-      <PresentationHUD />
-
-      {/* Action Confirmation Toast */}
-      <Toast />
     </>
   );
 };
+
+export default App;

@@ -2,48 +2,64 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const ApprovalModal = () => {
-  const { activeSheet, setActiveSheet, t, approveCurrentMeeting } = useApp();
+  const { t, currentLang, activeSheet, closeSheet, showToast } = useApp();
+  const isOpen = activeSheet === 'approval';
 
-  if (activeSheet !== 'approval') return null;
-
-  const handleApprove = () => {
-    approveCurrentMeeting();
-    setActiveSheet(null);
+  const handleConfirm = () => {
+    closeSheet();
+    showToast(currentLang === 'ar' ? 'تم اعتماد وتثبيت خط الأساس التشغيلي' : 'Plan Approved · Dispatched to Operations');
   };
 
   return (
     <>
-      <div className="sheet-overlay active" onClick={() => setActiveSheet(null)} />
-      <div className="bottom-sheet active" id="approvalModal">
-        <div className="sheet-handle" onClick={() => setActiveSheet(null)} />
-
+      <div
+        className={`sheet-overlay ${isOpen ? 'active' : ''}`}
+        id="sheetOverlayApproval"
+        onClick={closeSheet}
+      />
+      <div
+        className={`bottom-sheet ${isOpen ? 'active' : ''}`}
+        id="sheetApproval"
+      >
+        <div className="sheet-handle" onClick={closeSheet} />
         <div className="sheet-header-row">
           <div>
-            <div className="sheet-title">{t('approvalSheetTitle')}</div>
-            <div style={{ fontSize: '12px', color: 'var(--secondary-grey)' }}>{t('approvalSheetSub')}</div>
+            <div className="sheet-title" data-i18n="approvalSheetTitle">
+              {t('approvalSheetTitle')}
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }} data-i18n="approvalSheetSub">
+              {t('approvalSheetSub')}
+            </div>
           </div>
-          <button className="sheet-close-btn" onClick={() => setActiveSheet(null)}>✕</button>
+          <button className="sheet-close-btn" onClick={closeSheet}>✕</button>
         </div>
 
-        <div style={{ fontSize: '15.5px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px' }}>
+        <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '6px' }} data-i18n="approvalQuestion">
           {t('approvalQuestion')}
         </div>
 
-        <div style={{ fontSize: '13px', color: 'var(--secondary-grey)', marginBottom: '14px', lineHeight: 1.4 }}>
-          {t('approvalScope')}
+        <div style={{ fontSize: '13px', color: 'var(--slate)' }} data-i18n="approvalScope">
+          {currentLang === 'ar' ? (
+            <><b>النطاق:</b> 3 تعديلات على زمن استدارة المواقف (المواقف 24-28) · إخطار 5 مدراء تشغيليين.</>
+          ) : (
+            <><b>Scope:</b> 3 turnaround buffer modifications (Stands 24–28) · 5 recipient operational leads.</>
+          )}
         </div>
 
-        {/* Consequence Box */}
         <div className="consequence-box">
-          <b style={{ color: 'var(--airport-blue)' }}>{t('consequenceTitle')} </b>
-          <span>{t('consequenceDesc')}</span>
+          <b style={{ color: 'var(--navy)' }} data-i18n="consequenceTitle">
+            {t('consequenceTitle')}
+          </b>
+          <p style={{ marginTop: '4px' }} data-i18n="consequenceDesc">
+            {t('consequenceDesc')}
+          </p>
         </div>
 
         <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
-          <button className="btn-exec-secondary" style={{ flex: 1 }} onClick={() => setActiveSheet(null)}>
+          <button className="btn-exec-secondary" style={{ flex: 1 }} onClick={closeSheet} data-i18n="btnCancel">
             {t('btnCancel')}
           </button>
-          <button className="btn-exec-primary" style={{ flex: 2 }} onClick={handleApprove}>
+          <button className="btn-exec-primary" style={{ flex: 1.4 }} onClick={handleConfirm} data-i18n="btnApprove">
             {t('btnApprove')}
           </button>
         </div>

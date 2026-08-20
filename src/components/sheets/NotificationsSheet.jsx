@@ -2,137 +2,191 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const NotificationsSheet = () => {
-  const { activeSheet, setActiveSheet, t, currentLang, remindersList, toggleReminder, addReminder } = useApp();
-  const [newReminderText, setNewReminderText] = useState('');
+  const {
+    t,
+    currentLang,
+    activeSheet,
+    closeSheet,
+    switchTab,
+    openApprovalModal,
+    remindersList,
+    toggleReminder,
+    addReminder
+  } = useApp();
 
-  if (activeSheet !== 'notif') return null;
+  const [newTitle, setNewTitle] = useState('');
+  const [selectedTime, setSelectedTime] = useState('Today 16:00');
 
-  const handleAdd = (e) => {
-    e.preventDefault();
-    if (newReminderText.trim()) {
-      addReminder(newReminderText);
-      setNewReminderText('');
+  const isOpen = activeSheet === 'notif';
+
+  const handleAdd = () => {
+    if (newTitle.trim()) {
+      addReminder(newTitle.trim(), selectedTime);
+      setNewTitle('');
     }
   };
 
   return (
     <>
-      <div className="sheet-overlay active" onClick={() => setActiveSheet(null)} />
-      <div className="bottom-sheet active" id="notifBottomSheet">
-        <div className="sheet-handle" onClick={() => setActiveSheet(null)} />
-
+      <div
+        className={`sheet-overlay ${isOpen ? 'active' : ''}`}
+        id="sheetOverlayNotif"
+        onClick={closeSheet}
+      />
+      <div
+        className={`bottom-sheet ${isOpen ? 'active' : ''}`}
+        id="sheetReminders"
+      >
+        <div className="sheet-handle" onClick={closeSheet} />
         <div className="sheet-header-row">
           <div>
-            <div className="sheet-title">{t('notifSheetTitle')}</div>
-            <div style={{ fontSize: '12px', color: 'var(--secondary-grey)' }}>{t('notifSheetSub')}</div>
+            <div className="sheet-title" data-i18n="notifSheetTitle">
+              {t('notifSheetTitle')}
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }} data-i18n="notifSheetSub">
+              {t('notifSheetSub')}
+            </div>
           </div>
-          <button className="sheet-close-btn" onClick={() => setActiveSheet(null)}>✕</button>
+          <button className="sheet-close-btn" onClick={closeSheet}>✕</button>
         </div>
 
-        {/* Priority Alerts Section */}
-        <div style={{ marginBottom: '16px' }}>
-          <div style={{ fontSize: '11.5px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--critical)', letterSpacing: '0.5px', marginBottom: '8px' }}>
-            {t('notifSectionTitle')}
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ background: 'var(--attention-bg)', border: '1px solid rgba(201,135,35,0.3)', borderRadius: 'var(--radius-md)', padding: '10px 12px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#8B540A' }}>{t('notif1Title')}</div>
-              <div style={{ fontSize: '11.5px', color: '#7D4F08', marginTop: '2px' }}>{t('notif1Desc')}</div>
-            </div>
-
-            <div style={{ background: 'var(--critical-bg)', border: '1px solid rgba(185,67,67,0.3)', borderRadius: 'var(--radius-md)', padding: '10px 12px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--critical)' }}>{t('notif2Title')}</div>
-              <div style={{ fontSize: '11.5px', color: '#7E2525', marginTop: '2px' }}>{t('notif2Desc')}</div>
-            </div>
-
-            <div style={{ background: 'var(--teal-light)', border: '1px solid rgba(22,125,131,0.3)', borderRadius: 'var(--radius-md)', padding: '10px 12px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--aviation-teal)' }}>{t('notif3Title')}</div>
-              <div style={{ fontSize: '11.5px', color: 'var(--slate)', marginTop: '2px' }}>{t('notif3Desc')}</div>
-            </div>
-          </div>
+        {/* Section 1: Priority Notifications */}
+        <div className="section-kicker" data-i18n="notifSectionTitle">
+          {t('notifSectionTitle')}
         </div>
 
-        {/* Executive Reminders Section */}
-        <div style={{ marginBottom: '16px' }}>
-          <div style={{ fontSize: '11.5px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--navy)', letterSpacing: '0.5px', marginBottom: '8px' }}>
-            {t('remindersSectionTitle')}
+        <div
+          className="notif-item-row"
+          onClick={() => {
+            closeSheet();
+            switchTab('answer');
+          }}
+        >
+          <div className="priority-indicator attention" style={{ marginTop: '4px' }} />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '13.5px', fontWeight: 650, color: 'var(--navy)' }} data-i18n="notif1Title">
+              {t('notif1Title')}
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--secondary-grey)', marginTop: '2px' }} data-i18n="notif1Desc">
+              {t('notif1Desc')}
+            </div>
           </div>
+          <span style={{ fontSize: '11px', color: 'var(--airport-blue)', fontWeight: 600 }}>
+            {currentLang === 'ar' ? 'عرض ←' : 'View →'}
+          </span>
+        </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            {remindersList.map((rem) => (
-              <div
-                key={rem.id}
-                onClick={() => toggleReminder(rem.id)}
-                style={{
-                  background: rem.done ? 'var(--app-bg)' : 'var(--white-surface)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '9px 12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  cursor: 'pointer',
-                  opacity: rem.done ? 0.6 : 1
-                }}
+        <div
+          className="notif-item-row"
+          onClick={() => {
+            closeSheet();
+            openApprovalModal();
+          }}
+        >
+          <div className="priority-indicator action" style={{ marginTop: '4px' }} />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '13.5px', fontWeight: 650, color: 'var(--navy)' }} data-i18n="notif2Title">
+              {t('notif2Title')}
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--secondary-grey)', marginTop: '2px' }} data-i18n="notif2Desc">
+              {t('notif2Desc')}
+            </div>
+          </div>
+          <span style={{ fontSize: '11px', color: 'var(--airport-blue)', fontWeight: 600 }}>
+            {currentLang === 'ar' ? 'توقيع ←' : 'Sign →'}
+          </span>
+        </div>
+
+        <div
+          className="notif-item-row"
+          onClick={() => {
+            closeSheet();
+            switchTab('premeeting');
+          }}
+        >
+          <div className="priority-indicator verified" style={{ marginTop: '4px' }} />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '13.5px', fontWeight: 650, color: 'var(--navy)' }} data-i18n="notif3Title">
+              {t('notif3Title')}
+            </div>
+            <div style={{ fontSize: '11.5px', color: 'var(--secondary-grey)', marginTop: '2px' }} data-i18n="notif3Desc">
+              {t('notif3Desc')}
+            </div>
+          </div>
+          <span style={{ fontSize: '11px', color: 'var(--airport-blue)', fontWeight: 600 }}>
+            {currentLang === 'ar' ? 'إيجاز ←' : 'Brief →'}
+          </span>
+        </div>
+
+        {/* Section 2: Executive Reminders */}
+        <div className="section-kicker" style={{ marginTop: '16px' }} data-i18n="remindersSectionTitle">
+          {t('remindersSectionTitle')}
+        </div>
+        <div id="remindersList">
+          {remindersList.map((item) => (
+            <div className="reminder-item-row" key={item.id}>
+              <button
+                className={`reminder-check-btn ${item.done ? 'checked' : ''}`}
+                onClick={() => toggleReminder(item.id)}
               >
-                <input
-                  type="checkbox"
-                  checked={rem.done}
-                  onChange={() => {}}
-                  style={{ width: '16px', height: '16px', accentColor: 'var(--airport-blue)', cursor: 'pointer' }}
-                />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--navy)', textDecoration: rem.done ? 'line-through' : 'none' }}>
-                    {currentLang === 'ar' ? rem.titleAr : rem.title}
-                  </div>
-                  <div style={{ fontSize: '11px', color: 'var(--secondary-grey)' }}>
-                    {currentLang === 'ar' ? rem.timeAr : rem.time}
-                  </div>
+                ✓
+              </button>
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    fontSize: '13.5px',
+                    fontWeight: 600,
+                    color: 'var(--navy)',
+                    textDecoration: item.done ? 'line-through' : 'none',
+                    opacity: item.done ? 0.6 : 1
+                  }}
+                  data-i18n={item.titleKey || undefined}
+                >
+                  {item.titleKey ? t(item.titleKey) : item.customTitle}
+                </div>
+                <div style={{ fontSize: '11px', color: 'var(--secondary-grey)' }} data-i18n={item.timeKey || undefined}>
+                  {item.timeKey ? t(item.timeKey) : item.customTime}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
-        {/* Add Reminder Form */}
-        <div>
-          <div style={{ fontSize: '11.5px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--secondary-grey)', letterSpacing: '0.5px', marginBottom: '6px' }}>
+        {/* Section 3: Add Reminder Form */}
+        <div className="add-reminder-form">
+          <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--navy)', textTransform: 'uppercase', letterSpacing: '0.4px' }} data-i18n="addReminderTitle">
             {t('addReminderTitle')}
           </div>
-          <form onSubmit={handleAdd} style={{ display: 'flex', gap: '6px' }}>
-            <input
-              type="text"
-              value={newReminderText}
-              onChange={(e) => setNewReminderText(e.target.value)}
-              placeholder={t('addReminderPlaceholder')}
-              style={{
-                flex: 1,
-                padding: '8px 12px',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-strong)',
-                fontSize: '13px',
-                fontFamily: 'inherit',
-                outline: 'none'
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                background: 'var(--airport-blue)',
-                color: '#FFFFFF',
-                border: 'none',
-                padding: '8px 14px',
-                borderRadius: 'var(--radius-md)',
-                fontSize: '12.5px',
-                fontWeight: 700,
-                cursor: 'pointer',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              {t('btnAddReminder')}
-            </button>
-          </form>
+          <input
+            type="text"
+            id="newReminderInput"
+            placeholder={t('addReminderPlaceholder')}
+            data-i18n-placeholder="addReminderPlaceholder"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            style={{ width: '100%', marginTop: '8px', padding: '8px 12px', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-sm)', fontFamily: 'inherit', fontSize: '13.5px', outline: 'none', background: '#FFFFFF' }}
+          />
+
+          <div className="reminder-time-pills">
+            {['Today 16:00', 'Before ELT', 'Tomorrow 09:00'].map((timeStr) => (
+              <button
+                key={timeStr}
+                className={`time-pill-btn ${selectedTime === timeStr ? 'active' : ''}`}
+                onClick={() => setSelectedTime(timeStr)}
+              >
+                {timeStr}
+              </button>
+            ))}
+          </div>
+
+          <button
+            className="btn-exec-primary"
+            style={{ width: '100%', padding: '9px 14px', fontSize: '13px' }}
+            onClick={handleAdd}
+            data-i18n="btnAddReminder"
+          >
+            {t('btnAddReminder')}
+          </button>
         </div>
       </div>
     </>

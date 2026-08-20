@@ -18,9 +18,8 @@ export const AppProvider = ({ children }) => {
   const [askQuery, setAskQuery] = useState('');
 
   const [remindersList, setRemindersList] = useState([
-    { id: 1, title: 'Follow up on Pier B luxury tenant SLA draft', titleAr: 'متابعة مسودة اتفاقية مستوى الخدمة لمستأجري الرصيف B', time: 'Due today · 15:30', timeAr: 'الموعد: اليوم · 15:30', done: false },
-    { id: 2, title: 'Review summer heat contingency buffer report', titleAr: 'مراجعة تقرير طوارئ حرارة الصيف ومرونة المواقف', time: 'Due tomorrow · 09:00', timeAr: 'الموعد: غداً · 09:00', done: false },
-    { id: 3, title: 'Ratify GCAA Runway Noise Abatement declaration', titleAr: 'اعتماد إقرار الامتثال لخفض الضوضاء لهيئة الطيران', time: 'Due today · 14:00', timeAr: 'الموعد: اليوم · 14:00', done: false }
+    { id: 1, titleKey: 'rem1Title', timeKey: 'rem1Time', customTitle: '', customTime: '', done: false },
+    { id: 2, titleKey: 'rem2Title', timeKey: 'rem2Time', customTitle: '', customTime: '', done: false }
   ]);
 
   // Handle Recording Timer
@@ -119,6 +118,14 @@ export const AppProvider = ({ children }) => {
     showToast(currentLang === 'ar' ? 'تم اعتماد وتوثيق السجل الرسمي' : 'Official Record Approved & Sealed');
   };
 
+  const openApprovalModal = () => {
+    setActiveSheet('approval');
+  };
+
+  const closeSheet = () => {
+    setActiveSheet(null);
+  };
+
   const setScenario = (scenarioKey) => {
     setScenarioState(scenarioKey);
     if (scenarioKey === 'normal') {
@@ -137,17 +144,17 @@ export const AppProvider = ({ children }) => {
     );
   };
 
-  const addReminder = (text) => {
+  const addReminder = (text, timePill = 'Today 16:00') => {
     if (!text.trim()) return;
     const newRem = {
       id: Date.now(),
-      title: text,
-      titleAr: text,
-      time: currentLang === 'ar' ? 'مضاف حديثاً' : 'Added just now',
-      timeAr: 'مضاف حديثاً',
+      titleKey: null,
+      timeKey: null,
+      customTitle: text,
+      customTime: timePill,
       done: false
     };
-    setRemindersList([newRem, ...remindersList]);
+    setRemindersList((prev) => [...prev, newRem]);
     showToast(currentLang === 'ar' ? 'تمت إضافة التذكير بنجاح' : 'Executive Reminder Added');
   };
 
@@ -185,6 +192,8 @@ export const AppProvider = ({ children }) => {
         addReminder,
         activeSheet,
         setActiveSheet,
+        openApprovalModal,
+        closeSheet,
         toastMessage,
         showToast,
         askQuery,

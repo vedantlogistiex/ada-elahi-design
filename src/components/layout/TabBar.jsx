@@ -2,37 +2,15 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const TabBar = () => {
-  const { currentTab, switchTab, currentLang } = useApp();
-
-  const isAr = currentLang === 'ar';
+  const { currentTab, switchTab, t } = useApp();
 
   return (
     <nav className="app-tab-bar">
-      <div
+      {/* Tab 1: Today */}
+      <a
         className={`tab-item ${currentTab === 'today' ? 'active' : ''}`}
+        id="tabToday"
         onClick={() => switchTab('today')}
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-        </svg>
-        <span>{isAr ? 'اليوم' : 'Today'}</span>
-      </div>
-
-      <div
-        className={`tab-item ${currentTab === 'ask' || currentTab === 'answer' ? 'active' : ''}`}
-        onClick={() => switchTab('ask')}
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <circle cx="11" cy="11" r="8" />
-          <path d="M21 21l-4.35-4.35" />
-        </svg>
-        <span>{isAr ? 'اسأل' : 'Ask'}</span>
-      </div>
-
-      <div
-        className={`tab-item ${['meetings', 'premeeting', 'meetingoutput'].includes(currentTab) ? 'active' : ''}`}
-        onClick={() => switchTab('meetings')}
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -40,22 +18,53 @@ export const TabBar = () => {
           <line x1="8" y1="2" x2="8" y2="6" />
           <line x1="3" y1="10" x2="21" y2="10" />
         </svg>
-        <span>{isAr ? 'الاجتماعات' : 'Meetings'}</span>
-      </div>
+        <span>{t('tabToday')}</span>
+      </a>
 
-      <div
+      {/* Tab 2: Ask */}
+      <a
+        className={`tab-item ${['ask', 'answer'].includes(currentTab) ? 'active' : ''}`}
+        id="tabAsk"
+        onClick={() => switchTab('ask')}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <span>{t('tabAsk')}</span>
+      </a>
+
+      {/* Tab 3: Meetings */}
+      <a
+        className={`tab-item ${['meetings', 'premeeting', 'meetingoutput'].includes(currentTab) ? 'active' : ''}`}
+        id="tabMeetings"
+        onClick={() => switchTab('meetings')}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+        <span>{t('tabMeetings')}</span>
+      </a>
+
+      {/* Tab 4: Memory */}
+      <a
         className={`tab-item ${currentTab === 'memory' ? 'active' : ''}`}
+        id="tabMemory"
         onClick={() => switchTab('memory')}
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          <polyline points="21 8 21 21 3 21 3 8" />
+          <rect x="1" y="3" width="22" height="5" />
+          <line x1="10" y1="12" x2="14" y2="12" />
         </svg>
-        <span>{isAr ? 'الذاكرة' : 'Memory'}</span>
-      </div>
+        <span>{t('tabMemory')}</span>
+      </a>
 
-      <div
+      {/* Tab 5: More */}
+      <a
         className={`tab-item ${currentTab === 'more' ? 'active' : ''}`}
+        id="tabMore"
         onClick={() => switchTab('more')}
       >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -63,8 +72,8 @@ export const TabBar = () => {
           <circle cx="19" cy="12" r="1" />
           <circle cx="5" cy="12" r="1" />
         </svg>
-        <span>{isAr ? 'المزيد' : 'More'}</span>
-      </div>
+        <span>{t('tabMore')}</span>
+      </a>
     </nav>
   );
 };

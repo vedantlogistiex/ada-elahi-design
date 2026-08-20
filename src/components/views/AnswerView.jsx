@@ -5,57 +5,70 @@ export const AnswerView = () => {
   const { t, switchTab, setActiveSheet } = useApp();
 
   return (
-    <section className="screen-view" id="viewAnswer">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <button
-          className="studio-btn"
-          style={{ background: 'var(--white-surface)', color: 'var(--navy)', borderColor: 'var(--border-subtle)' }}
-          onClick={() => switchTab('ask')}
-        >
-          ← {t('askTitle')}
+    <section className="screen-view active" id="viewAnswer">
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+        <button className="lang-toggle-btn" onClick={() => switchTab('ask')}>
+          <span data-i18n="backToAsk">{t('backToAsk')}</span>
         </button>
-        <span className="priority-badge ver">Verified Ground Truth</span>
+        <span style={{ fontSize: '11px', color: 'var(--secondary-grey)' }} data-i18n="queryTimestamp">
+          {t('queryTimestamp')}
+        </span>
       </div>
 
-      <div>
-        <h2 className="screen-title">{t('ansTitle')}</h2>
-        <div className="screen-subtitle">{t('ansSubtitle')}</div>
-      </div>
-
-      {/* Answer 3-Part Executive Card */}
       <div className="answer-card">
-        {/* 1. Direct Executive Answer */}
+        {/* 1. Executive Answer */}
         <div className="answer-section">
-          <div className="answer-label">{t('directAnswerLabel')}</div>
-          <div className="answer-headline">{t('directAnswerHeadline')}</div>
+          <div className="answer-label" data-i18n="ansExecutiveLabel">
+            {t('ansExecutiveLabel')}
+          </div>
+          <h2 className="answer-headline" id="ansHeadline" data-i18n="ansHeadlineText">
+            {t('ansHeadlineText')}
+          </h2>
         </div>
 
-        {/* 2. Operational & Commercial Implication */}
+        {/* 2. Implication */}
         <div className="answer-section">
-          <div className="answer-label">{t('implicationLabel')}</div>
-          <div className="implication-box">{t('implicationText')}</div>
+          <div className="answer-label" data-i18n="ansImplicationLabel">
+            {t('ansImplicationLabel')}
+          </div>
+          <div className="implication-box" id="ansImplication" data-i18n="ansImplicationText">
+            {t('ansImplicationText')}
+          </div>
         </div>
 
-        {/* 3. Recommended Executive Action */}
+        {/* 3. Recommended Action */}
         <div className="answer-section">
-          <div className="answer-label">{t('actionLabel')}</div>
-          <div className="action-box">{t('actionText')}</div>
+          <div className="answer-label" data-i18n="ansActionLabel">
+            {t('ansActionLabel')}
+          </div>
+          <div className="action-box" id="ansAction" data-i18n="ansActionText">
+            {t('ansActionText')}
+          </div>
         </div>
 
-        {/* Evidence & Provenance Bar */}
+        {/* Trust Bar & Trigger to Why This Answer? */}
         <button className="evidence-bar-btn" onClick={() => setActiveSheet('why')}>
-          <span>{t('whyThisAnswerBtn')}</span>
-          <span>→</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span data-i18n="ansSourcesSummary">{t('ansSourcesSummary')}</span>
+          </div>
+          <span style={{ fontWeight: 700 }} data-i18n="whyThisAnswerBtn">
+            {t('whyThisAnswerBtn')}
+          </span>
         </button>
       </div>
 
-      {/* Follow-up Action Buttons */}
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <button className="btn-exec-primary" onClick={() => setActiveSheet('approval')}>
-          {t('openApprovalQuick')} →
+      {/* Quick Secondary Executive Actions */}
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <button className="btn-exec-primary" onClick={() => setActiveSheet('approval')} data-i18n="actionAuthorize">
+          {t('actionAuthorize')}
         </button>
-        <button className="btn-exec-secondary" onClick={() => switchTab('premeeting')}>
-          {t('open60sBrief')}
+        <button className="btn-exec-secondary" onClick={() => switchTab('premeeting')} data-i18n="actionAttachToBrief">
+          {t('actionAttachToBrief')}
         </button>
       </div>
     </section>
