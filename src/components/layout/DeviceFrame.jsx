@@ -35,7 +35,7 @@ export const DeviceFrame = ({ children }) => {
       <header className="ios-status-bar">
         <span id="clockDisplay">{clock}</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '11px', fontWeight: 700, color: '#94A3B8' }}>5G</span>
+          <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--ink-muted)' }}>5G</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="2" y="7" width="16" height="10" rx="2" />
             <line x1="22" y1="11" x2="22" y2="13" />
@@ -58,7 +58,7 @@ export const DeviceFrame = ({ children }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span className="island-rec-dot" />
               <div>
-                <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#FFFFFF' }}>
+                <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--ink)' }}>
                   {t('elahiListeningTitle')}
                 </div>
                 <div style={{ fontSize: '11px', color: 'var(--ink-secondary)' }}>
@@ -82,14 +82,14 @@ export const DeviceFrame = ({ children }) => {
 
         {scenario === 'error' && (
           <div className="state-banner error" id="stateBannerError">
-            <b style={{ color: '#F87171' }}>{t('commErrorTitle')}</b>
+            <b style={{ color: 'var(--accent-err)' }}>{t('commErrorTitle')}</b>
             <p style={{ fontSize: '12px', marginTop: '3px' }}>{t('commErrorDesc')}</p>
           </div>
         )}
 
         {scenario === 'denied' && (
           <div className="state-banner denied" id="stateBannerDenied">
-            <b style={{ color: '#FCD34D' }}>{t('securityNoticeTitle')}</b>
+            <b style={{ color: 'var(--accent-gold)' }}>{t('securityNoticeTitle')}</b>
             <p style={{ fontSize: '12px', marginTop: '3px' }}>{t('securityNoticeDesc')}</p>
           </div>
         )}

@@ -13,7 +13,7 @@ export const StudioBar = () => {
       </div>
 
       <div className="studio-scenarios">
-        <span style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+        <span style={{ fontSize: '11px', color: 'var(--ink-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
           Simulate:
         </span>
         <button

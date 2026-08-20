@@ -77,6 +77,7 @@ export const AppProvider = ({ children }) => {
 
   const switchTab = (tab) => {
     setCurrentTab(tab);
+    setActiveSheet(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

@@ -62,7 +62,7 @@ export const AskView = () => {
         style={{ padding: '16px 20px', cursor: 'pointer' }}
         onClick={() => executeAskQuery('Compare Terminal A retail yield vs Q2 benchmark')}
       >
-        <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>
+        <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--ink)' }}>
           Compare Terminal A retail yield vs Q2 benchmark
         </div>
         <div style={{ fontSize: '12px', color: 'var(--ink-muted)', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>

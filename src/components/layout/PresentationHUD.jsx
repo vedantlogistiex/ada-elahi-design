@@ -6,7 +6,7 @@ export const PresentationHUD = () => {
 
   return (
     <div className="presentation-hud" id="presentationHud">
-      <span style={{ fontSize: '12px', color: '#94A3B8' }}>Executive Presentation Mode</span>
+      <span style={{ fontSize: '12px', color: 'var(--ink-secondary)' }}>Executive Presentation Mode</span>
       <button className="hud-btn" onClick={toggleLanguage}>
         🌐 <span>{currentLang === 'ar' ? 'English' : 'العربية'}</span>
       </button>

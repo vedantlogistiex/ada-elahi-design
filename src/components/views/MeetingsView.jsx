@@ -31,7 +31,7 @@ export const MeetingsView = () => {
             </div>
             <div className="meeting-title">{t('m1Title')}</div>
             <div className="meeting-meta">{t('m1Desc')}</div>
-            <div className="meeting-cta">{t('open60sBrief')} →</div>
+            <div className="meeting-cta">{t('open60sBrief')}</div>
           </div>
 
           <div className="meeting-row" onClick={() => openMeetingOutput('retail', 'draft')}>
@@ -41,7 +41,7 @@ export const MeetingsView = () => {
             </div>
             <div className="meeting-title">{t('m2Title')}</div>
             <div className="meeting-meta">{t('m2Desc')}</div>
-            <div className="meeting-cta">{t('viewOutputBtn')} →</div>
+            <div className="meeting-cta">{t('viewOutputBtn')}</div>
           </div>
 
           <div className="meeting-row" style={{ opacity: 0.7 }}>
@@ -62,7 +62,7 @@ export const MeetingsView = () => {
             </div>
             <div className="meeting-title">{t('rec1Title')}</div>
             <div className="meeting-meta">{t('rec1Desc')}</div>
-            <div className="meeting-cta">{t('viewTranscriptDecisions')} →</div>
+            <div className="meeting-cta">{t('viewTranscriptDecisions')}</div>
           </div>
 
           <div className="meeting-row" onClick={() => openMeetingOutput('retail', 'approved')}>
@@ -72,7 +72,7 @@ export const MeetingsView = () => {
             </div>
             <div className="meeting-title">{t('rec2Title')}</div>
             <div className="meeting-meta">{t('rec2Desc')}</div>
-            <div className="meeting-cta">{t('viewTranscriptDecisions')} →</div>
+            <div className="meeting-cta">{t('viewTranscriptDecisions')}</div>
           </div>
 
           <div className="meeting-row" onClick={() => openMeetingOutput('runway', 'approved')}>
@@ -82,7 +82,7 @@ export const MeetingsView = () => {
             </div>
             <div className="meeting-title">{t('rec3Title')}</div>
             <div className="meeting-meta">{t('rec3Desc')}</div>
-            <div className="meeting-cta">{t('viewTranscriptDecisions')} →</div>
+            <div className="meeting-cta">{t('viewTranscriptDecisions')}</div>
           </div>
         </div>
       )}

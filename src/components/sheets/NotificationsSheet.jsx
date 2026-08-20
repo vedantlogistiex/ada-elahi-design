@@ -41,7 +41,7 @@ export const NotificationsSheet = () => {
             >
               <span className={`pill ${a.type}`} style={{ flexShrink: 0, marginTop: '2px', padding: '3px 8px' }}>!</span>
               <div>
-                <div style={{ fontSize: '13.5px', fontWeight: 700, color: '#FFFFFF', lineHeight: 1.35 }}>
+                <div style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.35 }}>
                   {a.title}
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px', lineHeight: 1.45 }}>
@@ -61,7 +61,7 @@ export const NotificationsSheet = () => {
             onClick={() => addReminder(currentLang === 'ar' ? 'متابعة تقرير العمليات' : 'Follow-up with Operations')}
             type="button"
           >
-            + {t('btnAddReminder')}
+            {t('btnAddReminder')}
           </button>
         </div>
 
@@ -90,7 +90,7 @@ export const NotificationsSheet = () => {
               <div style={{
                 width: '20px',
                 height: '20px',
-                border: `1.5px solid ${r.done ? 'var(--accent-ok)' : 'rgba(255,255,255,0.25)'}`,
+                border: `1.5px solid ${r.done ? 'var(--accent-ok)' : 'rgba(15, 23, 42, 0.2)'}`,
                 borderRadius: '6px',
                 flexShrink: 0,
                 display: 'flex',
@@ -100,14 +100,14 @@ export const NotificationsSheet = () => {
                 boxShadow: r.done ? '0 0 8px var(--accent-ok)' : 'none',
                 transition: 'all 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
               }}>
-                {r.done && <span style={{ fontSize: '11px', color: '#040914', fontWeight: 800 }}>✓</span>}
+                {r.done && <span style={{ fontSize: '11px', color: '#FFFFFF', fontWeight: 800 }}>✓</span>}
               </div>
               {/* Text */}
               <div style={{ flex: 1 }}>
                 <div style={{
                   fontSize: '13.5px',
                   fontWeight: 600,
-                  color: '#FFFFFF',
+                  color: 'var(--ink)',
                   textDecoration: r.done ? 'line-through' : 'none',
                   lineHeight: 1.35,
                 }}>

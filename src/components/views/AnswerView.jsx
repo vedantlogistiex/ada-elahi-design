@@ -10,7 +10,7 @@ export const AnswerView = () => {
       {/* Navigation & Timestamp */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0 16px' }}>
         <button className="btn-link" onClick={() => switchTab('ask')} type="button">
-          ← {t('backToAsk')}
+          {t('backToAsk')}
         </button>
         <span style={{ fontSize: '12px', color: 'var(--ink-muted)', fontWeight: 600 }}>{t('queryTimestamp')}</span>
       </div>
@@ -25,7 +25,7 @@ export const AnswerView = () => {
           <div className="answer-bullet">
             <span className="bullet-dot" />
             <span>
-              <strong style={{ color: '#FFFFFF' }}>
+              <strong style={{ color: 'var(--ink)' }}>
                 {currentLang === 'ar' ? 'الأثر التنفيذي: ' : 'Implication: '}
               </strong>
               {t('ansImplicationText')}
@@ -34,7 +34,7 @@ export const AnswerView = () => {
           <div className="answer-bullet">
             <span className="bullet-dot" />
             <span>
-              <strong style={{ color: '#FFFFFF' }}>
+              <strong style={{ color: 'var(--ink)' }}>
                 {currentLang === 'ar' ? 'الإجراء المقترح: ' : 'Action: '}
               </strong>
               {t('ansActionText')}
@@ -45,7 +45,7 @@ export const AnswerView = () => {
         <div className="answer-footer">
           <span style={{ fontSize: '12px', color: 'var(--ink-muted)', fontWeight: 600 }}>{t('ansSourcesSummary')}</span>
           <button className="btn-link" style={{ fontSize: '12.5px', fontWeight: 700 }} onClick={() => setActiveSheet('why')} type="button">
-            {t('whyThisAnswerBtn')} →
+            {t('whyThisAnswerBtn')}
           </button>
         </div>
       </div>

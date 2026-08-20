@@ -41,7 +41,7 @@ export const WhyThisAnswerSheet = () => {
 
         <div className="limit-box">
           <strong style={{ color: 'var(--accent-gold)' }}>{t('limitationTitle')}</strong>
-          <div style={{ marginTop: '4px', fontSize: '12.5px', color: 'rgba(253, 230, 138, 0.9)' }}>{t('limitationDesc')}</div>
+          <div style={{ marginTop: '4px', fontSize: '12.5px' }}>{t('limitationDesc')}</div>
         </div>
       </div>
     </>

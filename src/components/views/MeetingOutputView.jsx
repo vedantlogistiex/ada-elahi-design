@@ -20,7 +20,7 @@ export const MeetingOutputView = () => {
       {/* Navigation + Status Badge */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0 16px' }}>
         <button className="btn-link" onClick={() => switchTab('meetings')} type="button">
-          ← {t('backToMeetings')}
+          {t('backToMeetings')}
         </button>
         <span className={`pill ${isApproved ? 'ok' : 'err'}`}>
           {isApproved
@@ -58,7 +58,7 @@ export const MeetingOutputView = () => {
           <div className="card" style={{ padding: '6px 20px', marginBottom: '18px' }}>
             {currentMeetingData.decisions.map((dec, i) => (
               <div key={i} style={{ padding: '14px 0', borderBottom: i < currentMeetingData.decisions.length - 1 ? '1px solid var(--border-glass)' : 'none' }}>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF', marginBottom: '4px' }}>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--ink)', marginBottom: '4px' }}>
                   {dec.title[currentLang] || dec.title.en}
                 </div>
                 <div style={{ fontSize: '13px', color: 'var(--ink-secondary)', lineHeight: 1.5 }}>
@@ -85,7 +85,7 @@ export const MeetingOutputView = () => {
                 onClick={act.type === 'sign' ? () => setActiveSheet('approval') : undefined}
               >
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>
+                  <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--ink)' }}>
                     {act.title[currentLang] || act.title.en}
                   </div>
                   <div style={{ fontSize: '12px', color: 'var(--ink-muted)', marginTop: '2px' }}>

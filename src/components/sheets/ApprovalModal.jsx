@@ -23,7 +23,7 @@ export const ApprovalModal = () => {
           <button className="sheet-close" onClick={closeSheet} type="button">✕</button>
         </div>
 
-        <div style={{ fontSize: '17px', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px', lineHeight: 1.35 }}>
+        <div style={{ fontSize: '17px', fontWeight: 800, color: 'var(--ink)', marginBottom: '8px', lineHeight: 1.35 }}>
           {t('approvalQuestion')}
         </div>
 
@@ -35,7 +35,7 @@ export const ApprovalModal = () => {
 
         <div className="consequence-box">
           <strong style={{ color: 'var(--accent-gold)' }}>{t('consequenceTitle')}</strong>
-          <div style={{ marginTop: '4px', fontSize: '12.5px', color: '#FDE68A' }}>{t('consequenceDesc')}</div>
+          <div style={{ marginTop: '4px', fontSize: '12.5px' }}>{t('consequenceDesc')}</div>
         </div>
 
         <div style={{ display: 'flex', gap: '12px', marginTop: '22px' }}>

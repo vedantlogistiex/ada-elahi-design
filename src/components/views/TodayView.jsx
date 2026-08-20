@@ -131,7 +131,7 @@ export const TodayView = () => {
                 </span>
                 <span style={{ fontSize: '11.5px', color: 'var(--ink-muted)', fontWeight: 600 }}>{card.time}</span>
               </div>
-              <div style={{ fontSize: '15.5px', fontWeight: 700, color: '#FFFFFF', lineHeight: 1.35, marginBottom: '6px' }}>
+              <div style={{ fontSize: '15.5px', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.35, marginBottom: '6px' }}>
                 {card.title}
               </div>
               <div style={{ fontSize: '12px', color: 'var(--ink-muted)', marginBottom: '12px' }}>{card.meta}</div>
@@ -139,7 +139,7 @@ export const TodayView = () => {
                 {card.snippet}
               </div>
               <div style={{ fontSize: '12.5px', fontWeight: 700, color: card.accent, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                {card.cta} <span>→</span>
+                {card.cta}
               </div>
             </div>
           ))}
@@ -153,7 +153,7 @@ export const TodayView = () => {
                 width: activeCard === i ? '20px' : '6px',
                 height: '5px',
                 borderRadius: 'var(--r-pill)',
-                background: activeCard === i ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.12)',
+                background: activeCard === i ? 'var(--accent-cyan)' : 'rgba(15, 23, 42, 0.15)',
                 boxShadow: activeCard === i ? '0 0 8px var(--accent-cyan)' : 'none',
                 transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
               }}
@@ -166,7 +166,7 @@ export const TodayView = () => {
       <button className="btn-record" onClick={startRecording} type="button">
         <span className="rec-dot-live" />
         <div style={{ flex: 1, textAlign: currentLang === 'ar' ? 'right' : 'left' }}>
-          <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('heroRecTitle')}</div>
+          <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--ink)' }}>{t('heroRecTitle')}</div>
           <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '2px' }}>{t('heroRecSub')}</div>
         </div>
         <span className="pill blue" style={{ fontSize: '11px' }}>{t('heroRecBtn')}</span>
@@ -177,7 +177,7 @@ export const TodayView = () => {
       <div className="card" style={{ padding: '4px 0' }}>
         <div className="card-row" style={{ cursor: 'pointer' }} onClick={() => switchTab('answer')}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('pri1Title')}</div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--ink)' }}>{t('pri1Title')}</div>
             <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px' }}>{t('pri1Desc')}</div>
           </div>
           <span className="pill warn" style={{ marginInlineStart: '12px', flexShrink: 0 }}>{t('badgeAttention')}</span>
@@ -185,7 +185,7 @@ export const TodayView = () => {
 
         <div className="card-row" style={{ cursor: 'pointer' }} onClick={() => setActiveSheet('approval')}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('pri2Title')}</div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--ink)' }}>{t('pri2Title')}</div>
             <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px' }}>{t('pri2Desc')}</div>
           </div>
           <span className="pill err" style={{ marginInlineStart: '12px', flexShrink: 0 }}>{t('badgeActionRequired')}</span>
@@ -193,7 +193,7 @@ export const TodayView = () => {
 
         <div className="card-row" style={{ cursor: 'pointer' }} onClick={() => switchTab('premeeting')}>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('pri3Title')}</div>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--ink)' }}>{t('pri3Title')}</div>
             <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px' }}>{t('pri3Desc')}</div>
           </div>
           <span className="pill ok" style={{ marginInlineStart: '12px', flexShrink: 0 }}>{t('badgeVerified')}</span>

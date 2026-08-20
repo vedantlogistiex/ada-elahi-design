@@ -9,7 +9,7 @@ export const PreMeetingBriefView = () => {
       {/* Navigation */}
       <div style={{ padding: '10px 0 16px' }}>
         <button className="btn-link" onClick={() => switchTab('meetings')} type="button">
-          ← {t('backToMeetings')}
+          {t('backToMeetings')}
         </button>
       </div>
 
@@ -20,7 +20,7 @@ export const PreMeetingBriefView = () => {
       <button className="btn-record" style={{ marginBottom: '24px' }} onClick={startRecording} type="button">
         <span className="rec-dot-live" />
         <div style={{ flex: 1, textAlign: currentLang === 'ar' ? 'right' : 'left' }}>
-          <div style={{ fontSize: '14.5px', fontWeight: 700, color: '#FFFFFF' }}>{t('heroRecTitle')}</div>
+          <div style={{ fontSize: '14.5px', fontWeight: 700, color: 'var(--ink)' }}>{t('heroRecTitle')}</div>
           <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '2px' }}>
             Acoustic Diarization · Sovereign Action Extraction
           </div>
