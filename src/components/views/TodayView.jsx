@@ -144,23 +144,6 @@ export const TodayView = () => {
         ))}
       </div>
 
-      {/* Elahi Hero Voice Recording Banner */}
-      <div
-        className="elahi-hero-banner"
-        onClick={startRecording}
-        role="button"
-        tabIndex={0}
-      >
-        <div className="banner-left">
-          <div className="banner-icon-box">🎙️</div>
-          <div>
-            <div className="banner-title">{t('heroRecTitle')}</div>
-            <div className="banner-sub">{t('heroRecSub')}</div>
-          </div>
-        </div>
-        <span className="banner-pill">{t('heroRecBtn')}</span>
-      </div>
-
       {/* Section: Important Mails & Meetings (Spaced-out Cards Matching Reference) */}
       <div className="section-label">
         <span>{t('mailsAndMeetingsKicker')}</span>
