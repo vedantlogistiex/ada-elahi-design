@@ -2,273 +2,216 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const TodayView = () => {
-  const { t, currentLang, switchTab, startRecording, openMeetingOutput, setActiveSheet } = useApp();
-  const [activeDeckIndex, setActiveDeckIndex] = useState(0);
+  const { t, currentLang, switchTab, startRecording, setActiveSheet, openMeetingOutput } = useApp();
+  const [activeCard, setActiveCard] = useState(0);
 
-  const handleDeckScroll = (e) => {
-    const scrollLeft = e.target.scrollLeft;
-    const cardWidth = e.target.offsetWidth * 0.92;
-    const index = Math.round(scrollLeft / cardWidth);
-    setActiveDeckIndex(Math.min(Math.max(index, 0), 3));
-  };
-
-  const scrollToDeckCard = (index) => {
-    const el = document.getElementById('todaySwipeDeck');
-    if (el) {
-      const cardWidth = el.offsetWidth * 0.92;
-      el.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
-      setActiveDeckIndex(index);
-    }
-  };
+  const cards = [
+    {
+      type: 'meeting',
+      time: t('card1Time'),
+      title: t('card1Title'),
+      meta: t('card1Meta'),
+      snippet: t('card1Snippet'),
+      cta: t('card1Action'),
+      onClick: () => switchTab('premeeting'),
+      accent: 'var(--accent-ok)',
+      tag: 'Executive Meeting',
+    },
+    {
+      type: 'mail',
+      time: '08:45',
+      title: t('card2Title'),
+      meta: 'GCAA · Priority Sovereign Directive',
+      snippet: t('card2Snippet'),
+      cta: t('card2Action'),
+      onClick: () => setActiveSheet('approval'),
+      accent: 'var(--accent-err)',
+      tag: 'Action Required',
+    },
+    {
+      type: 'meeting',
+      time: '02:00 PM',
+      title: t('card3Title'),
+      meta: t('card3Meta'),
+      snippet: t('card3Snippet'),
+      cta: t('card3Action'),
+      onClick: () => openMeetingOutput('retail', 'draft'),
+      accent: 'var(--accent-cyan)',
+      tag: 'Executive Brief',
+    },
+    {
+      type: 'mail',
+      time: '09:12',
+      title: t('card4Title'),
+      meta: t('card4Sender'),
+      snippet: t('card4Snippet'),
+      cta: t('card4Action'),
+      onClick: () => switchTab('answer'),
+      accent: 'var(--ink-secondary)',
+      tag: 'Operations Mail',
+    },
+  ];
 
   return (
     <section className="screen-view active" id="viewToday">
-      <h1 className="screen-title" data-i18n="todayGreeting">
-        {t('todayGreeting')}
-      </h1>
-      <div className="screen-subtitle" id="currentDateDisplay">
-        {currentLang === 'ar'
-          ? 'الخميس، 20 أغسطس · مطار زايد الدولي (AUH)'
-          : 'Thursday, 20 August · Zayed International (AUH)'}
-      </div>
 
-      {/* Today's Important Mails & Meetings (Swipeable Deck - iOS Style) */}
-      <div className="deck-header-row">
-        <span className="section-kicker" style={{ marginBottom: 0 }} data-i18n="mailsAndMeetingsKicker">
-          {t('mailsAndMeetingsKicker')}
-        </span>
-        <span className="deck-counter-badge" id="deckCounter">
-          {activeDeckIndex + 1} of 4
-        </span>
-      </div>
-
-      <div className="swipeable-deck-container">
-        <div className="swipeable-deck" id="todaySwipeDeck" onScroll={handleDeckScroll}>
-          {/* Card 1: Next Meeting */}
-          <div className="deck-card meeting-theme" onClick={() => switchTab('premeeting')}>
-            <div className="deck-card-badge-row">
-              <div className="deck-badge meeting">
-                <span className="live-pulse" style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ADE80' }} />
-                <span data-i18n="card1Time">{t('card1Time')}</span>
-              </div>
-              <span style={{ fontSize: '11px', color: '#94A3B8' }}>45 min</span>
-            </div>
-            <div className="deck-card-title" data-i18n="card1Title">
-              {t('card1Title')}
-            </div>
-            <div className="deck-card-sender" style={{ color: '#B5C4D3' }} data-i18n="card1Meta">
-              {t('card1Meta')}
-            </div>
-            <div className="deck-card-snippet" data-i18n="card1Snippet">
-              {t('card1Snippet')}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', gap: '8px' }}>
-              <button
-                className="hero-record-cta-badge"
-                style={{ border: 'none', cursor: 'pointer', padding: '6px 12px', fontSize: '11.5px' }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  startRecording();
-                }}
-              >
-                <span className="live-pulse" style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#FFFFFF' }} />
-                <span data-i18n="recNowBtn">{t('recNowBtn')}</span>
-              </button>
-              <div className="deck-card-action">
-                <span data-i18n="card1Action">{t('card1Action')}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: Priority Mail from GCAA */}
-          <div className="deck-card mail-theme" onClick={() => setActiveSheet('approval')}>
-            <div className="deck-card-badge-row">
-              <div className="deck-badge mail-urgent">
-                <span data-i18n="card2Badge">{t('card2Badge')}</span>
-              </div>
-              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)' }}>08:45 AM</span>
-            </div>
-            <div className="deck-card-title" data-i18n="card2Title">
-              {t('card2Title')}
-            </div>
-            <div className="deck-card-sender" data-i18n="card2Sender">
-              {t('card2Sender')}
-            </div>
-            <div className="deck-card-snippet" data-i18n="card2Snippet">
-              {t('card2Snippet')}
-            </div>
-            <div className="deck-card-action">
-              <span data-i18n="card2Action">{t('card2Action')}</span>
-            </div>
-          </div>
-
-          {/* Card 3: Afternoon Commercial Meeting */}
-          <div className="deck-card meeting-theme" onClick={() => openMeetingOutput('retail', 'draft')}>
-            <div className="deck-card-badge-row">
-              <div className="deck-badge meeting-comm">
-                <span data-i18n="card3Badge">{t('card3Badge')}</span>
-              </div>
-              <span style={{ fontSize: '11px', color: '#94A3B8' }}>30 min</span>
-            </div>
-            <div className="deck-card-title" data-i18n="card3Title">
-              {t('card3Title')}
-            </div>
-            <div className="deck-card-sender" style={{ color: '#B5C4D3' }} data-i18n="card3Meta">
-              {t('card3Meta')}
-            </div>
-            <div className="deck-card-snippet" data-i18n="card3Snippet">
-              {t('card3Snippet')}
-            </div>
-            <div className="deck-card-action">
-              <span data-i18n="card3Action">{t('card3Action')}</span>
-            </div>
-          </div>
-
-          {/* Card 4: Operations Mail from Etihad */}
-          <div className="deck-card mail-theme" onClick={() => switchTab('answer')}>
-            <div className="deck-card-badge-row">
-              <div className="deck-badge mail-ops">
-                <span data-i18n="card4Badge">{t('card4Badge')}</span>
-              </div>
-              <span style={{ fontSize: '11px', color: 'var(--secondary-grey)' }}>09:12 AM</span>
-            </div>
-            <div className="deck-card-title" data-i18n="card4Title">
-              {t('card4Title')}
-            </div>
-            <div className="deck-card-sender" data-i18n="card4Sender">
-              {t('card4Sender')}
-            </div>
-            <div className="deck-card-snippet" data-i18n="card4Snippet">
-              {t('card4Snippet')}
-            </div>
-            <div className="deck-card-action">
-              <span data-i18n="card4Action">{t('card4Action')}</span>
-            </div>
-          </div>
+      {/* Greeting Header */}
+      <div className="greeting">
+        <div className="page-eyebrow">
+          {currentLang === 'ar' ? 'الخميس، 20 أغسطس · مطار زايد الدولي' : 'Thursday, 20 August · Zayed International (AUH)'}
         </div>
+        <h1 className="page-title" data-i18n="todayGreeting">
+          {t('todayGreeting')}
+        </h1>
+      </div>
 
-        {/* Pagination Dots */}
-        <div className="deck-pagination" id="deckPagination">
-          {[0, 1, 2, 3].map((idx) => (
+      {/* Spacious KPI Strip */}
+      <div className="kpi-row">
+        <div className="kpi-unit">
+          <div className="kpi-val" style={{ color: 'var(--accent-ok)' }}>91.4%</div>
+          <div className="kpi-lbl">{t('kpiOTD')}</div>
+        </div>
+        <div className="kpi-unit">
+          <div className="kpi-val">99.1%</div>
+          <div className="kpi-lbl">{t('kpiBaggage')}</div>
+        </div>
+        <div className="kpi-unit">
+          <div className="kpi-val" style={{ fontSize: '15px', color: 'var(--accent-ok)', paddingTop: '4px' }}>
+            {currentLang === 'ar' ? 'مستقر' : 'Stable'}
+          </div>
+          <div className="kpi-lbl">{t('kpiTerminal')}</div>
+        </div>
+      </div>
+
+      {/* Swipeable Executive Deck Header */}
+      <div style={{ margin: '24px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className="section-label" style={{ margin: 0 }}>{t('mailsAndMeetingsKicker')}</div>
+        <span style={{ fontSize: '11.5px', color: 'var(--ink-muted)', fontWeight: 600 }}>{activeCard + 1} / {cards.length}</span>
+      </div>
+
+      {/* Swipeable Cards Deck with Elahi AI Glass Styling */}
+      <div style={{ overflow: 'hidden', marginBottom: '16px' }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: '14px',
+            overflowX: 'auto',
+            scrollSnapType: 'x mandatory',
+            scrollbarWidth: 'none',
+            paddingBottom: '4px',
+          }}
+          onScroll={(e) => {
+            const w = e.target.scrollWidth / cards.length;
+            setActiveCard(Math.round(e.target.scrollLeft / w));
+          }}
+        >
+          {cards.map((card, i) => (
             <div
-              key={idx}
-              className={`deck-dot ${activeDeckIndex === idx ? 'active' : ''}`}
-              onClick={() => scrollToDeckCard(idx)}
+              key={i}
+              onClick={card.onClick}
+              style={{
+                flex: '0 0 90%',
+                scrollSnapAlign: 'start',
+                background: 'var(--bg-card)',
+                backdropFilter: 'var(--blur-card)',
+                WebkitBackdropFilter: 'var(--blur-card)',
+                border: '1px solid var(--border-glass)',
+                borderLeft: currentLang === 'ar' ? '1px solid var(--border-glass)' : `4px solid ${card.accent}`,
+                borderRight: currentLang === 'ar' ? `4px solid ${card.accent}` : '1px solid var(--border-glass)',
+                borderRadius: 'var(--r-xl)',
+                padding: '20px 22px',
+                boxShadow: 'var(--shadow-card)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '11px', fontWeight: 800, color: card.accent, textTransform: 'uppercase', letterSpacing: '0.6px' }}>
+                  {card.tag}
+                </span>
+                <span style={{ fontSize: '11.5px', color: 'var(--ink-muted)', fontWeight: 600 }}>{card.time}</span>
+              </div>
+              <div style={{ fontSize: '15.5px', fontWeight: 700, color: '#FFFFFF', lineHeight: 1.35, marginBottom: '6px' }}>
+                {card.title}
+              </div>
+              <div style={{ fontSize: '12px', color: 'var(--ink-muted)', marginBottom: '12px' }}>{card.meta}</div>
+              <div style={{ fontSize: '13px', color: 'var(--ink-secondary)', lineHeight: 1.55, marginBottom: '14px' }}>
+                {card.snippet}
+              </div>
+              <div style={{ fontSize: '12.5px', fontWeight: 700, color: card.accent, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                {card.cta} <span>→</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Pagination indicator dots */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
+          {cards.map((_, i) => (
+            <div
+              key={i}
+              style={{
+                width: activeCard === i ? '20px' : '6px',
+                height: '5px',
+                borderRadius: 'var(--r-pill)',
+                background: activeCard === i ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.12)',
+                boxShadow: activeCard === i ? '0 0 8px var(--accent-cyan)' : 'none',
+                transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
             />
           ))}
         </div>
       </div>
 
-      {/* Prominent Live Meeting Hero Record Launcher */}
-      <button className="hero-record-btn" onClick={startRecording}>
-        <div className="hero-record-left">
-          <div className="hero-record-icon-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-              <line x1="12" y1="19" x2="12" y2="22" />
-            </svg>
-            <span className="live-rec-dot-beacon" />
-          </div>
-          <div className="hero-record-text">
-            <div className="hero-record-title">
-              <span data-i18n="heroRecTitle">{t('heroRecTitle')}</span>
-            </div>
-            <div className="hero-record-sub" data-i18n="heroRecSub">
-              {t('heroRecSub')}
-            </div>
-          </div>
+      {/* Hero Ambient Companion Recorder CTA */}
+      <button className="btn-record" onClick={startRecording} type="button">
+        <span className="rec-dot-live" />
+        <div style={{ flex: 1, textAlign: currentLang === 'ar' ? 'right' : 'left' }}>
+          <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('heroRecTitle')}</div>
+          <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '2px' }}>{t('heroRecSub')}</div>
         </div>
-        <div className="hero-record-cta-badge">
-          <span className="live-pulse" style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#FFFFFF' }} />
-          <span data-i18n="heroRecBtn">{t('heroRecBtn')}</span>
-        </div>
+        <span className="pill blue" style={{ fontSize: '11px' }}>{t('heroRecBtn')}</span>
       </button>
 
-      {/* What Needs Attention (Strictly Top 3 Items) */}
-      <div className="section-kicker">
-        <span data-i18n="whatNeedsAttention">{t('whatNeedsAttention')}</span>
-        <span style={{ color: 'var(--secondary-grey)', fontSize: '10px' }} data-i18n="topPriorities">
-          {t('topPriorities')}
-        </span>
-      </div>
-
-      <div className="priority-list">
-        {/* Item 1: Delay Risk */}
-        <div className="priority-item" onClick={() => switchTab('answer')}>
-          <div className="priority-indicator attention" />
-          <div className="priority-content">
-            <div className="priority-title" data-i18n="pri1Title">{t('pri1Title')}</div>
-            <div className="priority-desc" data-i18n="pri1Desc">{t('pri1Desc')}</div>
+      {/* Executive Priority Action Items */}
+      <div className="section-label">{t('whatNeedsAttention')}</div>
+      <div className="card" style={{ padding: '4px 0' }}>
+        <div className="card-row" style={{ cursor: 'pointer' }} onClick={() => switchTab('answer')}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('pri1Title')}</div>
+            <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px' }}>{t('pri1Desc')}</div>
           </div>
-          <span className="priority-badge att" data-i18n="badgeAttention">{t('badgeAttention')}</span>
+          <span className="pill warn" style={{ marginInlineStart: '12px', flexShrink: 0 }}>{t('badgeAttention')}</span>
         </div>
 
-        {/* Item 2: Approval Required */}
-        <div className="priority-item" onClick={() => setActiveSheet('approval')}>
-          <div className="priority-indicator action" />
-          <div className="priority-content">
-            <div className="priority-title" data-i18n="pri2Title">{t('pri2Title')}</div>
-            <div className="priority-desc" data-i18n="pri2Desc">{t('pri2Desc')}</div>
+        <div className="card-row" style={{ cursor: 'pointer' }} onClick={() => setActiveSheet('approval')}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('pri2Title')}</div>
+            <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px' }}>{t('pri2Desc')}</div>
           </div>
-          <span className="priority-badge act" data-i18n="badgeActionRequired">{t('badgeActionRequired')}</span>
+          <span className="pill err" style={{ marginInlineStart: '12px', flexShrink: 0 }}>{t('badgeActionRequired')}</span>
         </div>
 
-        {/* Item 3: Meeting Brief Ready */}
-        <div className="priority-item" onClick={() => switchTab('premeeting')}>
-          <div className="priority-indicator verified" />
-          <div className="priority-content">
-            <div className="priority-title" data-i18n="pri3Title">{t('pri3Title')}</div>
-            <div className="priority-desc" data-i18n="pri3Desc">{t('pri3Desc')}</div>
+        <div className="card-row" style={{ cursor: 'pointer' }} onClick={() => switchTab('premeeting')}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{t('pri3Title')}</div>
+            <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px' }}>{t('pri3Desc')}</div>
           </div>
-          <span className="priority-badge ver" data-i18n="badgeVerified">{t('badgeVerified')}</span>
+          <span className="pill ok" style={{ marginInlineStart: '12px', flexShrink: 0 }}>{t('badgeVerified')}</span>
         </div>
       </div>
 
-      {/* Executive Briefing */}
-      <div className="section-kicker" data-i18n="execBriefingKicker">{t('execBriefingKicker')}</div>
-      <div className="briefing-card">
-        <h3 data-i18n="todayPositionTitle">{t('todayPositionTitle')}</h3>
-        <p className="briefing-text" data-i18n="todayPositionSummary">
-          {t('todayPositionSummary')}
-        </p>
-
-        <div className="kpi-row">
-          <div className="kpi-unit">
-            <div className="kpi-val" style={{ color: 'var(--success)' }}>91.4%</div>
-            <div className="kpi-lbl" data-i18n="kpiOTD">{t('kpiOTD')}</div>
-          </div>
-          <div className="kpi-unit">
-            <div className="kpi-val" style={{ color: 'var(--navy)' }}>99.1%</div>
-            <div className="kpi-lbl" data-i18n="kpiBaggage">{t('kpiBaggage')}</div>
-          </div>
-          <div className="kpi-unit">
-            <div className="kpi-val" style={{ color: 'var(--aviation-teal)' }}>Nominal</div>
-            <div className="kpi-lbl" data-i18n="kpiTerminal">{t('kpiTerminal')}</div>
-          </div>
-        </div>
-
-        <div className="trust-chip" onClick={() => setActiveSheet('why')}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
-          <span data-i18n="trustChipLabel">{t('trustChipLabel')}</span>
-        </div>
-      </div>
-
-      {/* Restrained Entry Point into Ask */}
-      <div className="ask-entry-card" onClick={() => switchTab('ask')}>
-        <div className="ask-entry-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      {/* Conversational Ask Trigger Capsule */}
+      <div className="ask-capsule" style={{ marginTop: '18px' }} onClick={() => switchTab('ask')}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
+          <span style={{ fontSize: '13.5px' }}>{t('askPlaceholder')}</span>
         </div>
-        <div className="ask-entry-placeholder" data-i18n="askPlaceholder">
-          {t('askPlaceholder')}
-        </div>
-        <div className="ask-entry-arrow">→</div>
+        <span style={{ color: 'var(--accent-cyan)', fontWeight: 700, fontSize: '17px' }}>→</span>
       </div>
+
     </section>
   );
 };

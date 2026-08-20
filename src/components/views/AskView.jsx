@@ -2,88 +2,73 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const AskView = () => {
-  const { t, executeAskQuery } = useApp();
-  const [inputVal, setInputVal] = useState('What changed today?');
+  const { t, currentLang, executeAskQuery } = useApp();
+  const [query, setQuery] = useState('');
 
-  const submitAsk = () => {
-    if (inputVal.trim()) {
-      executeAskQuery(inputVal);
-    }
-  };
+  const prompts = [
+    t('prompt1'),
+    t('prompt2'),
+    t('prompt3'),
+  ];
 
   return (
     <section className="screen-view active" id="viewAsk">
-      <h1 className="screen-title" data-i18n="askHeader">
-        {t('askHeader')}
-      </h1>
-      <div className="screen-subtitle" data-i18n="askSubHeader">
-        {t('askSubHeader')}
+      <div className="greeting">
+        <div className="page-eyebrow">
+          {currentLang === 'ar' ? 'تصريح أمني مستوى 1 · 14 مجموعة بيانات سيادية' : 'Level 1 Clearance · 14 Sovereign Datasets'}
+        </div>
+        <h1 className="page-title" data-i18n="askHeader">{t('askHeader')}</h1>
       </div>
 
-      <div className="ask-container">
-        {/* Large but compact Input */}
-        <div className="ask-input-box">
-          <textarea
-            className="ask-textarea"
-            id="askQueryInput"
-            placeholder={t('inputAskPlaceholder')}
-            data-i18n-placeholder="inputAskPlaceholder"
-            value={inputVal}
-            onChange={(e) => setInputVal(e.target.value)}
-          />
-          <div className="ask-action-row">
-            <span style={{ fontSize: '11px', color: 'var(--secondary-grey)' }} data-i18n="groundedNotice">
-              {t('groundedNotice')}
+      {/* Spacious Conversational Input Area */}
+      <div className="ask-input-wrap">
+        <textarea
+          className="ask-textarea"
+          placeholder={t('inputAskPlaceholder')}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <div className="ask-footer">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-ok)', display: 'inline-block' }} />
+            <span style={{ fontSize: '11.5px', color: 'var(--ink-muted)', fontWeight: 600 }}>
+              {currentLang === 'ar' ? 'سري · معالجة سيادية معزولة' : 'Confidential · Air-gapped Sovereign AI'}
             </span>
-            <button className="ask-submit-btn" onClick={submitAsk}>
-              <span data-i18n="askSubmit">{t('askSubmit')}</span>
-              <span>→</span>
-            </button>
           </div>
+          <button
+            className="btn-primary btn-sm"
+            onClick={() => executeAskQuery(query || prompts[0])}
+            type="button"
+          >
+            {t('askSubmit')} →
+          </button>
         </div>
+      </div>
 
-        {/* Suggested Prompts */}
-        <div className="section-kicker" data-i18n="suggestedPromptsKicker">
-          {t('suggestedPromptsKicker')}
-        </div>
-        <div className="suggested-prompts-group">
-          <div className="prompt-chip" onClick={() => executeAskQuery(t('prompt1'))}>
-            <span data-i18n="prompt1">{t('prompt1')}</span>
-            <span>→</span>
-          </div>
-          <div className="prompt-chip" onClick={() => executeAskQuery(t('prompt2'))}>
-            <span data-i18n="prompt2">{t('prompt2')}</span>
-            <span>→</span>
-          </div>
-          <div className="prompt-chip" onClick={() => executeAskQuery(t('prompt3'))}>
-            <span data-i18n="prompt3">{t('prompt3')}</span>
-            <span>→</span>
-          </div>
-          <div className="prompt-chip" onClick={() => executeAskQuery(t('prompt4'))}>
-            <span data-i18n="prompt4">{t('prompt4')}</span>
-            <span>→</span>
-          </div>
-          <div className="prompt-chip" onClick={() => executeAskQuery(t('prompt5'))}>
-            <span data-i18n="prompt5">{t('prompt5')}</span>
-            <span>→</span>
-          </div>
-        </div>
+      {/* Suggested Prompts with Generous Spacing */}
+      <div className="section-label">{t('suggestedPromptsKicker')}</div>
 
-        {/* Recent Inquiries */}
-        <div className="section-kicker" style={{ marginTop: '12px' }} data-i18n="recentQueriesKicker">
-          {t('recentQueriesKicker')}
+      {prompts.map((p, i) => (
+        <div className="prompt-item" key={i} onClick={() => executeAskQuery(p)}>
+          <span style={{ lineHeight: 1.45 }}>{p}</span>
+          <span style={{ color: 'var(--accent-cyan)', fontSize: '16px', fontWeight: 700, marginInlineStart: '12px' }}>→</span>
         </div>
-        <div
-          className="exec-card"
-          style={{ padding: '10px 14px', cursor: 'pointer' }}
-          onClick={() => executeAskQuery('Compare Terminal A retail yield vs Q2 benchmark')}
-        >
-          <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--navy)' }}>
-            Compare Terminal A retail yield vs Q2 benchmark (C8)
-          </div>
-          <div style={{ fontSize: '11px', color: 'var(--secondary-grey)', marginTop: '2px' }}>
-            Yesterday 16:45 · 3 sources · Verified
-          </div>
+      ))}
+
+      {/* Recent Intelligence Queries */}
+      <div className="section-label">{t('recentQueriesKicker')}</div>
+      <div
+        className="card"
+        style={{ padding: '16px 20px', cursor: 'pointer' }}
+        onClick={() => executeAskQuery('Compare Terminal A retail yield vs Q2 benchmark')}
+      >
+        <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>
+          Compare Terminal A retail yield vs Q2 benchmark
+        </div>
+        <div style={{ fontSize: '12px', color: 'var(--ink-muted)', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span>Yesterday</span>
+          <span>·</span>
+          <span style={{ color: 'var(--accent-cyan)' }}>3 verified sovereign sources</span>
         </div>
       </div>
     </section>

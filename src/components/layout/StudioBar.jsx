@@ -7,49 +7,51 @@ export const StudioBar = () => {
   return (
     <aside className="studio-bar">
       <div className="studio-brand-tag">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-        </svg>
+        <span className="companion-pulse-orb" />
         <span>Abu Dhabi Airports</span>
-        <span className="badge">Executive AI Agent</span>
+        <span className="badge">Elahi AI Companion</span>
       </div>
 
       <div className="studio-scenarios">
-        <span style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 600, textTransform: 'uppercase' }}>
-          Quick State:
+        <span style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          Simulate:
         </span>
         <button
           className={`studio-btn ${scenario === 'normal' ? 'active' : ''}`}
           id="btnSceneNormal"
           onClick={() => setScenario('normal')}
+          type="button"
         >
-          🟢 Normal (Happy)
+          🟢 Normal
         </button>
         <button
           className={`studio-btn ${scenario === 'conflict' ? 'active' : ''}`}
           id="btnSceneConflict"
           onClick={() => setScenario('conflict')}
+          type="button"
         >
-          ⚠️ Conflicting Evidence
+          ⚠️ Conflict
         </button>
         <button
           className={`studio-btn ${scenario === 'denied' ? 'active' : ''}`}
           id="btnSceneDenied"
           onClick={() => setScenario('denied')}
+          type="button"
         >
-          🔒 Permission Denied
+          🔒 Denied
         </button>
         <button
           className={`studio-btn ${scenario === 'loading' ? 'active' : ''}`}
           id="btnSceneLoading"
           onClick={() => setScenario('loading')}
+          type="button"
         >
-          ⏳ AI Loading State
+          ⏳ AI Loading
         </button>
-        <button className="studio-btn" onClick={toggleLanguage}>
-          🌐 Language (<span id="studioLangText">{currentLang === 'en' ? 'العربية RTL' : 'English LTR'}</span>)
+        <button className="studio-btn" onClick={toggleLanguage} type="button">
+          🌐 <span id="studioLangText">{currentLang === 'en' ? 'العربية RTL' : 'English LTR'}</span>
         </button>
-        <button className="studio-btn" id="btnPresentMode" onClick={togglePresentMode}>
+        <button className="studio-btn" id="btnPresentMode" onClick={togglePresentMode} type="button">
           📽 Present
         </button>
       </div>

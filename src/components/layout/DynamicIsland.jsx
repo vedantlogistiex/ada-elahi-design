@@ -2,37 +2,47 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const DynamicIsland = () => {
-  const { isRecording, toggleRecording, recSeconds } = useApp();
+  const { isRecording, toggleRecording, recSeconds, currentLang } = useApp();
 
-  const formatTimer = (totalSec) => {
-    const mins = Math.floor(totalSec / 60);
-    const secs = totalSec % 60;
-    return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-  };
+  const pad = (n) => String(n).padStart(2, '0');
+  const timer = `${pad(Math.floor(recSeconds / 60))}:${pad(recSeconds % 60)}`;
 
   return (
-    <div className="ios-island" id="dynamicIsland" onClick={toggleRecording}>
+    <div
+      className={`ios-island ${isRecording ? 'is-recording' : ''}`}
+      id="dynamicIsland"
+      onClick={toggleRecording}
+      title={isRecording ? 'Tap to finish recording & synthesize' : 'Tap to start ambient companion listening'}
+    >
       {!isRecording ? (
-        <div className="island-idle-state" id="islandIdleState">
-          <span style={{ color: '#CBD5E1' }}>ADA Intelligence</span>
-          <span className="island-dot" />
+        /* ── IDLE Elahi AMBIENT STATE ── */
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 16px' }}>
+          <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#E2E8F0', letterSpacing: '0.4px' }}>
+            Elahi AI
+          </span>
+          <span className="island-pulse-orb" />
         </div>
       ) : (
-        <div className="island-recording-state" id="islandRecordingState" style={{ display: 'flex' }}>
-          <div className="island-pulse-group">
-            <span className="island-rec-dot" />
-            <span style={{ color: '#FFFFFF', fontWeight: 700, letterSpacing: '-0.2px' }}>
-              Elahi Active
-            </span>
-          </div>
+        /* ── ACTIVE RECORDING / AMBIENT SYNTHESIS STATE ── */
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 14px', gap: '10px' }}>
+          {/* Red pulse dot */}
+          <span className="island-rec-dot" />
+
+          {/* Label */}
+          <span style={{ fontSize: '11px', fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.2px' }}>
+            {currentLang === 'ar' ? 'إلهي يستمع...' : 'Elahi Ambient'}
+          </span>
+
+          {/* Soundwave Frequency Bars */}
           <div className="island-waveform">
-            <span className="wave-bar" />
-            <span className="wave-bar" />
-            <span className="wave-bar" />
-            <span className="wave-bar" />
+            {[1, 2, 3, 2, 1].map((_, i) => (
+              <span key={i} className="wave-bar" />
+            ))}
           </div>
-          <span className="island-timer" id="islandTimer">
-            {formatTimer(recSeconds)}
+
+          {/* Live Timer */}
+          <span style={{ fontSize: '11px', color: '#94A3B8', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.5px', fontWeight: 600 }}>
+            {timer}
           </span>
         </div>
       )}

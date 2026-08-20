@@ -2,75 +2,74 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const AnswerView = () => {
-  const { t, switchTab, setActiveSheet } = useApp();
+  const { t, currentLang, switchTab, setActiveSheet } = useApp();
 
   return (
     <section className="screen-view active" id="viewAnswer">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-        <button className="lang-toggle-btn" onClick={() => switchTab('ask')}>
-          <span data-i18n="backToAsk">{t('backToAsk')}</span>
+
+      {/* Navigation & Timestamp */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0 16px' }}>
+        <button className="btn-link" onClick={() => switchTab('ask')} type="button">
+          ← {t('backToAsk')}
         </button>
-        <span style={{ fontSize: '11px', color: 'var(--secondary-grey)' }} data-i18n="queryTimestamp">
-          {t('queryTimestamp')}
-        </span>
+        <span style={{ fontSize: '12px', color: 'var(--ink-muted)', fontWeight: 600 }}>{t('queryTimestamp')}</span>
       </div>
 
+      {/* Executive Answer Card */}
       <div className="answer-card">
-        {/* 1. Executive Answer */}
-        <div className="answer-section">
-          <div className="answer-label" data-i18n="ansExecutiveLabel">
-            {t('ansExecutiveLabel')}
-          </div>
-          <h2 className="answer-headline" id="ansHeadline" data-i18n="ansHeadlineText">
-            {t('ansHeadlineText')}
-          </h2>
+        <div className="answer-headline">
+          {t('ansHeadlineText')}
         </div>
 
-        {/* 2. Implication */}
-        <div className="answer-section">
-          <div className="answer-label" data-i18n="ansImplicationLabel">
-            {t('ansImplicationLabel')}
+        <div className="answer-bullets">
+          <div className="answer-bullet">
+            <span className="bullet-dot" />
+            <span>
+              <strong style={{ color: '#FFFFFF' }}>
+                {currentLang === 'ar' ? 'الأثر التنفيذي: ' : 'Implication: '}
+              </strong>
+              {t('ansImplicationText')}
+            </span>
           </div>
-          <div className="implication-box" id="ansImplication" data-i18n="ansImplicationText">
-            {t('ansImplicationText')}
-          </div>
-        </div>
-
-        {/* 3. Recommended Action */}
-        <div className="answer-section">
-          <div className="answer-label" data-i18n="ansActionLabel">
-            {t('ansActionLabel')}
-          </div>
-          <div className="action-box" id="ansAction" data-i18n="ansActionText">
-            {t('ansActionText')}
+          <div className="answer-bullet">
+            <span className="bullet-dot" />
+            <span>
+              <strong style={{ color: '#FFFFFF' }}>
+                {currentLang === 'ar' ? 'الإجراء المقترح: ' : 'Action: '}
+              </strong>
+              {t('ansActionText')}
+            </span>
           </div>
         </div>
 
-        {/* Trust Bar & Trigger to Why This Answer? */}
-        <button className="evidence-bar-btn" onClick={() => setActiveSheet('why')}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="16" x2="12" y2="12" />
-              <line x1="12" y1="8" x2="12.01" y2="8" />
-            </svg>
-            <span data-i18n="ansSourcesSummary">{t('ansSourcesSummary')}</span>
-          </div>
-          <span style={{ fontWeight: 700 }} data-i18n="whyThisAnswerBtn">
-            {t('whyThisAnswerBtn')}
-          </span>
-        </button>
+        <div className="answer-footer">
+          <span style={{ fontSize: '12px', color: 'var(--ink-muted)', fontWeight: 600 }}>{t('ansSourcesSummary')}</span>
+          <button className="btn-link" style={{ fontSize: '12.5px', fontWeight: 700 }} onClick={() => setActiveSheet('why')} type="button">
+            {t('whyThisAnswerBtn')} →
+          </button>
+        </div>
       </div>
 
-      {/* Quick Secondary Executive Actions */}
-      <div style={{ display: 'flex', gap: '8px' }}>
-        <button className="btn-exec-primary" onClick={() => setActiveSheet('approval')} data-i18n="actionAuthorize">
+      {/* Executive Action Triggers */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
+        <button
+          className="btn-primary"
+          style={{ width: '100%' }}
+          onClick={() => setActiveSheet('approval')}
+          type="button"
+        >
           {t('actionAuthorize')}
         </button>
-        <button className="btn-exec-secondary" onClick={() => switchTab('premeeting')} data-i18n="actionAttachToBrief">
+        <button
+          className="btn-ghost"
+          style={{ width: '100%' }}
+          onClick={() => switchTab('premeeting')}
+          type="button"
+        >
           {t('actionAttachToBrief')}
         </button>
       </div>
+
     </section>
   );
 };

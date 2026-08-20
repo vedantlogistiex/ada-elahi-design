@@ -7,59 +7,42 @@ export const ApprovalModal = () => {
 
   const handleConfirm = () => {
     closeSheet();
-    showToast(currentLang === 'ar' ? 'تم اعتماد وتثبيت خط الأساس التشغيلي' : 'Plan Approved · Dispatched to Operations');
+    showToast(currentLang === 'ar' ? 'تم الاعتماد وإرسال التوجيه للعمليات' : 'Approved · Dispatched to Operations');
   };
 
   return (
     <>
-      <div
-        className={`sheet-overlay ${isOpen ? 'active' : ''}`}
-        id="sheetOverlayApproval"
-        onClick={closeSheet}
-      />
-      <div
-        className={`bottom-sheet ${isOpen ? 'active' : ''}`}
-        id="sheetApproval"
-      >
+      <div className={`sheet-overlay ${isOpen ? 'active' : ''}`} id="sheetOverlayApproval" onClick={closeSheet} />
+      <div className={`bottom-sheet ${isOpen ? 'active' : ''}`} id="sheetApproval">
         <div className="sheet-handle" onClick={closeSheet} />
-        <div className="sheet-header-row">
+        <div className="sheet-header">
           <div>
-            <div className="sheet-title" data-i18n="approvalSheetTitle">
-              {t('approvalSheetTitle')}
-            </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }} data-i18n="approvalSheetSub">
-              {t('approvalSheetSub')}
-            </div>
+            <div className="sheet-title">{t('approvalSheetTitle')}</div>
+            <div className="sheet-sub">{t('approvalSheetSub')}</div>
           </div>
-          <button className="sheet-close-btn" onClick={closeSheet}>✕</button>
+          <button className="sheet-close" onClick={closeSheet} type="button">✕</button>
         </div>
 
-        <div style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)', marginBottom: '6px' }} data-i18n="approvalQuestion">
+        <div style={{ fontSize: '17px', fontWeight: 800, color: '#FFFFFF', marginBottom: '8px', lineHeight: 1.35 }}>
           {t('approvalQuestion')}
         </div>
 
-        <div style={{ fontSize: '13px', color: 'var(--slate)' }} data-i18n="approvalScope">
-          {currentLang === 'ar' ? (
-            <><b>النطاق:</b> 3 تعديلات على زمن استدارة المواقف (المواقف 24-28) · إخطار 5 مدراء تشغيليين.</>
-          ) : (
-            <><b>Scope:</b> 3 turnaround buffer modifications (Stands 24–28) · 5 recipient operational leads.</>
-          )}
+        <div style={{ fontSize: '13.5px', color: 'var(--ink-secondary)', marginBottom: '16px', lineHeight: 1.55 }}>
+          {currentLang === 'ar'
+            ? <><strong>النطاق التنفيذي:</strong> 3 تعديلات على مواقف الطائرات 24–28 · 5 مدراء تشغيليين</>
+            : <><strong>Executive Scope:</strong> 3 turnaround buffer modifications (Stands 24–28) · 5 operations leads</>}
         </div>
 
         <div className="consequence-box">
-          <b style={{ color: 'var(--navy)' }} data-i18n="consequenceTitle">
-            {t('consequenceTitle')}
-          </b>
-          <p style={{ marginTop: '4px' }} data-i18n="consequenceDesc">
-            {t('consequenceDesc')}
-          </p>
+          <strong style={{ color: 'var(--accent-gold)' }}>{t('consequenceTitle')}</strong>
+          <div style={{ marginTop: '4px', fontSize: '12.5px', color: '#FDE68A' }}>{t('consequenceDesc')}</div>
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
-          <button className="btn-exec-secondary" style={{ flex: 1 }} onClick={closeSheet} data-i18n="btnCancel">
+        <div style={{ display: 'flex', gap: '12px', marginTop: '22px' }}>
+          <button className="btn-ghost" style={{ flex: 1 }} onClick={closeSheet} type="button">
             {t('btnCancel')}
           </button>
-          <button className="btn-exec-primary" style={{ flex: 1.4 }} onClick={handleConfirm} data-i18n="btnApprove">
+          <button className="btn-primary" style={{ flex: 1.5 }} onClick={handleConfirm} type="button">
             {t('btnApprove')}
           </button>
         </div>

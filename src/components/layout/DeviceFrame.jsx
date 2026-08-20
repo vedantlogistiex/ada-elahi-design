@@ -28,14 +28,14 @@ export const DeviceFrame = ({ children }) => {
 
   return (
     <div className="device-frame" id="deviceFrame">
-      {/* iOS Dynamic Island with Live Elahi Active / Recording State */}
+      {/* iOS Dynamic Island with Live Elahi Companion Active / Recording State */}
       <DynamicIsland />
 
       {/* iOS Native Status Bar */}
       <header className="ios-status-bar">
         <span id="clockDisplay">{clock}</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ fontSize: '11px' }}>5G</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '11px', fontWeight: 700, color: '#94A3B8' }}>5G</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="2" y="7" width="16" height="10" rx="2" />
             <line x1="22" y1="11" x2="22" y2="13" />
@@ -52,21 +52,21 @@ export const DeviceFrame = ({ children }) => {
 
       {/* Scrollable Content Viewport */}
       <div className="app-viewport" id="appViewport">
-        {/* Live Elahi Recording Banner */}
+        {/* Live Ambient Recording Banner */}
         {isRecording && (
-          <div className="live-recording-bar" id="liveRecordingBar" style={{ display: 'flex' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className="live-recording-bar" id="liveRecordingBar">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span className="island-rec-dot" />
               <div>
-                <div style={{ fontSize: '12px', fontWeight: 700 }}>
+                <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#FFFFFF' }}>
                   {t('elahiListeningTitle')}
                 </div>
-                <div style={{ fontSize: '10.5px', color: '#94A3B8' }}>
-                  4 verified feeds synced
+                <div style={{ fontSize: '11px', color: 'var(--ink-secondary)' }}>
+                  4 sovereign verified streams synced
                 </div>
               </div>
             </div>
-            <button className="btn-rec-stop" onClick={stopRecording}>
+            <button className="btn-rec-stop" onClick={stopRecording} type="button">
               {t('stopRecBtn')}
             </button>
           </div>
@@ -74,23 +74,23 @@ export const DeviceFrame = ({ children }) => {
 
         {/* Universal State Simulated Banners */}
         {scenario === 'loading' && (
-          <div className="state-banner loading" id="stateBannerLoading" style={{ display: 'flex' }}>
+          <div className="state-banner loading" id="stateBannerLoading">
             <div className="ios-spinner" />
             <span>{t('loadingSynthesizing')}</span>
           </div>
         )}
 
         {scenario === 'error' && (
-          <div className="state-banner error" id="stateBannerError" style={{ display: 'block' }}>
-            <b>{t('commErrorTitle')}</b>
-            <p style={{ fontSize: '12px', marginTop: '2px' }}>{t('commErrorDesc')}</p>
+          <div className="state-banner error" id="stateBannerError">
+            <b style={{ color: '#F87171' }}>{t('commErrorTitle')}</b>
+            <p style={{ fontSize: '12px', marginTop: '3px' }}>{t('commErrorDesc')}</p>
           </div>
         )}
 
         {scenario === 'denied' && (
-          <div className="state-banner denied" id="stateBannerDenied" style={{ display: 'block' }}>
-            <b>{t('securityNoticeTitle')}</b>
-            <p style={{ fontSize: '12px', marginTop: '2px' }}>{t('securityNoticeDesc')}</p>
+          <div className="state-banner denied" id="stateBannerDenied">
+            <b style={{ color: '#FCD34D' }}>{t('securityNoticeTitle')}</b>
+            <p style={{ fontSize: '12px', marginTop: '3px' }}>{t('securityNoticeDesc')}</p>
           </div>
         )}
 
@@ -98,7 +98,7 @@ export const DeviceFrame = ({ children }) => {
         {children}
       </div>
 
-      {/* Native Bottom Tab Bar (5 Tabs) */}
+      {/* Native Floating Glass Bottom Tab Bar */}
       <TabBar />
 
       {/* Modals & Bottom Sheets contained strictly inside Mobile Device Frame */}

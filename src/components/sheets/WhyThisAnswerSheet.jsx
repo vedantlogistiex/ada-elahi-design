@@ -5,88 +5,43 @@ export const WhyThisAnswerSheet = () => {
   const { t, activeSheet, closeSheet } = useApp();
   const isOpen = activeSheet === 'why';
 
+  const sources = [
+    { icon: '🛫', titleKey: 'src1Title', metaKey: 'src1Meta' },
+    { icon: '📋', titleKey: 'src2Title', metaKey: 'src2Meta' },
+    { icon: '📅', titleKey: 'src3Title', metaKey: 'src3Meta' },
+    { icon: '📊', titleKey: 'src4Title', metaKey: 'src4Meta' },
+  ];
+
   return (
     <>
-      <div
-        className={`sheet-overlay ${isOpen ? 'active' : ''}`}
-        id="sheetOverlayWhy"
-        onClick={closeSheet}
-      />
-      <div
-        className={`bottom-sheet ${isOpen ? 'active' : ''}`}
-        id="sheetWhyThisAnswer"
-      >
+      <div className={`sheet-overlay ${isOpen ? 'active' : ''}`} id="sheetOverlayWhy" onClick={closeSheet} />
+      <div className={`bottom-sheet ${isOpen ? 'active' : ''}`} id="sheetWhyThisAnswer">
         <div className="sheet-handle" onClick={closeSheet} />
-        <div className="sheet-header-row">
+        <div className="sheet-header">
           <div>
-            <div className="sheet-title" data-i18n="whySheetTitle">
-              {t('whySheetTitle')}
+            <div className="sheet-title">{t('whySheetTitle')}</div>
+            <div className="sheet-sub">{t('whySheetSub')}</div>
+          </div>
+          <button className="sheet-close" onClick={closeSheet} type="button">✕</button>
+        </div>
+
+        <div className="section-label" style={{ marginTop: '12px' }}>{t('approvedSourcesKicker')}</div>
+
+        <div className="card" style={{ padding: '6px 18px', marginBottom: '18px' }}>
+          {sources.map((s, i) => (
+            <div key={i} className="source-row" style={{ borderBottom: i < sources.length - 1 ? '1px solid var(--border-glass)' : 'none', padding: '14px 0' }}>
+              <div className="source-icon" style={{ fontSize: '15px' }}>{s.icon}</div>
+              <div>
+                <div className="source-title">{t(s.titleKey)}</div>
+                <div className="source-meta">{t(s.metaKey)}</div>
+              </div>
             </div>
-            <div style={{ fontSize: '11.5px', color: 'var(--secondary-grey)' }} data-i18n="whySheetSub">
-              {t('whySheetSub')}
-            </div>
-          </div>
-          <button className="sheet-close-btn" onClick={closeSheet}>✕</button>
+          ))}
         </div>
 
-        <div className="section-kicker" data-i18n="approvedSourcesKicker">
-          {t('approvedSourcesKicker')}
-        </div>
-
-        <div className="source-row">
-          <div className="source-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-            </svg>
-          </div>
-          <div style={{ flex: 1 }}>
-            <div className="source-title" data-i18n="src1Title">{t('src1Title')}</div>
-            <div className="source-meta" data-i18n="src1Meta">{t('src1Meta')}</div>
-          </div>
-        </div>
-
-        <div className="source-row">
-          <div className="source-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            </svg>
-          </div>
-          <div style={{ flex: 1 }}>
-            <div className="source-title" data-i18n="src2Title">{t('src2Title')}</div>
-            <div className="source-meta" data-i18n="src2Meta">{t('src2Meta')}</div>
-          </div>
-        </div>
-
-        <div className="source-row">
-          <div className="source-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" />
-            </svg>
-          </div>
-          <div style={{ flex: 1 }}>
-            <div className="source-title" data-i18n="src3Title">{t('src3Title')}</div>
-            <div className="source-meta" data-i18n="src3Meta">{t('src3Meta')}</div>
-          </div>
-        </div>
-
-        <div className="source-row">
-          <div className="source-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-            </svg>
-          </div>
-          <div style={{ flex: 1 }}>
-            <div className="source-title" data-i18n="src4Title">{t('src4Title')}</div>
-            <div className="source-meta" data-i18n="src4Meta">{t('src4Meta')}</div>
-          </div>
-        </div>
-
-        {/* Material Limitations & Conflict Handling */}
-        <div className="limitation-box">
-          <b data-i18n="limitationTitle">{t('limitationTitle')}</b>
-          <p style={{ marginTop: '4px' }} data-i18n="limitationDesc">
-            {t('limitationDesc')}
-          </p>
+        <div className="limit-box">
+          <strong style={{ color: 'var(--accent-gold)' }}>{t('limitationTitle')}</strong>
+          <div style={{ marginTop: '4px', fontSize: '12.5px', color: 'rgba(253, 230, 138, 0.9)' }}>{t('limitationDesc')}</div>
         </div>
       </div>
     </>
