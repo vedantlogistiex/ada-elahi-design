@@ -7,59 +7,66 @@ export const PreMeetingBriefView = () => {
   return (
     <section className="screen-view active" id="viewPreMeetingBrief">
       {/* Navigation */}
-      <div style={{ padding: '10px 0 16px' }}>
+      <div style={{ padding: '6px 0 14px' }}>
         <button className="btn-link" onClick={() => switchTab('meetings')} type="button">
-          {t('backToMeetings')}
+          <span style={{ fontSize: '18px', fontWeight: 800 }}>‹</span>
+          <span style={{ marginInlineStart: '4px' }}>{t('backToMeetings')}</span>
         </button>
       </div>
 
       <div className="page-eyebrow">10:30 AM · 45 min · Executive Leadership Team</div>
-      <h1 className="page-title" style={{ marginBottom: '20px' }}>{t('briefScreenTitle')}</h1>
+      <h1 className="page-title" style={{ marginBottom: '16px' }}>{t('briefScreenTitle')}</h1>
 
-      {/* Hero Ambient Companion Recorder */}
-      <button className="btn-record" style={{ marginBottom: '24px' }} onClick={startRecording} type="button">
-        <span className="rec-dot-live" />
-        <div style={{ flex: 1, textAlign: currentLang === 'ar' ? 'right' : 'left' }}>
-          <div style={{ fontSize: '14.5px', fontWeight: 700, color: 'var(--ink)' }}>{t('heroRecTitle')}</div>
-          <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '2px' }}>
-            Acoustic Diarization · Sovereign Action Extraction
+      {/* Hero Recording Action Banner */}
+      <div
+        className="elahi-hero-banner"
+        onClick={startRecording}
+        role="button"
+        tabIndex={0}
+        style={{ marginBottom: '18px' }}
+      >
+        <div className="banner-left">
+          <div className="banner-icon-box">🎙️</div>
+          <div>
+            <div className="banner-title">{t('heroRecTitle')}</div>
+            <div className="banner-sub">Acoustic Diarization · Sovereign Action Extraction</div>
           </div>
         </div>
-        <span className="pill blue">{t('heroRecBtn')}</span>
-      </button>
+        <span className="banner-pill">{t('heroRecBtn')}</span>
+      </div>
 
       {/* Brief Card Container */}
-      <div className="card" style={{ padding: '22px 24px', marginBottom: '20px' }}>
+      <div className="anees-highlight-card" style={{ cursor: 'default', marginBottom: '18px' }}>
         {/* Purpose */}
         <div className="brief-section">
           <div className="brief-kicker">{t('briefPurposeTitle')}</div>
           <div className="brief-body">{t('briefPurposeText')}</div>
         </div>
 
-        <div style={{ height: '1px', background: 'var(--border-glass)', margin: '18px 0' }} />
+        <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '12px 0' }} />
 
         {/* What Changed */}
         <div className="brief-section">
-          <div className="brief-kicker" style={{ color: 'var(--accent-gold)' }}>{t('briefChangedTitle')}</div>
+          <div className="brief-kicker" style={{ color: 'var(--ada-attention)' }}>{t('briefChangedTitle')}</div>
           <ul className="brief-list">
-            <li style={{ marginBottom: '6px' }}>{t('briefChanged1')}</li>
+            <li style={{ marginBottom: '5px' }}>{t('briefChanged1')}</li>
             <li>{t('briefChanged2')}</li>
           </ul>
         </div>
 
-        <div style={{ height: '1px', background: 'var(--border-glass)', margin: '18px 0' }} />
+        <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '12px 0' }} />
 
         {/* Suggested Questions */}
         <div className="brief-section" style={{ marginBottom: 0 }}>
-          <div className="brief-kicker" style={{ color: 'var(--accent-cyan)' }}>{t('briefQuestionsTitle')}</div>
+          <div className="brief-kicker" style={{ color: 'var(--ada-blue)' }}>{t('briefQuestionsTitle')}</div>
           <ol className="brief-list">
-            <li style={{ marginBottom: '6px' }}>{t('briefQ1')}</li>
+            <li style={{ marginBottom: '5px' }}>{t('briefQ1')}</li>
             <li>{t('briefQ2')}</li>
           </ol>
         </div>
       </div>
 
-      {/* Primary CTA */}
+      {/* Primary Action Button */}
       <button
         className="btn-primary"
         style={{ width: '100%' }}

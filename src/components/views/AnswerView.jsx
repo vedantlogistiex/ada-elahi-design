@@ -6,16 +6,16 @@ export const AnswerView = () => {
 
   return (
     <section className="screen-view active" id="viewAnswer">
-
       {/* Navigation & Timestamp */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0 16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 0 14px' }}>
         <button className="btn-link" onClick={() => switchTab('ask')} type="button">
-          {t('backToAsk')}
+          <span style={{ fontSize: '18px', fontWeight: 800 }}>‹</span>
+          <span style={{ marginInlineStart: '4px' }}>{t('backToAsk')}</span>
         </button>
         <span style={{ fontSize: '12px', color: 'var(--ink-muted)', fontWeight: 600 }}>{t('queryTimestamp')}</span>
       </div>
 
-      {/* Executive Answer Card */}
+      {/* Executive Answer Card with Signature Anees Outline */}
       <div className="answer-card">
         <div className="answer-headline">
           {t('ansHeadlineText')}
@@ -45,13 +45,13 @@ export const AnswerView = () => {
         <div className="answer-footer">
           <span style={{ fontSize: '12px', color: 'var(--ink-muted)', fontWeight: 600 }}>{t('ansSourcesSummary')}</span>
           <button className="btn-link" style={{ fontSize: '12.5px', fontWeight: 700 }} onClick={() => setActiveSheet('why')} type="button">
-            {t('whyThisAnswerBtn')}
+            {t('whyThisAnswerBtn')} ›
           </button>
         </div>
       </div>
 
-      {/* Executive Action Triggers */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
+      {/* Action Buttons */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '14px' }}>
         <button
           className="btn-primary"
           style={{ width: '100%' }}
@@ -69,7 +69,6 @@ export const AnswerView = () => {
           {t('actionAttachToBrief')}
         </button>
       </div>
-
     </section>
   );
 };

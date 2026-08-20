@@ -6,9 +6,9 @@ export const NotificationsSheet = () => {
   const isOpen = activeSheet === 'notif';
 
   const alerts = [
-    { type: 'err', title: t('notif1Title'), desc: t('notif1Desc') },
-    { type: 'warn', title: t('notif2Title'), desc: t('notif2Desc') },
-    { type: 'blue', title: t('notif3Title'), desc: t('notif3Desc') },
+    { type: 'err', title: t('notif1Title'), desc: t('notif1Desc'), time: '09:40' },
+    { type: 'warn', title: t('notif2Title'), desc: t('notif2Desc'), time: '14:00 Deadline' },
+    { type: 'blue', title: t('notif3Title'), desc: t('notif3Desc'), time: '09:35' },
   ];
 
   return (
@@ -25,28 +25,24 @@ export const NotificationsSheet = () => {
           <button className="sheet-close" onClick={closeSheet} type="button">✕</button>
         </div>
 
-        {/* Priority Alerts */}
-        <div className="section-label" style={{ marginTop: '12px' }}>{t('notifSectionTitle')}</div>
-        <div className="card" style={{ padding: '6px 18px', marginBottom: '22px' }}>
+        {/* Priority Alerts (Spaced-out Cards) */}
+        <div className="section-label" style={{ marginTop: '8px', fontSize: '15px' }}>{t('notifSectionTitle')}</div>
+        <div style={{ marginBottom: '18px' }}>
           {alerts.map((a, i) => (
             <div
               key={i}
-              style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '12px',
-                padding: '14px 0',
-                borderBottom: i < alerts.length - 1 ? '1px solid var(--border-glass)' : 'none',
-              }}
+              className="spaced-card"
+              style={{ padding: '16px 18px', marginBottom: '10px' }}
             >
-              <span className={`pill ${a.type}`} style={{ flexShrink: 0, marginTop: '2px', padding: '3px 8px' }}>!</span>
-              <div>
-                <div style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.35 }}>
-                  {a.title}
-                </div>
-                <div style={{ fontSize: '12px', color: 'var(--ink-secondary)', marginTop: '3px', lineHeight: 1.45 }}>
-                  {a.desc}
-                </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <span className={`pill ${a.type}`}>{a.type === 'err' ? 'Critical' : a.type === 'warn' ? 'Attention' : 'Brief'}</span>
+                <span style={{ fontSize: '12px', color: 'var(--ada-grey)', fontWeight: 600 }}>{a.time}</span>
+              </div>
+              <div style={{ fontSize: '14px', fontWeight: 800, color: 'var(--ada-navy)', margin: '4px 0 2px' }}>
+                {a.title}
+              </div>
+              <div style={{ fontSize: '12.5px', color: 'var(--ada-slate)', lineHeight: 1.45 }}>
+                {a.desc}
               </div>
             </div>
           ))}
@@ -54,35 +50,35 @@ export const NotificationsSheet = () => {
 
         {/* Executive Reminders */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-          <div className="section-label" style={{ margin: 0 }}>{t('remindersSectionTitle')}</div>
+          <div className="section-label" style={{ margin: 0, fontSize: '15px' }}>{t('remindersSectionTitle')}</div>
           <button
             className="btn-link"
-            style={{ fontSize: '12.5px', fontWeight: 700 }}
+            style={{ fontSize: '13px', fontWeight: 700 }}
             onClick={() => addReminder(currentLang === 'ar' ? 'متابعة تقرير العمليات' : 'Follow-up with Operations')}
             type="button"
           >
-            {t('btnAddReminder')}
+            + {t('btnAddReminder')}
           </button>
         </div>
 
-        <div className="card" style={{ padding: '6px 18px' }}>
+        <div>
           {remindersList.length === 0 && (
-            <div style={{ padding: '18px 0', fontSize: '13px', color: 'var(--ink-muted)', textAlign: 'center' }}>
+            <div style={{ padding: '20px 0', fontSize: '13px', color: 'var(--ada-grey)', textAlign: 'center' }}>
               {currentLang === 'ar' ? 'لا توجد تذكيرات مسجلة' : 'No active reminders'}
             </div>
           )}
-          {remindersList.map((r, i) => (
+          {remindersList.map((r) => (
             <div
               key={r.id}
+              className="spaced-card"
               style={{
+                padding: '14px 18px',
+                marginBottom: '10px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '14px',
-                padding: '14px 0',
-                borderBottom: i < remindersList.length - 1 ? '1px solid var(--border-glass)' : 'none',
-                opacity: r.done ? 0.4 : 1,
+                opacity: r.done ? 0.45 : 1,
                 cursor: 'pointer',
-                transition: 'opacity 0.2s ease',
               }}
               onClick={() => toggleReminder(r.id)}
             >
@@ -90,30 +86,29 @@ export const NotificationsSheet = () => {
               <div style={{
                 width: '20px',
                 height: '20px',
-                border: `1.5px solid ${r.done ? 'var(--accent-ok)' : 'rgba(15, 23, 42, 0.2)'}`,
+                border: `2px solid ${r.done ? 'var(--ada-navy)' : '#CBD5E1'}`,
                 borderRadius: '6px',
                 flexShrink: 0,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: r.done ? 'var(--accent-ok)' : 'transparent',
-                boxShadow: r.done ? '0 0 8px var(--accent-ok)' : 'none',
-                transition: 'all 0.18s cubic-bezier(0.16, 1, 0.3, 1)',
+                background: r.done ? 'var(--ada-navy)' : 'transparent',
+                transition: 'all 0.15s ease',
               }}>
                 {r.done && <span style={{ fontSize: '11px', color: '#FFFFFF', fontWeight: 800 }}>✓</span>}
               </div>
               {/* Text */}
               <div style={{ flex: 1 }}>
                 <div style={{
-                  fontSize: '13.5px',
-                  fontWeight: 600,
-                  color: 'var(--ink)',
+                  fontSize: '14px',
+                  fontWeight: 700,
+                  color: 'var(--ada-navy)',
                   textDecoration: r.done ? 'line-through' : 'none',
-                  lineHeight: 1.35,
+                  lineHeight: 1.3,
                 }}>
                   {r.customTitle || (r.titleKey ? t(r.titleKey) : '')}
                 </div>
-                <div style={{ fontSize: '11.5px', color: 'var(--ink-muted)', marginTop: '2px' }}>
+                <div style={{ fontSize: '11.5px', color: 'var(--ada-grey)', marginTop: '2px' }}>
                   {r.customTime || (r.timeKey ? t(r.timeKey) : '')}
                 </div>
               </div>

@@ -2,32 +2,56 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 
 export const MemoryView = () => {
-  const { t, setActiveSheet } = useApp();
+  const { t, currentLang, setActiveSheet } = useApp();
   const [filter, setFilter] = useState('all');
   const [query, setQuery] = useState('');
 
   const records = [
-    { id: '1', cat: 'decision', tagKey: 'tagDecision', date: '12 Jun 2026', titleKey: 'mem1Title', descKey: 'mem1Desc' },
-    { id: '2', cat: 'resolution', tagKey: 'tagResolution', date: '28 May 2026', titleKey: 'mem2Title', descKey: 'mem2Desc' },
-    { id: '3', cat: 'commitment', tagKey: 'tagCommitment', date: '15 Apr 2026', titleKey: 'mem3Title', descKey: 'mem3Desc' },
+    {
+      id: '1',
+      cat: 'decision',
+      tagKey: 'tagDecision',
+      date: currentLang === 'ar' ? '12 يونيو 2026' : '12 Jun 2026',
+      titleKey: 'mem1Title',
+      descKey: 'mem1Desc',
+      stats: currentLang === 'ar' ? 'تصريح مستوى 1' : 'Level 1 Clearance',
+    },
+    {
+      id: '2',
+      cat: 'resolution',
+      tagKey: 'tagResolution',
+      date: currentLang === 'ar' ? '28 مايو 2026' : '28 May 2026',
+      titleKey: 'mem2Title',
+      descKey: 'mem2Desc',
+      stats: currentLang === 'ar' ? 'قرار مجلس الإدارة' : 'Board Ratified',
+    },
+    {
+      id: '3',
+      cat: 'commitment',
+      tagKey: 'tagCommitment',
+      date: currentLang === 'ar' ? '15 أبريل 2026' : '15 Apr 2026',
+      titleKey: 'mem3Title',
+      descKey: 'mem3Desc',
+      stats: currentLang === 'ar' ? 'اتفاقية الاتحاد للطيران' : 'Etihad Bilateral',
+    },
   ];
 
   const visible = records.filter((r) => {
     const matchCat = filter === 'all' || r.cat === filter;
     const q = query.toLowerCase();
-    return matchCat && (!q || t(r.titleKey).toLowerCase().includes(q));
+    return matchCat && (!q || t(r.titleKey).toLowerCase().includes(q) || t(r.descKey).toLowerCase().includes(q));
   });
 
   return (
     <section className="screen-view active" id="viewMemory">
       <div className="greeting">
-        <h1 className="page-title" data-i18n="memoryTitle">{t('memoryTitle')}</h1>
+        <h1 className="page-title">{t('memoryTitle')}</h1>
         <div className="page-sub">{t('memorySubtitle')}</div>
       </div>
 
-      {/* Glass Search Input */}
+      {/* Search Input */}
       <div className="search-input-wrap">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--ink-muted)" strokeWidth="2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ada-grey)" strokeWidth="2">
           <circle cx="11" cy="11" r="8" />
           <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
@@ -40,34 +64,71 @@ export const MemoryView = () => {
         />
       </div>
 
-      {/* Segmented Filter Pills */}
+      {/* Anees Segmented Filter Pills */}
       <div className="seg-bar">
-        <button className={`seg-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')} type="button">
+        <button
+          className={`seg-btn ${filter === 'all' ? 'active' : ''}`}
+          onClick={() => setFilter('all')}
+          type="button"
+        >
           {t('filterAll')}
         </button>
-        <button className={`seg-btn ${filter === 'decision' ? 'active' : ''}`} onClick={() => setFilter('decision')} type="button">
+        <button
+          className={`seg-btn ${filter === 'decision' ? 'active' : ''}`}
+          onClick={() => setFilter('decision')}
+          type="button"
+        >
           {t('filterDecisions')}
         </button>
-        <button className={`seg-btn ${filter === 'commitment' ? 'active' : ''}`} onClick={() => setFilter('commitment')} type="button">
+        <button
+          className={`seg-btn ${filter === 'commitment' ? 'active' : ''}`}
+          onClick={() => setFilter('commitment')}
+          type="button"
+        >
           {t('filterCommitments')}
         </button>
       </div>
 
-      {/* Memory Records Card */}
-      <div className="card" style={{ padding: '6px 20px' }}>
-        {visible.map((item, i) => (
+      {/* Memory Records (Spaced-out Cards) */}
+      <div>
+        {visible.length === 0 && (
+          <div style={{ padding: '30px 0', fontSize: '13.5px', color: 'var(--ada-grey)', textAlign: 'center' }}>
+            {currentLang === 'ar' ? 'لا توجد سجلات مطابقة' : 'No matching records found'}
+          </div>
+        )}
+        {visible.map((item) => (
           <div
+            className="spaced-card"
             key={item.id}
-            className="memory-record"
             onClick={() => setActiveSheet('why')}
-            style={{ borderBottom: i < visible.length - 1 ? '1px solid var(--border-glass)' : 'none' }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <span className="pill ok" style={{ fontSize: '10.5px' }}>{t(item.tagKey)}</span>
-              <span style={{ fontSize: '11.5px', color: 'var(--ink-muted)', fontWeight: 600 }}>{item.date}</span>
+            <div className="spaced-card-time">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <span>{item.date}</span>
             </div>
-            <div className="memory-title">{t(item.titleKey)}</div>
-            <div className="memory-desc">{t(item.descKey)}</div>
+
+            <div className="spaced-card-title">
+              {t(item.titleKey)}
+            </div>
+
+            <div className="spaced-card-snippet">
+              {t(item.descKey)}
+            </div>
+
+            <div className="spaced-card-footer">
+              <div className="spaced-card-tags">
+                <span className="spaced-tag" style={{ background: '#E6F3F4', color: 'var(--ada-teal)' }}>
+                  {t(item.tagKey)}
+                </span>
+                <span className="spaced-tag count">+3</span>
+              </div>
+              <div className="spaced-card-meta-stats">
+                {item.stats}
+              </div>
+            </div>
           </div>
         ))}
       </div>

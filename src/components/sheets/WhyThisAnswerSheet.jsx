@@ -25,23 +25,35 @@ export const WhyThisAnswerSheet = () => {
           <button className="sheet-close" onClick={closeSheet} type="button">✕</button>
         </div>
 
-        <div className="section-label" style={{ marginTop: '12px' }}>{t('approvedSourcesKicker')}</div>
+        <div className="section-label" style={{ marginTop: '8px', fontSize: '15px' }}>
+          {t('approvedSourcesKicker')}
+        </div>
 
-        <div className="card" style={{ padding: '6px 18px', marginBottom: '18px' }}>
+        <div style={{ marginBottom: '16px' }}>
           {sources.map((s, i) => (
-            <div key={i} className="source-row" style={{ borderBottom: i < sources.length - 1 ? '1px solid var(--border-glass)' : 'none', padding: '14px 0' }}>
-              <div className="source-icon" style={{ fontSize: '15px' }}>{s.icon}</div>
+            <div
+              key={i}
+              className="spaced-card"
+              style={{
+                padding: '14px 18px',
+                marginBottom: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+              }}
+            >
+              <div className="source-icon" style={{ flexShrink: 0 }}>{s.icon}</div>
               <div>
                 <div className="source-title">{t(s.titleKey)}</div>
-                <div className="source-meta">{t(s.metaKey)}</div>
+                <div className="source-meta" style={{ marginTop: '2px' }}>{t(s.metaKey)}</div>
               </div>
             </div>
           ))}
         </div>
 
         <div className="limit-box">
-          <strong style={{ color: 'var(--accent-gold)' }}>{t('limitationTitle')}</strong>
-          <div style={{ marginTop: '4px', fontSize: '12.5px' }}>{t('limitationDesc')}</div>
+          <strong style={{ color: 'var(--ada-attention)', fontSize: '13px' }}>{t('limitationTitle')}</strong>
+          <div style={{ marginTop: '4px', fontSize: '12.5px', lineHeight: 1.48 }}>{t('limitationDesc')}</div>
         </div>
       </div>
     </>
